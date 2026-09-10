@@ -1,0 +1,1599 @@
+<title>Painel Taon Delivery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  /* fundo bege quente — os cards brancos sobem sobre ele */
+  --ground:#E7DECB;
+  --ground-ink:#241F16; --ground-ink-2:#4A4334;
+  --ground-muted:#7A705A; --ground-line:#CFC4AC;
+  --ground-warn:#97500C;
+
+  --surface:#FFFFFF; --surface-2:#F3EFE5;
+  --brand:#2B4899; --brand-soft:#E7EAF7;                 /* azul da logo Ragga */
+  --taon:#69427B; --taon-soft:#F1EAF4; --taon-ink:#69427B;
+  --d1:#2B4899; --d1-soft:#8D9FD4;
+  --d2:#EDD55E; --d2-line:#A88A1C;                       /* amarelo da logo Taon + contorno */
+  --d3:#1baf7a;
+  --ink:#1E1A13; --ink-2:#4B4536; --muted:#7B7360;
+  --line:#E4DCCB; --line-2:#CDC2AC;
+  --good:#0F7A55; --warn:#97500C; --crit:#B8322C;
+  --good-bg:#E3F1E7; --warn-bg:#F7EBD9; --crit-bg:#F9E5E2;
+  --shadow:0 1px 2px rgba(60,48,26,.06), 0 8px 24px -16px rgba(60,48,26,.22);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#201C15;
+    --ground-ink:#F4F0E7; --ground-ink-2:rgba(244,240,231,.82);
+    --ground-muted:rgba(244,240,231,.58); --ground-line:rgba(244,240,231,.15);
+    --ground-warn:#E8B978;
+
+    --surface:#2C2720; --surface-2:#39332A;
+    --brand:#9DACF2; --brand-soft:#2A3050;
+    --taon:#BE9BD1; --taon-soft:#372B4A; --taon-ink:#CDAEDD;
+    --d1:#9CB0F2; --d1-soft:#5F72AE;
+    --d2:#EDD55E; --d2-line:#EDD55E;
+    --d3:#199e70;
+    --ink:#F4F0E7; --ink-2:#CFC8B8; --muted:#A0977F;
+    --line:#3D372D; --line-2:#524A3C;
+    --good:#5EC894; --warn:#E0A24E; --crit:#EE8078;
+    --good-bg:#1B3A2C; --warn-bg:#3A2E18; --crit-bg:#3C2622;
+    --shadow:0 1px 2px rgba(0,0,0,.34), 0 8px 24px -16px rgba(0,0,0,.62);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#201C15;
+  --ground-ink:#F4F0E7; --ground-ink-2:rgba(244,240,231,.82);
+  --ground-muted:rgba(244,240,231,.58); --ground-line:rgba(244,240,231,.15);
+  --ground-warn:#E8B978;
+
+  --surface:#2C2720; --surface-2:#39332A;
+  --brand:#9DACF2; --brand-soft:#2A3050;
+  --taon:#BE9BD1; --taon-soft:#372B4A; --taon-ink:#CDAEDD;
+  --d1:#9CB0F2; --d1-soft:#5F72AE;
+  --d2:#EDD55E; --d2-line:#EDD55E;
+  --d3:#199e70;
+  --ink:#F4F0E7; --ink-2:#CFC8B8; --muted:#A0977F;
+  --line:#3D372D; --line-2:#524A3C;
+  --good:#5EC894; --warn:#E0A24E; --crit:#EE8078;
+  --good-bg:#1B3A2C; --warn-bg:#3A2E18; --crit-bg:#3C2622;
+  --shadow:0 1px 2px rgba(0,0,0,.34), 0 8px 24px -16px rgba(0,0,0,.62);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1220px; margin:0 auto; padding:0 20px 64px}
+h1,h2,h3{font-family:"Archivo", ui-sans-serif, system-ui, sans-serif; text-wrap:balance}
+.num{font-variant-numeric:tabular-nums}
+
+header{background:transparent; border-bottom:1px solid var(--ground-line)}
+.hd{max-width:1220px; margin:0 auto; padding:22px 20px 18px; display:flex; flex-wrap:wrap; gap:18px; align-items:flex-end; justify-content:space-between}
+.mark{display:flex; align-items:center; gap:13px}
+.leaf{width:auto;height:46px;flex:none;display:block}
+.tmark{width:22px;height:22px;border-radius:5px;flex:none;display:block}
+.ftlogo{height:74px;width:auto;display:block}
+.ftmarks{display:flex; align-items:center; gap:16px; margin-bottom:16px}
+.ftx{color:var(--ground-muted); font-size:17px}
+.ftaon{height:44px; width:44px; border-radius:9px; display:block}
+.src{display:inline-flex; align-items:center; gap:6px; margin-top:7px;
+  font-size:10.5px; font-weight:600; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--ground-muted); background:rgba(36,31,22,.055); padding:4px 9px; border-radius:20px}
+.src img{width:14px; height:14px; border-radius:3px}
+.mark h1{margin:0; color:var(--ground-ink); font-size:23px; font-weight:700; letter-spacing:-.02em; line-height:1.15}
+.mark p{margin:2px 0 0; font-size:12.5px; color:var(--ground-muted); letter-spacing:.02em}
+.per{text-align:right}
+.per .lab{font-size:10.5px; text-transform:uppercase; letter-spacing:.12em; color:var(--ground-muted); font-weight:600}
+.per .val{font-family:"Archivo",sans-serif; color:var(--ground-ink); font-size:16px; font-weight:600; letter-spacing:-.01em; margin-top:2px}
+.per .sub{font-size:11.5px; color:var(--ground-muted); margin-top:1px}
+.wksel{max-width:1220px; margin:0 auto; padding:0 20px 16px; display:flex; gap:12px 16px; align-items:center; flex-wrap:wrap}
+.wksel .cap{font-size:10.5px; text-transform:uppercase; letter-spacing:.11em; color:var(--ground-muted); font-weight:600}
+.wksel .fgrp{background:rgba(36,31,22,.055)}
+.fgrp{display:flex; gap:8px; align-items:center; border-radius:8px; padding:5px 11px}
+.fgrp input[type="date"]{
+  font:inherit; font-size:13px; font-variant-numeric:tabular-nums; color:var(--ink);
+  background:var(--surface); border:1px solid transparent; border-radius:6px; padding:5px 9px;
+  cursor:pointer;
+  color-scheme:light;
+}
+:root[data-theme="dark"] .fgrp input[type="date"], :root:not([data-theme="light"]) .fgrp input[type="date"]{color-scheme:dark}
+.entfilt{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+.chips{display:flex; gap:6px; flex-wrap:wrap}
+.chip{
+  font:inherit; font-size:12px; font-weight:500; cursor:pointer;
+  border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2);
+  padding:5px 10px; border-radius:20px; display:flex; align-items:center; gap:5px;
+}
+.chip:hover{border-color:var(--muted); color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--brand-soft); border-color:transparent; color:var(--brand); font-weight:600}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:var(--line-2);flex:none}
+.chip[aria-pressed="true"] .dot{background:var(--brand)}
+.chip .qt{font-size:11px; opacity:.72; font-variant-numeric:tabular-nums}
+
+.lnks{display:inline-flex; gap:8px; white-space:nowrap}
+.lnk{
+  font:inherit; font-size:12px; background:none; border:0; padding:2px 4px; cursor:pointer;
+  color:var(--ground-muted); text-decoration:underline; text-underline-offset:2px;
+}
+.lnk:hover{color:var(--ground-ink)}
+.btn-wa{
+  font:inherit; font-size:12.5px; font-weight:600; cursor:pointer; white-space:nowrap;
+  display:inline-flex; align-items:center; gap:7px; margin-top:10px;
+  background:var(--brand); color:#FFFFFF; border:0; border-radius:8px; padding:8px 14px;
+}
+.btn-wa:hover{filter:brightness(1.15)}
+:root[data-theme="dark"] .btn-wa, :root:not([data-theme="light"]) .btn-wa{color:#1B2038}
+
+/* modal do relatório para WhatsApp */
+.ov{position:fixed; inset:0; background:rgba(36,31,22,.52); display:none; z-index:60; padding:24px; overflow:auto}
+.ov[open]{display:flex; align-items:flex-start; justify-content:center}
+.modal{
+  background:var(--surface); border-radius:14px; box-shadow:0 24px 64px -12px rgba(0,0,0,.42);
+  width:min(660px,100%); margin:auto; border:1px solid var(--line);
+}
+.modal-hd{padding:18px 22px 14px; border-bottom:1px solid var(--line); display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap}
+.modal-hd h2{margin:0; font-size:17px; font-weight:600; letter-spacing:-.015em}
+.modal-hd .desc{font-size:12.5px; color:var(--muted); margin-top:3px}
+.modal-bd{padding:16px 22px 20px}
+.modal-ft{padding:0 22px 20px; display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+#wa-txt{
+  width:100%; height:340px; resize:vertical; font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  font-size:12px; line-height:1.55; padding:14px; border-radius:10px;
+  border:1px solid var(--line-2); background:var(--surface-2); color:var(--ink);
+}
+.btn{font:inherit; font-size:13px; font-weight:600; cursor:pointer; border-radius:8px; padding:9px 16px; border:1px solid var(--line-2); background:var(--surface); color:var(--ink)}
+.btn:hover{border-color:var(--muted)}
+.btn.pri{background:var(--brand); color:#FFFFFF; border-color:transparent}
+:root[data-theme="dark"] .btn.pri, :root:not([data-theme="light"]) .btn.pri{color:#1B2038}
+.btn.pri:hover{filter:brightness(1.12)}
+.btn.ok{background:var(--good-bg); color:var(--good); border-color:transparent}
+.modal .hint{font-size:12px; color:var(--muted); margin-left:auto}
+.x{font:inherit; font-size:20px; line-height:1; background:none; border:0; color:var(--muted); cursor:pointer; padding:4px 8px; border-radius:6px}
+.x:hover{color:var(--ink); background:var(--surface-2)}
+.fgrp input[type="date"]::-webkit-calendar-picker-indicator{cursor:pointer; opacity:.7}
+.fgrp input[type="date"]:hover::-webkit-calendar-picker-indicator{opacity:1}
+.wkinfo{font-size:12px; color:var(--ground-muted); flex:1 1 100%}
+.wkinfo b{color:var(--ground-ink); font-weight:600}
+.wkinfo.warn{color:var(--ground-warn)}
+.alerta{color:var(--ground-warn); font-weight:500}
+
+.note{
+  display:flex; gap:9px; align-items:flex-start; background:var(--warn-bg); color:var(--warn);
+  border-radius:9px; padding:11px 14px; font-size:12.5px; margin:22px 0 0; line-height:1.45;
+}
+.note b{font-weight:600}
+.note svg{flex:none; margin-top:1px}
+
+.kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:12px}
+.kpis.mod{grid-template-columns:repeat(6,1fr)}
+.kpis.mod .kpi{padding:13px 13px 12px}
+.kpis.mod .kpi .v{font-size:21px}
+.kpis.mod .kpi .lab{font-size:10px; letter-spacing:.08em}
+.kpis.mod .kpi.ifo{background:var(--surface-2); border-style:dashed}
+.secl{display:flex; align-items:center; gap:12px; margin:22px 0 12px; color:var(--ground-muted);
+  font-size:10.5px; text-transform:uppercase; letter-spacing:.13em; font-weight:600}
+.secl i{flex:1; height:1px; background:var(--ground-line)}
+.kpis:first-of-type{margin-top:22px}
+.kpi{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:15px 16px 14px; box-shadow:var(--shadow)}
+.kpi .lab img.tsel{width:13px;height:13px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+.kpi .lab{font-size:10.5px; text-transform:uppercase; letter-spacing:.11em; color:var(--muted); font-weight:600}
+.kpi .v{font-family:"Archivo",sans-serif; font-size:27px; font-weight:700; letter-spacing:-.025em; margin-top:7px; line-height:1; font-variant-numeric:tabular-nums}
+.kpi .v .cur{font-size:15px; font-weight:600; color:var(--muted); margin-right:2px}
+.kpi .foot{font-size:12px; color:var(--muted); margin-top:6px; display:flex; gap:7px; align-items:center; flex-wrap:wrap}
+.kpi.hero{background:var(--brand-soft); border-color:transparent}
+.kpi.taon{background:var(--taon-soft); border-color:transparent}
+.kpi.taon .lab, .kpi.taon .v{color:var(--taon-ink)}
+.kpi.hero .v, .kpi.hero .lab{color:var(--brand)}
+
+.delta{font-size:11.5px; font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap}
+.delta.up{color:var(--crit)} .delta.dn{color:var(--good)} .delta.fl{color:var(--muted)}
+
+/* confronto Cloud × Taon */
+.kpis.conf .kpi{border-style:dashed}
+.kpi.neg{background:var(--crit-bg); border-color:transparent; border-style:solid}
+.kpi.neg .v, .kpi.neg .lab{color:var(--crit)}
+.kpi.pos{background:var(--good-bg); border-color:transparent; border-style:solid}
+.kpi.pos .v, .kpi.pos .lab{color:var(--good)}
+.crow{display:grid; grid-template-columns:168px 1fr 92px 78px; align-items:center; gap:11px; padding:5px 6px; border-radius:7px}
+.crow:hover{background:var(--surface-2)}
+.dvrow .nm, .crow .nm{font-size:13px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.dvrow .nm .gp, .crow .nm .gp{font-size:10px; color:var(--muted); font-weight:600; letter-spacing:.06em; text-transform:uppercase}
+.pair{display:flex; flex-direction:column; gap:3px}
+.pbar{height:11px; border-radius:0 3px 3px 0; min-width:2px}
+.pbar.cu, .pbar.co{box-shadow:inset 0 0 0 1px var(--d2-line)}
+.pbar.tx{background:var(--d1)}
+.pbar.cu{background:var(--d2)}
+.crow .vl{text-align:right; font-size:13px; font-weight:600; font-variant-numeric:tabular-nums}
+.crow .vl small{display:block; color:var(--muted); font-weight:400; font-size:11px; margin-top:-2px}
+.crow .sd{text-align:right; font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums}
+.crow .sd.neg{color:var(--crit)} .crow .sd.pos{color:var(--good)}
+/* mini-KPIs dentro de um card */
+.kpi.off .v{color:var(--muted)}
+.kpi.off{background:var(--surface); border-style:dashed}
+.kpi.off .lab{color:var(--muted)}
+.vazio{display:flex; gap:11px; align-items:center; justify-content:center; padding:34px 20px;
+  color:var(--muted); font-size:13px; text-align:left}
+.vazio svg{flex:none; width:20px; height:20px}
+.mini{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px}
+.mini .t{background:var(--surface-2); border-radius:9px; padding:12px 14px}
+.mini .t .l{font-size:10.5px; text-transform:uppercase; letter-spacing:.11em; color:var(--muted); font-weight:600}
+.mini .t .n{font-family:"Archivo",sans-serif; font-size:23px; font-weight:700; letter-spacing:-.02em; margin-top:6px; line-height:1; font-variant-numeric:tabular-nums}
+.mini .t .s{font-size:11.5px; color:var(--muted); margin-top:5px}
+.mini .t.neg{background:var(--crit-bg)} .mini .t.neg .n, .mini .t.neg .l{color:var(--crit)}
+.mini .t.pos{background:var(--good-bg)} .mini .t.pos .n, .mini .t.pos .l{color:var(--good)}
+.pbar.re{background:var(--d1)}
+.pbar.co{background:var(--d2)}
+.crow .sd.info{color:var(--ink-2)}
+/* sobre o bege as marcas aparecem nas cores originais; no tema escuro são clareadas */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .leaf,
+  :root:not([data-theme="light"]) .ftlogo{filter:brightness(0) invert(1) opacity(.92)}
+}
+:root[data-theme="dark"] .leaf,
+:root[data-theme="dark"] .ftlogo{filter:brightness(0) invert(1) opacity(.92)}
+:root[data-theme="dark"] .src, :root:not([data-theme="light"]) .src{background:rgba(244,240,231,.08)}
+
+@media (max-width:900px){ .mini{grid-template-columns:repeat(2,1fr)} }
+
+/* eixo zero para o gráfico divergente de saldo */
+.dvrow{display:grid; grid-template-columns:168px 1fr 108px; align-items:center; gap:11px; padding:5px 6px; border-radius:7px}
+.dvrow:hover{background:var(--surface-2)}
+.dvtrack{position:relative; height:19px; background:var(--surface-2); border-radius:4px}
+.dvzero{position:absolute; top:-3px; bottom:-3px; width:1.5px; background:var(--line-2)}
+.dvbar{position:absolute; top:0; bottom:0; border-radius:3px}
+.dvbar.neg{background:var(--crit)} .dvbar.pos{background:var(--good)}
+
+.card{background:var(--surface); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); margin-top:22px}
+.card-hd{padding:17px 20px 14px; border-bottom:1px solid var(--line); display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between}
+.card-hd h2{margin:0; font-size:16.5px; font-weight:600; letter-spacing:-.015em}
+.card-hd .desc{font-size:12.5px; color:var(--muted); margin-top:3px}
+.card-bd{padding:18px 20px 22px}
+
+.seg{display:flex; gap:2px; background:var(--surface-2); border-radius:8px; padding:3px; flex-wrap:wrap}
+.seg button{font:inherit; font-size:12.5px; font-weight:500; border:0; background:transparent; color:var(--ink-2); padding:6px 11px; border-radius:6px; cursor:pointer; white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--surface); color:var(--brand); font-weight:600; box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.seg.wk button{font-variant-numeric:tabular-nums}
+.seg.wk button .pc{font-size:10.5px; color:var(--muted); margin-left:5px; font-weight:500}
+.wksel .seg{background:rgba(36,31,22,.07)}
+.wksel .seg button{color:var(--ground-ink-2)}
+.wksel .seg button:hover{color:var(--ground-ink)}
+.wksel .seg button[aria-pressed="true"]{background:var(--surface); color:var(--brand)}
+
+/* chips de entregador sobre o azul */
+.wksel .chip{background:var(--surface); border-color:var(--ground-line); color:var(--ground-ink-2)}
+.wksel .chip:hover{border-color:var(--ground-muted); color:var(--ground-ink)}
+.wksel .chip .dot{background:var(--ground-line)}
+.wksel .chip[aria-pressed="true"]{background:var(--brand-soft); border-color:transparent; color:var(--brand)}
+.wksel .chip[aria-pressed="true"] .dot{background:var(--brand)}
+
+button:focus-visible, input:focus-visible, th:focus-visible, textarea:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+
+.rank{display:flex; flex-direction:column; gap:3px}
+.row{display:grid; grid-template-columns:168px 1fr 100px 66px; align-items:center; gap:11px; padding:4px 6px; border-radius:7px}
+.row:hover{background:var(--surface-2)}
+.row .nm{font-size:13px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.row .nm .gp{font-size:10px; color:var(--muted); font-weight:600; letter-spacing:.06em; text-transform:uppercase}
+.bar-t{height:19px; background:var(--surface-2); border-radius:4px; overflow:hidden}
+.bar{height:100%; border-radius:0 4px 4px 0; background:var(--d1); transition:width .5s cubic-bezier(.4,0,.2,1)}
+.row .vl{text-align:right; font-size:13px; font-weight:600; font-variant-numeric:tabular-nums}
+.row .vl small{color:var(--muted); font-weight:400; font-size:11px; display:block; margin-top:-2px}
+.row .dl{text-align:right}
+
+.two{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+.two .card{margin-top:0}
+svg{display:block; width:100%; height:auto; overflow:visible}
+.gridline{stroke:var(--line); stroke-width:1}
+.axt{fill:var(--muted); font-size:11px; font-family:"IBM Plex Sans",sans-serif}
+.axt.b{fill:var(--ink-2); font-weight:500}
+.vbar{fill:var(--d1)} .vbar.soft{fill:var(--d1-soft)}
+.dlab{fill:var(--ink); font-size:10.5px; font-weight:600; font-variant-numeric:tabular-nums; font-family:"IBM Plex Sans",sans-serif}
+.tline{fill:none; stroke:var(--d1); stroke-width:2; stroke-linejoin:round; stroke-linecap:round}
+.tdot{fill:var(--d1); stroke:var(--surface); stroke-width:2}
+.tdot.last{r:6}
+.tarea{fill:var(--d1); opacity:.09}
+
+.leg{display:flex; gap:16px; flex-wrap:wrap; font-size:12px; color:var(--ink-2); margin-top:12px}
+.leg span{display:flex; align-items:center; gap:6px}
+.sw{width:10px;height:10px;border-radius:2px;flex:none}
+.sw.taon{background:var(--d2); box-shadow:inset 0 0 0 1px var(--d2-line)}
+
+.tw{overflow-x:auto}
+table{border-collapse:collapse; width:100%; font-size:13px; min-width:1720px}
+th,td{padding:9px 9px; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap}
+th:first-child, td:first-child{text-align:left; padding-left:2px}
+td:first-child{font-weight:500}
+td:first-child .gp{color:var(--muted); font-weight:400}
+thead th{font-size:10.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); font-weight:600; cursor:pointer; user-select:none; position:sticky; top:0; background:var(--surface); z-index:1; border-bottom:1.5px solid var(--line-2)}
+thead th:hover{color:var(--ink)}
+thead th .ar{opacity:.35; margin-left:3px}
+thead th[data-on="1"]{color:var(--brand)} thead th[data-on="1"] .ar{opacity:1}
+tbody tr:hover{background:var(--surface-2)}
+td.n{font-variant-numeric:tabular-nums}
+tfoot td{font-weight:700; border-top:1.5px solid var(--line-2); border-bottom:0; font-variant-numeric:tabular-nums; padding-top:11px}
+.pill{display:inline-block; font-size:11px; font-weight:600; padding:2px 7px; border-radius:20px; font-variant-numeric:tabular-nums}
+.pill.g{background:var(--good-bg); color:var(--good)}
+.pill.w{background:var(--warn-bg); color:var(--warn)}
+.pill.c{background:var(--crit-bg); color:var(--crit)}
+input[type="search"]{font:inherit; font-size:13px; padding:7px 11px; border:1px solid var(--line-2); border-radius:8px; background:var(--surface); color:var(--ink); width:190px}
+input[type="search"]::placeholder{color:var(--muted)}
+
+.ins{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+.ins .it{border-left:3px solid var(--d1); padding:2px 0 2px 13px}
+.ins .it:nth-child(2){border-color:var(--d2)}
+.ins .it:nth-child(3){border-color:var(--d3)}
+.ins h3{margin:0 0 5px; font-size:13px; font-weight:600; letter-spacing:-.005em}
+.ins p{margin:0; font-size:13px; color:var(--ink-2); line-height:1.5}
+.ins b{font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums}
+
+#tip{position:fixed; pointer-events:none; opacity:0; transition:opacity .12s; z-index:50; background:var(--surface); border:1px solid var(--line-2); border-radius:8px; padding:9px 12px; box-shadow:0 4px 20px -4px rgba(0,0,0,.25); font-size:12.5px; max-width:260px}
+#tip .t{font-weight:600; margin-bottom:4px; font-size:13px}
+#tip .r{display:flex; justify-content:space-between; gap:16px; color:var(--ink-2); font-variant-numeric:tabular-nums}
+#tip .r b{color:var(--ink); font-weight:600}
+
+footer{margin-top:30px; padding-top:18px; border-top:1px solid var(--ground-line); font-size:12px; color:var(--ground-muted)}
+footer b{color:var(--ground-ink-2)}
+footer .num{color:var(--ground-ink-2)}
+footer p{margin:0 0 5px}
+
+@media (max-width:1100px){ .kpis.mod{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:900px){
+  .kpis, .kpis.mod{grid-template-columns:repeat(2,1fr)}
+  .two{grid-template-columns:1fr}
+  .ins{grid-template-columns:1fr}
+  .row{grid-template-columns:120px 1fr 88px 58px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+
+<header>
+  <div class="hd">
+    <div class="mark">
+      <img class="leaf" src="data:image/png;base64,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" alt="Ragga" width="73" height="96">
+      <div>
+        <h1>Painel Taon Delivery</h1>
+        <p id="sub">Grupo Ragga</p>
+        <div class="src"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEVpQnrt1l1hOnpbOHGlhm3bwWDRt2LDqGS1mGl5VnOIZnCXd2365Fvky1/iyWBPLHC+omWAXXXfx1/o0GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0fXV2AAAAIHRSTlP//////////////////////////wAAAAAAAAAAAAAAALESzYUAAAF3SURBVHja7ZfRbsMgDEWJDQYDabvt//91oGRTyZoKgl8m+Tz0oZGuLHw5TY1RFEVRFEWpwBj9wcmOkHpjMS0jZOodGUMeSg6dwYBMqxsITr0TA5YPpu7gCCO9uHcf9M30HkWtG2LoDabeYRlMCsGL784vKQ21wnYFo/nM1g4F9+0OMdoytWs5RK309Iy4u8Zlc4ev4toWF4WchNiukkFIcmia2+Km5clhp72Ffnpgn6eKe75FynPSOQ2OVJiUzknxSiMOVSvSmS7FrrnHVem8KVvVHDvJ3VV1smWI4eGuSeckN35ZoEzmVS9mdodxCehKsPsbPLU7BDbIgTF6opvo7mAzBeJRFPMX+pe7FdtdY7fjxGk+GPjhC4dL/SEQ/KpsTuAgXtqNBAZGrifhZGW8JVeMk97dTzjJynjXW4zh2hvgu9wUTFikZVyFQTk66R/SrRQJraSMm1ZwWsV3t79dtUpmqWDA5J8Ign9S8QkAoyiKoijKP+cbQQwMwbylxg4AAAAASUVORK5CYII=" alt="Taon">Dados do Sistema Taon Delivery</div>
+      </div>
+    </div>
+    <div class="per">
+      <div class="lab">Período selecionado</div>
+      <div class="val num" id="per">—</div>
+      <div class="sub" id="emi">—</div>
+      <button type="button" class="btn-wa" id="wa-open">
+        <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="currentColor">
+          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.71-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.09-.16.05-.31-.02-.43-.06-.13-.55-1.35-.76-1.84-.2-.48-.4-.42-.55-.43h-.48c-.16 0-.43.06-.65.31-.22.24-.85.83-.85 2.03s.87 2.35.99 2.51c.13.17 1.72 2.62 4.16 3.67.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.47-.29Z"/>
+        </svg>
+        Copiar para WhatsApp
+      </button>
+    </div>
+  </div>
+  <div class="wksel">
+    <div class="fgrp">
+      <span class="cap">De</span>
+      <input type="date" id="dt0" aria-label="Data inicial do período">
+      <span class="cap">Até</span>
+      <input type="date" id="dt1" aria-label="Data final do período">
+    </div>
+    <div class="seg" id="ps-seg" role="group" aria-label="Períodos rápidos"></div>
+    <div class="entfilt">
+      <span class="cap">Entregador</span>
+      <div class="chips" id="ent-chips" role="group" aria-label="Filtrar modalidades de entrega"></div>
+      <span class="lnks"><button type="button" class="lnk" id="ent-reset">todas</button></span>
+    </div>
+    <div class="wkinfo" id="wkinfo"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="cover"></div>
+
+  <div class="kpis">
+    <div class="kpi hero">
+      <div class="lab"><img class="tsel" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEVpQnrt1l1hOnpbOHGlhm3bwWDRt2LDqGS1mGl5VnOIZnCXd2365Fvky1/iyWBPLHC+omWAXXXfx1/o0GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0fXV2AAAAIHRSTlP//////////////////////////wAAAAAAAAAAAAAAALESzYUAAAF3SURBVHja7ZfRbsMgDEWJDQYDabvt//91oGRTyZoKgl8m+Tz0oZGuLHw5TY1RFEVRFEWpwBj9wcmOkHpjMS0jZOodGUMeSg6dwYBMqxsITr0TA5YPpu7gCCO9uHcf9M30HkWtG2LoDabeYRlMCsGL784vKQ21wnYFo/nM1g4F9+0OMdoytWs5RK309Iy4u8Zlc4ev4toWF4WchNiukkFIcmia2+Km5clhp72Ffnpgn6eKe75FynPSOQ2OVJiUzknxSiMOVSvSmS7FrrnHVem8KVvVHDvJ3VV1smWI4eGuSeckN35ZoEzmVS9mdodxCehKsPsbPLU7BDbIgTF6opvo7mAzBeJRFPMX+pe7FdtdY7fjxGk+GPjhC4dL/SEQ/KpsTuAgXtqNBAZGrifhZGW8JVeMk97dTzjJynjXW4zh2hvgu9wUTFikZVyFQTk66R/SrRQJraSMm1ZwWsV3t79dtUpmqWDA5J8Ign9S8QkAoyiKoijKP+cbQQwMwbylxg4AAAAASUVORK5CYII=" alt="">Custo Taon</div>
+      <div class="v"><span class="cur">R$</span><span id="k-tot"></span></div>
+      <div class="foot">Corridas + adicionais + taxa <span id="d-tot"></span></div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Taxa arrecadada</div>
+      <div class="v"><span class="cur">R$</span><span id="k-ctaxa"></span></div>
+      <div class="foot"><span id="k-ctaxa-f"></span> <span id="d-ctaxa"></span></div>
+    </div>
+    <div class="kpi" id="kpi-saldo">
+      <div class="lab" id="k-saldo-l">Resultado da entrega</div>
+      <div class="v"><span class="cur">R$</span><span id="k-saldo"></span></div>
+      <div class="foot"><span id="k-saldo-f"></span> <span id="d-saldo"></span></div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Cobertura da taxa</div>
+      <div class="v"><span id="k-cober"></span><span class="cur" style="margin-left:2px">%</span></div>
+      <div class="foot"><span id="k-cober-f"></span> <span id="d-cober"></span></div>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="lab"><img class="tsel" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEVpQnrt1l1hOnpbOHGlhm3bwWDRt2LDqGS1mGl5VnOIZnCXd2365Fvky1/iyWBPLHC+omWAXXXfx1/o0GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0fXV2AAAAIHRSTlP//////////////////////////wAAAAAAAAAAAAAAALESzYUAAAF3SURBVHja7ZfRbsMgDEWJDQYDabvt//91oGRTyZoKgl8m+Tz0oZGuLHw5TY1RFEVRFEWpwBj9wcmOkHpjMS0jZOodGUMeSg6dwYBMqxsITr0TA5YPpu7gCCO9uHcf9M30HkWtG2LoDabeYRlMCsGL784vKQ21wnYFo/nM1g4F9+0OMdoytWs5RK309Iy4u8Zlc4ev4toWF4WchNiukkFIcmia2+Km5clhp72Ffnpgn6eKe75FynPSOQ2OVJiUzknxSiMOVSvSmS7FrrnHVem8KVvVHDvJ3VV1smWI4eGuSeckN35ZoEzmVS9mdodxCehKsPsbPLU7BDbIgTF6opvo7mAzBeJRFPMX+pe7FdtdY7fjxGk+GPjhC4dL/SEQ/KpsTuAgXtqNBAZGrifhZGW8JVeMk97dTzjJynjXW4zh2hvgu9wUTFikZVyFQTk66R/SrRQJraSMm1ZwWsV3t79dtUpmqWDA5J8Ign9S8QkAoyiKoijKP+cbQQwMwbylxg4AAAAASUVORK5CYII=" alt="">Taon &middot; Entregas (corridas)</div>
+      <div class="v" id="k-ent"></div>
+      <div class="foot"><span id="k-ent-f"></span> <span id="d-ent"></span></div>
+    </div>
+    <div class="kpi">
+      <div class="lab"><img class="tsel" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEVpQnrt1l1hOnpbOHGlhm3bwWDRt2LDqGS1mGl5VnOIZnCXd2365Fvky1/iyWBPLHC+omWAXXXfx1/o0GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0fXV2AAAAIHRSTlP//////////////////////////wAAAAAAAAAAAAAAALESzYUAAAF3SURBVHja7ZfRbsMgDEWJDQYDabvt//91oGRTyZoKgl8m+Tz0oZGuLHw5TY1RFEVRFEWpwBj9wcmOkHpjMS0jZOodGUMeSg6dwYBMqxsITr0TA5YPpu7gCCO9uHcf9M30HkWtG2LoDabeYRlMCsGL784vKQ21wnYFo/nM1g4F9+0OMdoytWs5RK309Iy4u8Zlc4ev4toWF4WchNiukkFIcmia2+Km5clhp72Ffnpgn6eKe75FynPSOQ2OVJiUzknxSiMOVSvSmS7FrrnHVem8KVvVHDvJ3VV1smWI4eGuSeckN35ZoEzmVS9mdodxCehKsPsbPLU7BDbIgTF6opvo7mAzBeJRFPMX+pe7FdtdY7fjxGk+GPjhC4dL/SEQ/KpsTuAgXtqNBAZGrifhZGW8JVeMk97dTzjJynjXW4zh2hvgu9wUTFikZVyFQTk66R/SrRQJraSMm1ZwWsV3t79dtUpmqWDA5J8Ign9S8QkAoyiKoijKP+cbQQwMwbylxg4AAAAASUVORK5CYII=" alt="">Taon &middot; Total corridas</div>
+      <div class="v"><span class="cur">R$</span><span id="k-corr"></span></div>
+      <div class="foot"><span id="k-corr-f"></span> <span id="d-corr"></span></div>
+    </div>
+    <div class="kpi">
+      <div class="lab"><img class="tsel" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEVpQnrt1l1hOnpbOHGlhm3bwWDRt2LDqGS1mGl5VnOIZnCXd2365Fvky1/iyWBPLHC+omWAXXXfx1/o0GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0fXV2AAAAIHRSTlP//////////////////////////wAAAAAAAAAAAAAAALESzYUAAAF3SURBVHja7ZfRbsMgDEWJDQYDabvt//91oGRTyZoKgl8m+Tz0oZGuLHw5TY1RFEVRFEWpwBj9wcmOkHpjMS0jZOodGUMeSg6dwYBMqxsITr0TA5YPpu7gCCO9uHcf9M30HkWtG2LoDabeYRlMCsGL784vKQ21wnYFo/nM1g4F9+0OMdoytWs5RK309Iy4u8Zlc4ev4toWF4WchNiukkFIcmia2+Km5clhp72Ffnpgn6eKe75FynPSOQ2OVJiUzknxSiMOVSvSmS7FrrnHVem8KVvVHDvJ3VV1smWI4eGuSeckN35ZoEzmVS9mdodxCehKsPsbPLU7BDbIgTF6opvo7mAzBeJRFPMX+pe7FdtdY7fjxGk+GPjhC4dL/SEQ/KpsTuAgXtqNBAZGrifhZGW8JVeMk97dTzjJynjXW4zh2hvgu9wUTFikZVyFQTk66R/SrRQJraSMm1ZwWsV3t79dtUpmqWDA5J8Ign9S8QkAoyiKoijKP+cbQQwMwbylxg4AAAAASUVORK5CYII=" alt="">Taon &middot; Taxa administrativa</div>
+      <div class="v"><span class="cur">R$</span><span id="k-taxa"></span></div>
+      <div class="foot"><span id="k-taxa-f"></span> <span id="d-taxa"></span></div>
+    </div>
+    <div class="kpi">
+      <div class="lab"><img class="tsel" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEVpQnrt1l1hOnpbOHGlhm3bwWDRt2LDqGS1mGl5VnOIZnCXd2365Fvky1/iyWBPLHC+omWAXXXfx1/o0GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0fXV2AAAAIHRSTlP//////////////////////////wAAAAAAAAAAAAAAALESzYUAAAF3SURBVHja7ZfRbsMgDEWJDQYDabvt//91oGRTyZoKgl8m+Tz0oZGuLHw5TY1RFEVRFEWpwBj9wcmOkHpjMS0jZOodGUMeSg6dwYBMqxsITr0TA5YPpu7gCCO9uHcf9M30HkWtG2LoDabeYRlMCsGL784vKQ21wnYFo/nM1g4F9+0OMdoytWs5RK309Iy4u8Zlc4ev4toWF4WchNiukkFIcmia2+Km5clhp72Ffnpgn6eKe75FynPSOQ2OVJiUzknxSiMOVSvSmS7FrrnHVem8KVvVHDvJ3VV1smWI4eGuSeckN35ZoEzmVS9mdodxCehKsPsbPLU7BDbIgTF6opvo7mAzBeJRFPMX+pe7FdtdY7fjxGk+GPjhC4dL/SEQ/KpsTuAgXtqNBAZGrifhZGW8JVeMk97dTzjJynjXW4zh2hvgu9wUTFikZVyFQTk66R/SrRQJraSMm1ZwWsV3t79dtUpmqWDA5J8Ign9S8QkAoyiKoijKP+cbQQwMwbylxg4AAAAASUVORK5CYII=" alt="">Taon &middot; Custo por entrega</div>
+      <div class="v"><span class="cur">R$</span><span id="k-tm"></span></div>
+      <div class="foot">Corridas &divide; entregas <span id="d-tm"></span></div>
+    </div>
+  </div>
+
+  <div class="secl"><span>Entregas registradas no sistema da loja</span><i></i></div>
+  <div class="kpis mod" id="mod-kpis"></div>
+
+  <div class="kpis">
+    <div class="kpi hero">
+      <div class="lab">Faturamento delivery</div>
+      <div class="v"><span class="cur">R$</span><span id="k-fat"></span></div>
+      <div class="foot"><span id="k-fat-f"></span> <span id="d-fat"></span></div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Faturamento iFood</div>
+      <div class="v"><span class="cur">R$</span><span id="k-fifo"></span></div>
+      <div class="foot"><span id="k-fifo-f"></span> <span id="d-fifo"></span></div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Ticket médio do pedido</div>
+      <div class="v"><span class="cur">R$</span><span id="k-tk"></span></div>
+      <div class="foot"><span id="k-tk-f"></span> <span id="d-tk"></span></div>
+    </div>
+    <div class="kpi">
+      <div class="lab"><img class="tsel" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEVpQnrt1l1hOnpbOHGlhm3bwWDRt2LDqGS1mGl5VnOIZnCXd2365Fvky1/iyWBPLHC+omWAXXXfx1/o0GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0fXV2AAAAIHRSTlP//////////////////////////wAAAAAAAAAAAAAAALESzYUAAAF3SURBVHja7ZfRbsMgDEWJDQYDabvt//91oGRTyZoKgl8m+Tz0oZGuLHw5TY1RFEVRFEWpwBj9wcmOkHpjMS0jZOodGUMeSg6dwYBMqxsITr0TA5YPpu7gCCO9uHcf9M30HkWtG2LoDabeYRlMCsGL784vKQ21wnYFo/nM1g4F9+0OMdoytWs5RK309Iy4u8Zlc4ev4toWF4WchNiukkFIcmia2+Km5clhp72Ffnpgn6eKe75FynPSOQ2OVJiUzknxSiMOVSvSmS7FrrnHVem8KVvVHDvJ3VV1smWI4eGuSeckN35ZoEzmVS9mdodxCehKsPsbPLU7BDbIgTF6opvo7mAzBeJRFPMX+pe7FdtdY7fjxGk+GPjhC4dL/SEQ/KpsTuAgXtqNBAZGrifhZGW8JVeMk97dTzjJynjXW4zh2hvgu9wUTFikZVyFQTk66R/SrRQJraSMm1ZwWsV3t79dtUpmqWDA5J8Ign9S8QkAoyiKoijKP+cbQQwMwbylxg4AAAAASUVORK5CYII=" alt="">Custo Taon sobre faturamento</div>
+      <div class="v"><span id="k-pfat"></span><span class="cur" style="margin-left:2px">%</span></div>
+      <div class="foot"><span id="k-pfat-f"></span> <span id="d-pfat"></span></div>
+    </div>
+  </div>
+
+  <section class="card">
+    <div class="card-hd">
+      <div>
+        <h2>Entregas: cobrado × realizado</h2>
+        <div class="desc" id="qt-desc"></div>
+      </div>
+      <div class="seg" id="qt-seg" role="group" aria-label="Base de comparação das entregas"></div>
+    </div>
+    <div class="card-bd">
+      <div class="mini" id="qt-kpi"></div>
+      <div id="qtd"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-hd">
+      <div>
+        <h2>Taxa arrecadada × custo Taon</h2>
+        <div class="desc" id="cf-desc"></div>
+      </div>
+      <div class="seg" id="cf-seg" role="group" aria-label="Visão do confronto"></div>
+    </div>
+    <div class="card-bd"><div id="conf"></div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-hd">
+      <div>
+        <h2>Evolução semanal</h2>
+        <div class="desc" id="tr-desc"></div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <div class="seg" id="tr-base" role="group" aria-label="Base de comparação"></div>
+        <div class="seg" id="tr-seg" role="group" aria-label="Métrica da evolução"></div>
+      </div>
+    </div>
+    <div class="card-bd"><div id="trend"></div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-hd">
+      <div>
+        <h2>Ranking das unidades</h2>
+        <div class="desc" id="rk-desc"></div>
+      </div>
+      <div class="seg" id="rk-seg" role="group" aria-label="Métrica do ranking"></div>
+    </div>
+    <div class="card-bd"><div class="rank" id="rank"></div></div>
+  </section>
+
+  <div class="two" style="margin-top:22px">
+    <section class="card">
+      <div class="card-hd">
+        <div><h2>Dia da semana</h2><div class="desc" id="dw-desc"></div></div>
+        <div class="seg" id="dw-seg" role="group" aria-label="Métrica por dia"></div>
+      </div>
+      <div class="card-bd"><div id="dow"></div></div>
+    </section>
+    <section class="card">
+      <div class="card-hd">
+        <div><h2>Faixa horária</h2><div class="desc">Entregas por hora de acionamento</div></div>
+      </div>
+      <div class="card-bd"><div id="hrs"></div></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="card-hd"><div><h2>Leitura do período</h2></div></div>
+    <div class="card-bd"><div class="ins" id="ins"></div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-hd">
+      <div>
+        <h2>Detalhamento por unidade</h2>
+        <div class="desc">Valores em R$ &middot; Δ compara com o período anterior de mesmo tamanho &middot; clique no cabeçalho para ordenar</div>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+        <div class="seg" id="gp-seg" role="group" aria-label="Filtrar por bandeira"></div>
+        <input type="search" id="q" placeholder="Buscar unidade…" aria-label="Buscar unidade">
+      </div>
+    </div>
+    <div class="card-bd" style="padding-top:6px">
+      <div class="tw"><table>
+        <thead><tr id="th"></tr></thead>
+        <tbody id="tbody"></tbody>
+        <tfoot><tr id="tfoot"></tr></tfoot>
+      </table></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="ftmarks">
+      <img class="ftlogo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAADLCAMAAAAyVw2QAAAAkFBMVEUuTaV/f/8qKqoZTH8rTaEwUat/AH9ISJEAAAAqSJktTKIqSJkqR5gAAP8pSJY+Pn4qR5kqR5kAf38qSJlVVaoqR5gAAH8AVaovOJYsRqMrVKkwUq49PrwAVVUFPn0ePJkAf/8qVX9VVVV/f38zZpkqKn8tTKIwVJEcVo8qSKAaTJcA//8AAFUtS6AvUa0kSG3ZwiYLAAAAMHRSTlOyAgYKTNwCBwD9/s8sARQEsHACjwNQAgMJDQf+BAMECAIGAwIFBtMNCCwLAQOLKQdp91o2AAAVp0lEQVR42u1diXajPLL23HvnjkALQqx29vT+LzPv/3ZTVRIgCYFJt+nEOeGcTtsGLZ9KKtWm4sAuftWs0ooZw179Oly8xmcmspw3AFK+P3Cm5nmW5VogDd8ZuJqVgA3QZZVi7O5dgZPymLkr5yVgbd8RuMIRzsET+Mv7mZYq8y6Ym6+59A47Es7CKx9ebVu4MDh54ll00bZQvANwBWvybHbRttBdPbhnpglcRD6Ym/evsadfFJwZ2IlOzs36qsGN7KSaz82s6lknr5pydlbmJU+svOy3E++S4NphVualTvAVYCzq97LNw0VnpeOVeZVimo545jrB1W5WIu/PFq7qP7+ReBddc/241I48T4NDcbO+QnCGTfRS5QI4mpp/tlcHzhNP8kYsgcMVefebiHdRcNUIrmTuE39NrnlBcC0bN4BcD0CrpYVXXBU4yb57/b8T2eJ2jlfzO9AdLkg4n/8Lw+3i0/kSutsrAlezxpt4pZ2XeVMtcZZyf9od9mCWtOhEtg4O8N9eETh/b+MPLZkvxeKGh+iK6wEXEEkQ1jVw+3OVy4HrmM87gCxqXVSxI9BdBzgTguOMvp9WwWWKtVcBTrJQWBbEPdkquJwf9zStXFIr4BG7OHGgnwcupZ5Xey67/cBpxsob7XOZlCiWNzsK0XuAc9NTAUupPHAgiqWmqJLmisDlVZnlNC+ZLj0uk97QgcL1NVEuLwXQCOelEAG4JHPZcWLuwi2BaEg8AduD5B6KtNmIq/bNg/P3OWCCdyX86X2PVi7S6jkMRf3WwQUSCprP++bBhGrQgk2MP8i3Di6SLTNNXtUAnFrYyveSMfcDR15VU3jsXy2B47J98+BiZggsxfhK3hI4FNXu3ja4QBMf97BCjqTjTC0a+/aZl5fklgl+IdqRdCBnLhrZef/mN/HvKZL0kwNhGdxOit1FzekJS5caCQpAxW+2OOxjcfZJ9zR4JJsVcPqtU65OhjIo04pRe11UXHn3xtdcm+KGQLqTo6haAQc35dtmKLGhwRFMFsoZVVZMDmIPj+tl3cZu0fEsMM+ekGRAQlYt2zB30Xsu6zZ2q4uXVeapcYBOW931NxtoLxtB5PzGedaICR7/fisFTjzJsysGN20GMAkVwMsH+yyrgGUcs2sG50lg6F/8VrrFJ1itYFaKqwYXCikY4ywqnufAKD8tbYNXBC50Y2UlwFONzm5A6pfF2k6wj7566WDSLzzQQhEeO/4fEPHPeoVZXsFWwObRpA4eI5WG59n1buJEutMskBRjuNljsTot3774tSA955km8q3NS76LSX2HEyFzCLnF1yl+tSrPirUB8fGH28Wd7u0rq4tWsJE6anHZieugHKLTS2bzhyXFYBd+sge4Vi5bllWh026sO3Yd4GCGieXYDJXY7faKSNkD3MLBELu2ksB3CmrYBRwrVjjHHN1es3IncOvomuvz8szQLa67GbrjTp3YCxyuuyxNPN0cA7LuF4uyGzgG8khaDcjz3xUjtR84IIeqVgO/RsLV7OrAoUS1NDV3V+V2B8dkx/rqDDzYB57ZNYKjI2VCr8Pbj3B7g2MS4a1Qb8cVtz84zNXAmEIL5oI+UJgrBmfhMUH48jnhWPd4zeBgctIuLZqK4zYXYCTzUdFeMTgkn5VCetGUlebcNx8Jgl90puuuFBxqsXUx6NtS4dWQCJNnvBTXTbkBlamLYgzaVpaPwjTlVdMIIa4b3IQSLm+bsOvwwhvDq4FL7oIgrph3Aw7XodsF99B+XhuchYd+PJqZ4l1RbtwFjSg17HmSvTNwqB252XhZ0+wbAUe7fH1pMfPtgHsHm/gHuA9wH+A+wH2A+wD3nsCB1rZzgaVqEFwLl2zrIjQH3JqUfFR0pIMV28QkeN71sy42GUceBxVdbm+BSnRF1EBn/0yUk6EIO2s4/H7OXtXa5wt1VE/2k/F+TnaU/vsMBQqvBVOcaWHq0YQPmlJH+O/A8dK6uUd01gSnmvLvMnArYR45JchsBQ9XDdo61hKqSmuprKyVi+tSfIHxMaSsqafTSfUxNOhZAUoPFeC8Kl0Ld0OBIqkFNkOPSqHINWHvsUbD1bBD7i6u2B0UaAXZFm/8M8B41tlpk7m1O2YUjLdo7hhtzE6/JgOQPSsI1UBvMh0qN/Wkro4FSr9AbFyZWhh7hA0YHPB/sIY3TSN4c5iCB5Wn8PsHnOFDEzszchuMl1wZsh2sWlF4mxg9Wjn3wZmkt4RaGAsEB66NtbzEOVCBVrjaaqabqvq7EvzgWbbVdErdq6xmKumnybMymeIKZlKZdHzkU2bIAFzHivMFfHA1+6tM90hjxjTJuKrgUh44ujuvrFt2ICaTQHUwFssJzRLgiiX3clAgmEmLBTBjWtcxLnRZ6ghc4tx9vRqZPE/XstJyMCwjODyzu6HABK5YdddSnH+pG6BJVZ0BV7Azbu0I3fOmrnrgEodB18EVZwoA67m/1Ro4u1br4M5ii4IJ27WzAylwd1sLDOC6swWIsYqyBO6yCm71KEAi0EIatWFOeuAWA/yWwLXsfAGYmb2VStbApYJe5+5DXnfTgpsROk86VAdw3Tw0c6GAA1cbnp/rEc6mngS4NDi7iXctj461434aO4Cn1AozQmMBFDryBXD1PF83iBs8SxSw4LqoQJ4skHNjA+UOyQgfkJdQhAr6Cptqg0Hm9yAlJdO1yDYM0M45CUUot8XDbcHJaFJiAQwD+54oQOBMPIuhnwXJi6HQMBzBOCRmAGFAByGP02g7AYc1fuODaBRH6lG8vaQC8S5twcXsqvyOq8ogTb+VKXBhAcoNzVxidhHMb65kChzltGUdqDxhRCie7StsHuYWpnO4UdsIZdnzKPawoI6SZB/ufgROBmfObPp/M2oIYg5OBtwEs2QaqzpIVGX8kXVBjod4vkAJq1W1QQoQWFieIHnLivBmMduxYFF74mPPwmmA4KJ4WsV8VaEP0RG48F0I+t7fYk0d3iQWfogG6H7I7hcwXXi4j4Ws4K6J50wTFQiThxC4kFWKKK1gH4yV495+ARVF6/fR3TYGx6cS4QpSJtLewmGneenNSuhLnAGxD19BgXYAFeU5iAtUoawbFpgJfq2Z3T5EG8T91Hs/qdVcQDbejoPcKUpaI+9mipAKKVcHBdTMdGKkCCnnc++czxNq+eSwLtrDUshqcOg74fAMqgLwQdM6ER4ajBaAuw37Mlee/GmL4OIWZ8PtbRSWHR8W84s9ZEnta1IYRTAq55pm4cAjOA9sIwu2OnwErlod7pAep1D8ggo+eQ+q9SBkyXq/5KPfV9Sq1keDo7lGr/fVl5HttPQKHBPjHaBXEbjSG76IMMkEqdxnlxvGNZg1bcD71Lm5oXEPnArwVH8icG0wLf0uxbPu6sH5LWyYln9kK+DmYYZtBK4+Ny3N2rT8fn5ahuDCswthV8413Yb8ITEaXbTmzi7SIuS/L2QoMbjT6pPrTbfFOc4ePDDfCor1vWPDVhCKnqvgfGaWquo53IXa7syeDCPNI27pyTj8dj43ZLeyiev1nfcsOD9h6kP8YpbAToPgQuFoPhrh4X+OZmyxelYpEpPRuK7W0iTL7oFvpVzYdiz6mUAxJYlkXaxtjd+0VXmkN/F5H6Wk6yL9BiZ6668Urj6FBT6H2uEquCjpThNoMEDHIK8xgotGugiWnXmOEyHLGWnMY+B6kVELM5WH/emNn+wjk986uEixbkZVElXDIhglAifZKVIlRycfsNJwWAlcKGpjnPq48EyoMI6UC4hZFYP6TNptk70AHAxG8DRmAEF3H3YgsipbQbmOjACCvIgF2aFCK4CTViNqoh2jpQIy1UKdbAFLIAFVlb0IXES6PCvFP/D3b03sw7HgIiOkS8pABo7Yb2HBRRZZv0CiBfSvSRH7dYgVfBJzx8gZcMycYtMe15XWc8ubU3HqWYZLXpVlWSXcU4NpL12Ap1qokwUyDV1KGA/PgkuYrvOkzdSBk+Ybz2ePp0o4cLI9JepPFrDg5N3MpJ3u0Xlw6y6eObilvAzLFufnLfZ63+K8uYXz4IB2W84uTpp3vbGzo/pbbB+++iVeoS3g5GpunTm4rZ2ddPti8/DVL2phAzj0b1f5C8BtbNszXGybHJHz8TLgUAQsF93GKYNQseWcqm+VqZcbSIJb8zPnLwO37AhGd3yesHYVGxzHgclpi6c5cPgXqWgJW+1U0TZwWGvJ8zwROTB0KtRm7fNroxrZ02r2nxTx8iVw6diOHN+l/F27FHgxOH5ailxi7ISRKHHMTM36kgKQvlaBMmtkfI4Tg3hKJZaMhR2bF8jCAmHif5mIytHNE/aioZgizr8hODFdy+FytXWCUfQSx2injlxHZu15Uelxj+Xk2rtftoQWeGxwOBeJA11hE2oJnHVc/eHiqShiS7F5SNPWkMTa6iMndbR6hvX5yMIPBLrv3HVng7+YEg1ewuY1mxmEpwLGRZ0d/QJPUiyDcydhgepHZd2Jj7XXMQfOjNeZODw5BBbiB5kgVvmVDxdavzo/sK8IvWuovcEeMBVQMAs6b6QktBWb9hJ2iCGGsSuSL4l5aTDpYqjnLatuYisDHXMsaiNTBuSC6ZvYzxsUCExQy2fPVoJPLxYpGxvi2DknTPEi69dPZSm6GLiz1i/fAoL2oND61Zs5RfqlWJ7fDk6yb9utX2hTbdd9iew2stTJVwQ38wJHrLs9etYvyhsYWqDi1/PEjulPrxqdHhkmHwJS3H1iswiB2JgluwDb3azAK4KbB1KMIeZonIpeTmdixZOiE8xk/frfRDDIK54rKBK2KeTsRRwDMwZyRbZMV+C2ju1rP3sI+aLvKziGomw1CHSxMcu5aLZbv37yfVmXTS9ebjFmTT6gjdavn34r0UWz3tenlG0q1pb48ZMc4zNT5rVZFFzxk9k2LnqW53mTbUpMGZXuNpkMfvpk/GUPKm2wfoVcfYvJpfnprKUXz+N8prPxq2PPWr9+JfflpY+YLScQXOjqOevXr2RQvPj5uTXrV57qardi/cJMFL+QZmOPbMBiwZCLTqoiWYAvFfi1t6rvcPKxozDheRA5b1iaNdSsTRBvpcArgmNtyx6ahDGLLb2JzaSsX7ppmfm1I577nFm1ZwP1eExA28N+Ly3wq5my9jqQS0AeBFqzBMXTn5GgrPWrtwV+PDjb5BsFh3qOSX5evB69h7qLpEbZ9yi16eq67ravHOkKXKj5j0PwH+A+wH2A+wC3Ozh0DO33qvONfZDLffgFcOgO6NrXhUY5NdpdKIdOQvXv21eFZ/vQXRaclL3GOEV90+yYifmM+kGHM6EPedoJdHBizyQiyfEaRCLTyuiOxDjX6oZnNxQ3MD0pFwbCqzGonHm5A6ffZOjmjZLbtGMzUx9uk304DAJ5On/LcO+xnov91VehKg4apYv7smNXbBUkl0TjQRtI51txnnD70J9Mf1XQBz0Y/5xDfOjDgX7+JgQeYcWPpu+PdPXKjuoJ7tmPin6m2z0oJeavU8/UMPTQlVur3Mw6rZStUvVPoNXgF/g3PKjUgwPb95378QhN1mNFj0qp06Tln462GWr2jj2c2HHoA6WkoWgBW/TQkhJM0REKD9gI/xgkU5X1qmGqkeC8rcY+4A+VfLb1NtrW0kfoPOMdnuodTH8YyWKwUmtdp4gu65IcuiNoShimpxiZlqJPSJlt7XdcdHk5UNv1oXSHPA5onXH5eKHyz0z450CO4z18Q2VgE2e1RAOsW3JGVi6f75Q6tf3SxuCqCRw8WAIhen7jTkk3ed5g+9QkHyoytlkbEUBxaHlG4Sr6aIYA9zwj4pvTED6EDiPswwHN+5X41lOYML1DOi+VoBzSn7FohZ8Fx2FV9CnXdJtOI3NhLZHkAuFNf0vuGXKIQ2//2YyHu22FONngwQY+QHPYYwmUG8Ehmp66o06qtBVR94V9yB4EbbAibd0peDRBN2jcrK1XhQv1DfvAe+zDAW5VlqYlDh2B8yeUXb0iv3FPYTvWqCOwAT6cBqE0P4yy2CBc+UWWNyX8tbUo3yJtHVUC/XTscwgO//rdKeQjz7mtoSXHtBi6kfU2l0rZjedFcv4H3ayGA7nwvOroGK7iXy24xu+J9ZkpfYDH27/aFjrT3rfGDSlRhY49A6R/wYLv1HjOprxpxiH65Ff5Ays4YU8VO0Xghu7c10AuTNyC3ZdU/Wd2xLqfgCQnqAYG87NtnqD3dl5jFJZRzr95wIHB3v8QQvxQdLJeYwaf6u+GMoBgSHrZ/Bg3GT70/R5KdpZ8DwRUWmYHk9Wwe5g7QDn4+0TTpbLXUdohwWPlLX1SPrgGwXHHx83pWNi5pmCvhl7WBLS1AlF/PNHJUqS+sC9Ioz4YR1d7IBcqly1G8wCM3L7pNb+hCw++I7eEr7igLAMawHWWWHhWix/rscvAZjQ6+ydnT0PucFvjjWATOJYEx4OYNzyBSAfw7WQWoa/BMSEJfeKytwQ0zEa8EMUs5WqKwxrA6ZKuhv0/0ZReM5C7MJcBHPmzFWxaJfVppNwjov3CxFeXngwd3Ug5W6VqJ3DyDOVugezkEmugFZogdopacEelOuP6UFjo4wDLkXJ4H4WLTgoHblxzGKum7XHIZnC6O3A2dIGyo9DMIDLCXtR2n8e4WZiWPlvy1pzspPTXHMy0vhvAwZrraM2NL7K2zWR/MFpLJ7fmAImY+lAxS8ancd3jmgOW7LhjOYCzo4N8Tt9A+7f9/zAWgYsP4imKPPG4JWxyAA63Osct2yS3NMMMYpY3xNwyPGIXcsvwJYtHrHCoyk3fgxpe01tmIziQseBS1BOt7uimm+0j5aBTNgSViIZd0+IzO5XDIdCCKFc4yilb48mCA/FLoTMBmRvOWdheVWMPfx9pn7u9s/sc3m1sM3aC4OJX7N7uc09jH0qCTn2oqbOZ3edwRmGym+xmXHOjY55ZbsmdvNASuBuKlbSLYGBNUipta8lxcuHEf2YN7B6fFsUvEnoMHj0aCkL/Okw/NVZEK3I4NG03S5KD6K5Wdi3QdaIAKq8PTkL5hLHQlDtP8RAcnj5WQyCxdjnbLeWs1GEKY8yTnWjAKaybRosV2dITv7gm/itdrDKJrxRWZJu0UdTYffkErfRG4PL54qRHEB/vLV7sQ9u7Od2WY1EzagUgSpNCi39OVlLCSzox2951TEzZGF33n/0orEp3tA+aUXeZiignfqFWYK+Te3Bo4ui+G9JDqKIO7/RTM7buY5WTYCH9PpywAslGKGbQ54zTheSKcsXO2+9d+XqrwWjIqNXWg18h/J7W5+Am0I6LtDZYhEUPzv8wGZFadw3KsMEAa29ftZ+lpyu70WHtY9rnAc+6KuVYvwzdH2FB/B5WzYbMS0z8G9TTGxIdpVdo6E7rV3VldksyLOitcTdXBg7YcsWRF20yZvwXyX1P4zMpKFoAAAAASUVORK5CYII=" alt="Ragga Gestão + Educação">
+      <span class="ftx">&times;</span>
+      <img class="ftaon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEVpQnrt1l1hOnpbOHGlhm3bwWDRt2LDqGS1mGl5VnOIZnCXd2365Fvky1/iyWBPLHC+omWAXXXfx1/o0GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0fXV2AAAAIHRSTlP//////////////////////////wAAAAAAAAAAAAAAALESzYUAAAF3SURBVHja7ZfRbsMgDEWJDQYDabvt//91oGRTyZoKgl8m+Tz0oZGuLHw5TY1RFEVRFEWpwBj9wcmOkHpjMS0jZOodGUMeSg6dwYBMqxsITr0TA5YPpu7gCCO9uHcf9M30HkWtG2LoDabeYRlMCsGL784vKQ21wnYFo/nM1g4F9+0OMdoytWs5RK309Iy4u8Zlc4ev4toWF4WchNiukkFIcmia2+Km5clhp72Ffnpgn6eKe75FynPSOQ2OVJiUzknxSiMOVSvSmS7FrrnHVem8KVvVHDvJ3VV1smWI4eGuSeckN35ZoEzmVS9mdodxCehKsPsbPLU7BDbIgTF6opvo7mAzBeJRFPMX+pe7FdtdY7fjxGk+GPjhC4dL/SEQ/KpsTuAgXtqNBAZGrifhZGW8JVeMk97dTzjJynjXW4zh2hvgu9wUTFikZVyFQTk66R/SrRQJraSMm1ZwWsV3t79dtUpmqWDA5J8Ign9S8QkAoyiKoijKP+cbQQwMwbylxg4AAAAASUVORK5CYII=" alt="Taon Delivery">
+    </div>
+    <p><b>Fonte:</b> relatórios semanais em PDF do Sistema Taon Delivery, enviados para <span class="num">coordenacao.financeiro1@raggagestao.com.br</span>.</p>
+    <p><b>Conferência:</b> em todos os relatórios, Total do Relatório = Total Corridas + Valores Adicionais + Taxa Administrativa, e a soma das entregas detalhadas bate com o Total Corridas.</p>
+    <p><b>Destinos</b> é o total de paradas atendidas — uma corrida pode entregar em mais de um endereço, por isso destinos &gt; entregas. <b>Δ</b> só é calculado quando a unidade tem relatório nas duas janelas.</p>
+    <p><b>Confronto Cloud × Taon:</b> faturamento, taxa arrecadada e contagem de pedidos vêm do Relatório de Entregas Sintético. O <b>filtro de Entregador</b> no topo escolhe quais canais próprios entram no confronto — Delivery WhatsApp, Delivery Telefone, App Próprio e Taxa Extra. O <span class="num">SEM ENTREGADOR</span> (iFood / marketplace) fica sempre fora dele, porque essas entregas são feitas pelo courier do próprio app e não pela Taon; elas aparecem nos cards de modalidade e no Faturamento iFood. O lado Taon não muda com esse filtro: os relatórios em PDF não separam a corrida por canal de origem.</p>
+    <p><b>Faturamento</b> é a soma da coluna <span class="num">Total do pedido</span> (coluna K) do relatório sintético, para as modalidades selecionadas.</p>
+    <p><b>Atenção:</b> em algumas unidades a Taon fez mais corridas do que os pedidos de canal próprio registrados no Cloud, o que indica que ela também atende pedidos de marketplace nessas lojas. Nesses casos a taxa arrecadada está subestimada e a falta real é menor que a mostrada.</p>
+  </footer>
+</div>
+
+<div class="ov" id="wa-ov" role="dialog" aria-modal="true" aria-labelledby="wa-t">
+  <div class="modal">
+    <div class="modal-hd">
+      <div>
+        <h2 id="wa-t">Relatório para WhatsApp</h2>
+        <div class="desc" id="wa-sub"></div>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center">
+        <div class="seg" id="wa-seg" role="group" aria-label="Nível de detalhe"></div>
+        <button type="button" class="x" id="wa-x" aria-label="Fechar">&times;</button>
+      </div>
+    </div>
+    <div class="modal-bd">
+      <textarea id="wa-txt" readonly aria-label="Texto do relatório"></textarea>
+    </div>
+    <div class="modal-ft">
+      <button type="button" class="btn pri" id="wa-copy">Copiar texto</button>
+      <button type="button" class="btn" id="wa-x2">Fechar</button>
+      <span class="hint">Cole direto na conversa — o WhatsApp entende o *negrito*.</span>
+    </div>
+  </div>
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+
+<script>
+const D = {"cats": [{"k": "WA", "lab": "Delivery WhatsApp", "src": "DELIVERY WHATSAPP"}, {"k": "TE", "lab": "Delivery Telefone", "src": "DELIVERY TELEFONE"}, {"k": "AP", "lab": "App Próprio", "src": "APP PROPRIO"}, {"k": "TX", "lab": "Taxa Extra", "src": "TAXA EXTRA"}, {"k": "SE", "lab": "iFood / Marketplace", "src": "SEM ENTREGADOR"}], "semanas": [{"ini": "27/07/2026", "fim": "02/08/2026", "lab": "27/07–02/08", "emissao": "04/08/2026, 09:33:40", "i0": "2026-07-27", "i1": "2026-08-02"}, {"ini": "03/08/2026", "fim": "09/08/2026", "lab": "03/08–09/08", "emissao": "12/08/2026, 09:18:17", "i0": "2026-08-03", "i1": "2026-08-09"}, {"ini": "10/08/2026", "fim": "16/08/2026", "lab": "10/08–16/08", "emissao": "18/08/2026, 09:00:38", "i0": "2026-08-10", "i1": "2026-08-16"}, {"ini": "17/08/2026", "fim": "23/08/2026", "lab": "17/08–23/08", "emissao": "26/08/2026, 08:52:45", "i0": "2026-08-17", "i1": "2026-08-23"}, {"ini": "24/08/2026", "fim": "30/08/2026", "lab": "24/08–30/08", "emissao": "01/09/2026, 10:32:35", "i0": "2026-08-24", "i1": "2026-08-30"}, {"ini": "31/08/2026", "fim": "06/09/2026", "lab": "31/08–06/09", "emissao": "08/09/2026, 14:16:52", "i0": "2026-08-31", "i1": "2026-09-06"}], "dias": ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"], "lojas": [{"id": "113150", "loja": "Biggs - Arthur Thomas", "grupo": "Biggs", "curto": "Arthur Thomas"}, {"id": "51369", "loja": "Biggs - Av Maringa", "grupo": "Biggs", "curto": "Av Maringa"}, {"id": "50988", "loja": "Biggs - Goias", "grupo": "Biggs", "curto": "Goias"}, {"id": "52025", "loja": "Biggs - Higienopolis", "grupo": "Biggs", "curto": "Higienopolis"}, {"id": "52827", "loja": "Biggs - Jamil Scaff", "grupo": "Biggs", "curto": "Jamil Scaff"}, {"id": "51379", "loja": "Biggs - Maritacas", "grupo": "Biggs", "curto": "Maritacas"}, {"id": "51403", "loja": "Biggs - Paranagua", "grupo": "Biggs", "curto": "Paranagua"}, {"id": "74789", "loja": "Biggs - Santo Amaro", "grupo": "Biggs", "curto": "Santo Amaro"}, {"id": "51371", "loja": "Biggs - Santos Dumont", "grupo": "Biggs", "curto": "Santos Dumont"}, {"id": "84878", "loja": "Biggs - Saul Elkind", "grupo": "Biggs", "curto": "Saul Elkind"}, {"id": "52825", "loja": "Biggs - Winston Churchill", "grupo": "Biggs", "curto": "Winston Churchill"}, {"id": "52828", "loja": "Biggs - Zona Sul", "grupo": "Biggs", "curto": "Zona Sul"}, {"id": "57804", "loja": "Isaias - Alphaville", "grupo": "Isaias", "curto": "Alphaville"}, {"id": "51917", "loja": "Isaias - Av Maringa", "grupo": "Isaias", "curto": "Av Maringa"}, {"id": "61039", "loja": "Isaias - Madre", "grupo": "Isaias", "curto": "Madre"}, {"id": "11549", "loja": "Robs Lanches", "grupo": "Robs", "curto": "Robs Lanches"}], "reg": [{"sem": "17/08/2026", "id": "74789", "ent": 80, "dest": 97, "corr": 710.2, "adic": 0.0, "taxa": 100.0, "tot": 810.2, "dia": [[10, 84.4], [10, 75.2], [17, 121.5], [19, 186.2], [14, 143.4], [5, 51.5], [5, 48.0]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 1, 1, 4, 0, 1, 1, 3, 15, 17, 15, 10, 5], "mot": [7, 25, 35, 51, 95, 196, 201, 236, 364, 446, 461, 560, 603, 658, 668, 679, 756, 768, 825, 826, 856, 889, 910, 949, 954, 1010, 1014, 1022, 1028, 1061, 1111, 1301, 1315], "cl": {"AP": {"qtd": 11, "taxa": 68.5, "custolog": 17.2, "pedidos": 724.56}, "SE": {"qtd": 728, "taxa": 1880.24, "custolog": 1871.48, "pedidos": 30373.21}, "TE": {"qtd": 1, "taxa": 10.0, "custolog": 14.0, "pedidos": 49.4}, "TX": {"qtd": 1, "taxa": 5.5, "custolog": 0.0, "pedidos": 5.5}, "WA": {"qtd": 82, "taxa": 527.5, "custolog": 806.7, "pedidos": 4773.23}}}, {"sem": "31/08/2026", "id": "61039", "ent": 8, "dest": 8, "corr": 70.7, "adic": 0.0, "taxa": 45.0, "tot": 115.7, "dia": [[1, 9.8], [2, 18.2], [1, 5.7], [2, 20.5], [1, 10.0], [0, 0.0], [1, 6.5]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 2, 0], "mot": [101, 102, 271, 443, 444, 1096, 1250, 1334], "cl": {"SE": {"qtd": 159, "taxa": 540.61, "custolog": 419.65, "pedidos": 10298.29}, "TE": {"qtd": 1, "taxa": 13.5, "custolog": 16.1, "pedidos": 158.5}, "TX": {"qtd": 2, "taxa": 12.0, "custolog": 11.5, "pedidos": 12.01}, "WA": {"qtd": 5, "taxa": 37.5, "custolog": 58.8, "pedidos": 621.5}}}, {"sem": "27/07/2026", "id": "52827", "ent": 210, "dest": 444, "corr": 2522.9, "adic": 0.0, "taxa": 140.0, "tot": 2662.9, "dia": [[25, 262.7], [25, 283.6], [30, 337.2], [33, 391.1], [35, 428.6], [37, 465.2], [25, 354.5]], "hora": [14, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8, 11, 13, 6, 6, 6, 8, 11, 19, 33, 29, 24, 17], "mot": [78, 93, 137, 145, 179, 184, 228, 279, 301, 332, 371, 374, 387, 394, 414, 475, 542, 546, 606, 682, 684, 696, 697, 714, 748, 764, 769, 785, 791, 792, 793, 802, 839, 875, 881, 916, 952, 994, 1025, 1101, 1128, 1145, 1202, 1238, 1299, 1301, 1316, 1323, 1334, 1340, 1341, 1371], "cl": {"AP": {"qtd": 10, "taxa": 64.0, "custolog": 9.8, "pedidos": 619.88}, "SE": {"qtd": 2522, "taxa": 4145.35, "custolog": 3040.66, "pedidos": 94024.3}, "TE": {"qtd": 40, "taxa": 224.5, "custolog": 373.7, "pedidos": 2279.7}, "TX": {"qtd": 13, "taxa": 132.9, "custolog": 139.2, "pedidos": 330.0}, "WA": {"qtd": 344, "taxa": 2006.0, "custolog": 3315.1, "pedidos": 20572.4}}}, {"sem": "03/08/2026", "id": "74789", "ent": 67, "dest": 97, "corr": 743.7, "adic": 0.0, "taxa": 105.0, "tot": 848.7, "dia": [[9, 86.2], [11, 126.1], [11, 101.2], [10, 148.9], [14, 149.3], [6, 56.9], [6, 75.1]], "hora": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 3, 4, 3, 2, 0, 3, 15, 16, 6, 6, 2], "mot": [7, 19, 25, 35, 43, 50, 196, 260, 364, 383, 446, 463, 486, 582, 603, 658, 662, 698, 723, 825, 837, 889, 910, 1022, 1031, 1053, 1089, 1102, 1108, 1157, 1164, 1207, 1234, 1302, 1305, 1347], "cl": {"AP": {"qtd": 16, "taxa": 98.0, "custolog": 0.0, "pedidos": 911.46}, "SE": {"qtd": 1087, "taxa": 1214.54, "custolog": 2969.61, "pedidos": 35624.13}, "TE": {"qtd": 2, "taxa": 12.0, "custolog": 20.0, "pedidos": 78.2}, "WA": {"qtd": 72, "taxa": 457.5, "custolog": 726.8, "pedidos": 4353.77}}}, {"sem": "10/08/2026", "id": "51371", "ent": 180, "dest": 317, "corr": 2061.7, "adic": 0.0, "taxa": 135.0, "tot": 2196.7, "dia": [[26, 305.3], [24, 249.8], [27, 248.3], [28, 269.9], [28, 363.0], [33, 418.8], [14, 206.6]], "hora": [7, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8, 10, 6, 9, 7, 3, 4, 13, 20, 27, 30, 21, 12], "mot": [53, 55, 57, 59, 67, 70, 87, 92, 93, 112, 119, 137, 184, 189, 191, 192, 210, 253, 259, 275, 286, 287, 290, 313, 315, 350, 378, 383, 389, 424, 449, 472, 492, 514, 517, 547, 548, 552, 556, 570, 585, 587, 589, 599, 636, 670, 675, 678, 684, 689, 717, 724, 725, 733, 735, 763, 772, 779, 808, 811, 860, 865, 869, 894, 898, 917, 921, 952, 957, 995, 1000, 1012, 1019, 1020, 1023, 1064, 1104, 1121, 1136, 1142, 1158, 1159, 1163, 1174, 1186, 1200, 1201, 1209, 1227, 1231, 1235, 1264, 1278, 1286, 1287, 1301, 1322, 1339, 1351, 1352, 1355, 1360, 1366], "cl": {"AP": {"qtd": 12, "taxa": 68.5, "custolog": 24.3, "pedidos": 748.89}, "SE": {"qtd": 656, "taxa": 2139.94, "custolog": 1609.81, "pedidos": 23339.16}, "TE": {"qtd": 94, "taxa": 546.0, "custolog": 889.3, "pedidos": 5336.37}, "TX": {"qtd": 10, "taxa": 64.5, "custolog": 106.4, "pedidos": 79.4}, "WA": {"qtd": 193, "taxa": 1147.5, "custolog": 1867.5, "pedidos": 10485.97}}}, {"sem": "10/08/2026", "id": "113150", "ent": 62, "dest": 90, "corr": 586.2, "adic": 0.0, "taxa": 102.5, "tot": 688.7, "dia": [[7, 54.0], [1, 5.7], [8, 64.0], [11, 91.0], [17, 183.9], [10, 99.0], [8, 88.6]], "hora": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 3, 2, 1, 2, 1, 4, 10, 11, 11, 8, 3], "mot": [2, 64, 80, 95, 107, 129, 144, 145, 155, 178, 181, 193, 199, 207, 271, 272, 414, 446, 541, 623, 627, 632, 665, 691, 763, 774, 910, 961, 1003, 1012, 1085, 1186, 1200, 1240, 1258, 1301, 1352], "cl": {"AP": {"qtd": 243, "taxa": 154.5, "custolog": 0.0, "pedidos": 8535.27}, "SE": {"qtd": 396, "taxa": 0.0, "custolog": 0.0, "pedidos": 17459.98}, "TE": {"qtd": 20, "taxa": 115.5, "custolog": 0.0, "pedidos": 1204.49}, "TX": {"qtd": 3, "taxa": 19.5, "custolog": 0.0, "pedidos": 19.5}, "WA": {"qtd": 40, "taxa": 250.0, "custolog": 0.0, "pedidos": 2573.95}}}, {"sem": "27/07/2026", "id": "52828", "ent": 139, "dest": 324, "corr": 2166.31, "adic": 0.0, "taxa": 135.0, "tot": 2301.31, "dia": [[20, 294.6], [19, 264.4], [21, 265.61], [24, 319.2], [18, 293.3], [25, 453.1], [12, 276.1]], "hora": [9, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 9, 5, 4, 9, 5, 4, 7, 20, 18, 15, 12, 11], "mot": [4, 45, 148, 210, 219, 222, 269, 287, 303, 305, 315, 331, 362, 370, 414, 420, 423, 448, 458, 459, 478, 518, 532, 586, 594, 598, 630, 664, 677, 678, 692, 735, 763, 801, 851, 973, 1005, 1027, 1045, 1088, 1093, 1106, 1112, 1118, 1160, 1182, 1201, 1208, 1342, 1350, 1375], "cl": {"AP": {"qtd": 8, "taxa": 45.0, "custolog": 0.0, "pedidos": 360.83}, "SE": {"qtd": 1864, "taxa": 1746.73, "custolog": 1892.18, "pedidos": 77592.58}, "TE": {"qtd": 66, "taxa": 403.5, "custolog": 596.3, "pedidos": 4439.61}, "TX": {"qtd": 5, "taxa": 31.17, "custolog": 0.0, "pedidos": 51.67}, "WA": {"qtd": 172, "taxa": 1095.0, "custolog": 1471.9, "pedidos": 11275.49}}}, {"sem": "31/08/2026", "id": "51371", "ent": 179, "dest": 321, "corr": 2199.8, "adic": 0.0, "taxa": 135.0, "tot": 2334.8, "dia": [[17, 187.4], [42, 375.7], [30, 282.0], [29, 367.7], [28, 409.4], [20, 349.1], [13, 228.5]], "hora": [10, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 12, 17, 12, 2, 5, 2, 10, 23, 35, 18, 16, 8], "mot": [0, 11, 24, 27, 56, 59, 89, 103, 112, 116, 118, 119, 138, 148, 157, 166, 182, 187, 192, 208, 232, 235, 259, 278, 290, 340, 341, 342, 378, 389, 414, 439, 440, 455, 472, 473, 474, 502, 504, 520, 523, 536, 538, 540, 545, 551, 582, 585, 595, 617, 657, 660, 673, 675, 681, 691, 699, 703, 707, 710, 718, 734, 743, 759, 761, 790, 823, 837, 864, 873, 876, 878, 884, 921, 934, 952, 995, 1002, 1012, 1023, 1041, 1049, 1106, 1110, 1119, 1121, 1133, 1137, 1141, 1160, 1168, 1179, 1199, 1202, 1203, 1206, 1220, 1223, 1227, 1233, 1235, 1237, 1244, 1250, 1253, 1261, 1265, 1276, 1299, 1310, 1317, 1322, 1335, 1351, 1362, 1374], "cl": {"AP": {"qtd": 8, "taxa": 46.5, "custolog": 18.5, "pedidos": 351.74}, "SE": {"qtd": 892, "taxa": 4785.36, "custolog": 3245.34, "pedidos": 32516.92}, "TE": {"qtd": 80, "taxa": 464.0, "custolog": 788.5, "pedidos": 4332.59}, "TX": {"qtd": 12, "taxa": 122.0, "custolog": 161.6, "pedidos": 122.0}, "WA": {"qtd": 209, "taxa": 1272.0, "custolog": 2205.7, "pedidos": 10866.45}}}, {"sem": "24/08/2026", "id": "11549", "ent": 34, "dest": 36, "corr": 372.5, "adic": 0.0, "taxa": 75.0, "tot": 447.5, "dia": [[6, 61.2], [3, 29.2], [2, 16.2], [5, 62.1], [7, 69.3], [5, 48.4], [6, 86.1]], "hora": [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 10, 5, 4, 2], "mot": [11, 117, 175, 215, 235, 251, 333, 381, 422, 454, 489, 502, 576, 736, 750, 797, 823, 841, 844, 854, 876, 884, 963, 966, 1046, 1141, 1227, 1234, 1266, 1270, 1351], "cl": {"AP": {"qtd": 18, "taxa": 108.5, "custolog": 260.4, "pedidos": 1068.08}, "SE": {"qtd": 859, "taxa": 6939.05, "custolog": 1892.84, "pedidos": 35866.08}, "TX": {"qtd": 5, "taxa": 36.5, "custolog": 61.6, "pedidos": 36.5}, "WA": {"qtd": 13, "taxa": 79.0, "custolog": 148.0, "pedidos": 847.6}}}, {"sem": "27/07/2026", "id": "51369", "ent": 160, "dest": 320, "corr": 2252.3, "adic": 0.0, "taxa": 140.0, "tot": 2392.3, "dia": [[22, 259.2], [26, 370.6], [16, 217.4], [31, 429.7], [17, 244.9], [29, 451.3], [19, 279.2]], "hora": [13, 3, 4, 2, 1, 0, 0, 0, 0, 0, 1, 12, 5, 6, 5, 4, 7, 6, 11, 17, 23, 14, 14, 12], "mot": [16, 19, 21, 30, 36, 37, 38, 74, 94, 104, 111, 112, 142, 145, 152, 160, 163, 186, 188, 195, 209, 244, 246, 279, 283, 288, 317, 331, 341, 346, 369, 383, 388, 414, 436, 439, 445, 455, 457, 462, 470, 472, 479, 483, 502, 503, 519, 524, 562, 576, 589, 597, 614, 621, 656, 668, 675, 677, 789, 795, 798, 816, 819, 846, 868, 891, 905, 911, 917, 942, 948, 975, 985, 993, 1054, 1076, 1090, 1100, 1110, 1115, 1122, 1128, 1133, 1135, 1141, 1159, 1162, 1174, 1175, 1179, 1187, 1197, 1215, 1234, 1258, 1265, 1294, 1296, 1302, 1339, 1341, 1347, 1352, 1358], "cl": {"AP": {"qtd": 73, "taxa": 442.0, "custolog": 35.3, "pedidos": 4254.9}, "SE": {"qtd": 1016, "taxa": 1773.04, "custolog": 721.71, "pedidos": 39668.2}, "TE": {"qtd": 89, "taxa": 575.5, "custolog": 919.0, "pedidos": 4698.31}, "TX": {"qtd": 15, "taxa": 88.0, "custolog": 110.7, "pedidos": 122.15}, "WA": {"qtd": 137, "taxa": 961.5, "custolog": 1499.5, "pedidos": 6841.43}}}, {"sem": "27/07/2026", "id": "51403", "ent": 14, "dest": 17, "corr": 134.9, "adic": 0.0, "taxa": 52.5, "tot": 187.4, "dia": [[2, 27.6], [1, 5.5], [4, 27.5], [2, 26.2], [2, 20.6], [1, 8.7], [2, 18.8]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 4, 5, 0, 1], "mot": [1, 74, 189, 331, 348, 396, 487, 566, 776, 888, 951, 966, 1077, 1262], "cl": {"AP": {"qtd": 2, "taxa": 11.0, "custolog": 0.0, "pedidos": 170.5}, "SE": {"qtd": 418, "taxa": 1060.45, "custolog": 317.32, "pedidos": 22684.03}, "TE": {"qtd": 3, "taxa": 16.5, "custolog": 27.0, "pedidos": 321.8}, "TX": {"qtd": 2, "taxa": 11.0, "custolog": 0.0, "pedidos": 11.0}, "WA": {"qtd": 7, "taxa": 62.5, "custolog": 80.3, "pedidos": 752.0}}}, {"sem": "31/08/2026", "id": "50988", "ent": 114, "dest": 219, "corr": 1292.2, "adic": 0.0, "taxa": 125.0, "tot": 1417.2, "dia": [[14, 145.2], [23, 273.6], [16, 148.1], [18, 216.9], [19, 220.0], [15, 188.3], [9, 100.1]], "hora": [4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 10, 6, 3, 4, 3, 4, 6, 16, 12, 13, 13, 11], "mot": [12, 29, 57, 99, 112, 115, 121, 157, 167, 192, 198, 211, 219, 268, 273, 294, 307, 312, 324, 366, 383, 391, 414, 415, 422, 436, 444, 469, 471, 474, 479, 485, 494, 547, 559, 614, 660, 701, 781, 809, 819, 831, 873, 885, 888, 911, 918, 985, 1013, 1093, 1097, 1106, 1141, 1203, 1210, 1227, 1233, 1244, 1250, 1256, 1257, 1261, 1263, 1268, 1270, 1281, 1310, 1312, 1345, 1348, 1356, 1359, 1373, 1374], "cl": {"AP": {"qtd": 15, "taxa": 87.0, "custolog": 0.0, "pedidos": 823.28}, "SE": {"qtd": 683, "taxa": 561.53, "custolog": 2900.51, "pedidos": 22709.26}, "TE": {"qtd": 68, "taxa": 376.0, "custolog": 635.7, "pedidos": 3356.33}, "TX": {"qtd": 16, "taxa": 88.0, "custolog": 135.8, "pedidos": 88.0}, "WA": {"qtd": 119, "taxa": 673.0, "custolog": 1137.2, "pedidos": 7061.2}}}, {"sem": "03/08/2026", "id": "57804", "ent": 21, "dest": 23, "corr": 253.0, "adic": 0.0, "taxa": 52.5, "tot": 305.5, "dia": [[2, 13.8], [1, 7.9], [4, 51.8], [3, 19.9], [5, 67.9], [4, 51.3], [2, 40.4]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1, 1, 0, 0, 2, 2, 4, 2, 3, 1, 1], "mot": [67, 112, 251, 342, 377, 388, 421, 465, 493, 613, 716, 718, 919, 1043, 1097, 1160, 1265, 1337], "cl": {"AP": {"qtd": 1, "taxa": 6.5, "custolog": 10.3, "pedidos": 103.5}, "SE": {"qtd": 507, "taxa": 1940.78, "custolog": 955.58, "pedidos": 23323.42}, "TE": {"qtd": 2, "taxa": 19.8, "custolog": 0.0, "pedidos": 120.8}, "TX": {"qtd": 2, "taxa": 15.3, "custolog": 12.6, "pedidos": 15.31}, "WA": {"qtd": 14, "taxa": 161.1, "custolog": 90.4, "pedidos": 1318.0}}}, {"sem": "10/08/2026", "id": "52828", "ent": 134, "dest": 339, "corr": 2199.7, "adic": 0.0, "taxa": 135.0, "tot": 2334.7, "dia": [[17, 282.6], [21, 389.0], [18, 217.9], [20, 276.8], [20, 377.6], [26, 415.3], [12, 240.5]], "hora": [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 9, 8, 4, 8, 5, 4, 4, 19, 17, 16, 15, 9], "mot": [18, 34, 41, 45, 57, 112, 119, 145, 148, 164, 179, 184, 210, 219, 231, 255, 267, 269, 274, 291, 339, 370, 375, 417, 423, 448, 464, 472, 480, 505, 513, 516, 550, 575, 577, 594, 630, 662, 664, 729, 735, 741, 746, 780, 803, 814, 845, 851, 873, 874, 933, 965, 983, 988, 1007, 1018, 1052, 1106, 1116, 1118, 1128, 1137, 1142, 1180, 1202, 1246, 1286, 1293, 1308, 1310, 1327, 1329, 1344, 1350, 1355], "cl": {"AP": {"qtd": 10, "taxa": 61.0, "custolog": 0.0, "pedidos": 535.09}, "SE": {"qtd": 1954, "taxa": 1652.19, "custolog": 3925.56, "pedidos": 65068.96}, "TE": {"qtd": 60, "taxa": 405.5, "custolog": 551.6, "pedidos": 3850.85}, "TX": {"qtd": 13, "taxa": 125.07, "custolog": 126.3, "pedidos": 195.77}, "WA": {"qtd": 205, "taxa": 1227.5, "custolog": 1592.2, "pedidos": 12629.6}}}, {"sem": "17/08/2026", "id": "51371", "ent": 205, "dest": 314, "corr": 2032.4, "adic": 0.0, "taxa": 140.0, "tot": 2172.4, "dia": [[41, 395.6], [36, 319.4], [29, 261.3], [30, 278.8], [29, 291.6], [24, 272.0], [16, 213.7]], "hora": [9, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 8, 8, 6, 8, 6, 7, 19, 21, 32, 27, 23, 16], "mot": [6, 12, 24, 26, 34, 45, 47, 49, 53, 59, 60, 70, 93, 97, 100, 109, 116, 117, 119, 146, 167, 182, 184, 187, 191, 192, 202, 205, 219, 223, 231, 235, 248, 257, 271, 276, 320, 326, 363, 365, 389, 415, 423, 449, 454, 474, 502, 516, 520, 547, 553, 554, 574, 575, 585, 588, 589, 618, 631, 660, 675, 678, 718, 725, 730, 755, 807, 815, 832, 834, 835, 836, 837, 852, 856, 873, 891, 899, 930, 995, 1006, 1012, 1016, 1020, 1023, 1025, 1035, 1059, 1062, 1121, 1129, 1141, 1142, 1169, 1172, 1174, 1193, 1213, 1220, 1223, 1235, 1251, 1273, 1310, 1332, 1349, 1351, 1356, 1363, 1365], "cl": {"AP": {"qtd": 9, "taxa": 60.0, "custolog": 28.9, "pedidos": 539.66}, "SE": {"qtd": 740, "taxa": 2262.67, "custolog": 1461.41, "pedidos": 25617.21}, "TE": {"qtd": 61, "taxa": 358.0, "custolog": 583.5, "pedidos": 3036.57}, "TX": {"qtd": 17, "taxa": 122.5, "custolog": 190.6, "pedidos": 252.2}, "WA": {"qtd": 220, "taxa": 1278.5, "custolog": 2038.7, "pedidos": 10667.79}}}, {"sem": "24/08/2026", "id": "51379", "ent": 72, "dest": 84, "corr": 550.4, "adic": 0.0, "taxa": 105.0, "tot": 655.4, "dia": [[8, 52.0], [14, 115.7], [6, 39.9], [9, 52.6], [13, 119.3], [13, 91.0], [9, 79.9]], "hora": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 2, 2, 1, 0, 1, 5, 11, 13, 11, 13, 2], "mot": [10, 125, 152, 171, 206, 220, 230, 241, 271, 280, 281, 327, 341, 352, 371, 392, 452, 466, 608, 636, 640, 970, 989, 1060, 1095, 1149, 1255, 1304, 1342, 1374], "cl": {"SE": {"qtd": 581, "taxa": 1309.28, "custolog": 873.8, "pedidos": 22027.53}, "TE": {"qtd": 2, "taxa": 11.0, "custolog": 18.1, "pedidos": 90.4}, "TX": {"qtd": 1, "taxa": 5.5, "custolog": 9.3, "pedidos": 5.5}, "WA": {"qtd": 78, "taxa": 451.0, "custolog": 710.6, "pedidos": 4874.85}}}, {"sem": "31/08/2026", "id": "51403", "ent": 12, "dest": 14, "corr": 115.6, "adic": 0.0, "taxa": 45.0, "tot": 160.6, "dia": [[1, 9.0], [1, 5.5], [3, 30.7], [0, 0.0], [2, 28.1], [2, 13.1], [3, 29.2]], "hora": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 4, 2, 2, 0], "mot": [211, 276, 314, 436, 474, 626, 654, 838, 1133, 1242], "cl": {"AP": {"qtd": 4, "taxa": 22.0, "custolog": 0.0, "pedidos": 247.35}, "SE": {"qtd": 241, "taxa": 1010.96, "custolog": 775.13, "pedidos": 11702.09}, "TE": {"qtd": 1, "taxa": 13.5, "custolog": 18.6, "pedidos": 107.5}, "TX": {"qtd": 2, "taxa": 19.0, "custolog": 0.0, "pedidos": 98.5}, "WA": {"qtd": 7, "taxa": 47.5, "custolog": 80.1, "pedidos": 470.4}}}, {"sem": "24/08/2026", "id": "57804", "ent": 19, "dest": 19, "corr": 193.8, "adic": 0.0, "taxa": 52.5, "tot": 246.3, "dia": [[0, 0.0], [6, 67.0], [2, 23.8], [2, 12.8], [2, 14.9], [4, 48.6], [3, 26.7]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 1, 0, 0, 0, 1, 1, 2, 6, 2, 2, 0], "mot": [119, 128, 324, 421, 465, 499, 524, 620, 810, 854, 919, 934, 955, 1029, 1116, 1134, 1163, 1244], "cl": {"SE": {"qtd": 648, "taxa": 3756.71, "custolog": 0.0, "pedidos": 32063.21}, "TX": {"qtd": 2, "taxa": 15.8, "custolog": 0.0, "pedidos": 15.8}, "WA": {"qtd": 13, "taxa": 114.8, "custolog": 146.0, "pedidos": 1268.98}}}, {"sem": "10/08/2026", "id": "11549", "ent": 27, "dest": 30, "corr": 293.4, "adic": 0.0, "taxa": 67.5, "tot": 360.9, "dia": [[2, 16.2], [2, 14.4], [6, 64.3], [2, 18.3], [5, 53.0], [3, 39.5], [7, 87.7]], "hora": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 9, 3, 4, 5, 1], "mot": [101, 102, 145, 193, 312, 331, 341, 446, 543, 744, 778, 815, 903, 957, 995, 1040, 1174, 1186, 1187, 1204, 1253, 1258, 1270, 1284, 1351, 1354], "cl": {"AP": {"qtd": 14, "taxa": 80.5, "custolog": 207.7, "pedidos": 1030.03}, "SE": {"qtd": 710, "taxa": 6042.29, "custolog": 1570.5, "pedidos": 31527.86}, "TX": {"qtd": 4, "taxa": 26.5, "custolog": 47.3, "pedidos": 26.5}, "WA": {"qtd": 10, "taxa": 71.0, "custolog": 129.7, "pedidos": 695.2}}}, {"sem": "27/07/2026", "id": "51917", "ent": 62, "dest": 82, "corr": 627.6, "adic": 0.0, "taxa": 110.0, "tot": 737.6, "dia": [[19, 205.6], [10, 113.4], [6, 71.2], [7, 74.5], [6, 43.9], [8, 66.8], [6, 52.2]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 11, 4, 2, 3, 1, 2, 1, 5, 11, 7, 0, 0], "mot": [18, 36, 55, 58, 63, 95, 104, 156, 170, 192, 199, 253, 263, 315, 321, 386, 391, 406, 423, 450, 472, 482, 502, 512, 562, 570, 579, 637, 645, 670, 731, 764, 835, 886, 936, 955, 966, 1036, 1041, 1063, 1082, 1097, 1101, 1105, 1114, 1116, 1118, 1131, 1139, 1153, 1179, 1227, 1257, 1294, 1302, 1357, 1363], "cl": {"SE": {"qtd": 896, "taxa": 3464.52, "custolog": 2807.74, "pedidos": 45394.6}, "TE": {"qtd": 6, "taxa": 40.5, "custolog": 64.8, "pedidos": 482.7}, "TX": {"qtd": 14, "taxa": 111.4, "custolog": 54.4, "pedidos": 111.4}, "WA": {"qtd": 8, "taxa": 52.0, "custolog": 81.0, "pedidos": 829.3}}}, {"sem": "03/08/2026", "id": "52827", "ent": 194, "dest": 436, "corr": 2588.8, "adic": 0.0, "taxa": 140.0, "tot": 2728.8, "dia": [[23, 320.1], [28, 279.6], [28, 299.8], [36, 402.5], [31, 483.4], [29, 459.3], [19, 344.1]], "hora": [10, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 12, 9, 8, 6, 8, 4, 10, 27, 30, 23, 19, 16], "mot": [73, 78, 116, 126, 137, 179, 228, 301, 330, 331, 374, 399, 474, 475, 546, 558, 574, 588, 589, 660, 684, 696, 697, 747, 748, 753, 785, 791, 793, 808, 823, 828, 849, 881, 895, 902, 916, 980, 986, 1011, 1023, 1065, 1080, 1101, 1128, 1145, 1154, 1162, 1185, 1199, 1202, 1213, 1216, 1223, 1257, 1268, 1299, 1321, 1331, 1352, 1363], "cl": {"AP": {"qtd": 6, "taxa": 28.98, "custolog": 15.28, "pedidos": 400.29}, "SE": {"qtd": 3475, "taxa": 8910.38, "custolog": 7766.13, "pedidos": 109239.8}, "TE": {"qtd": 27, "taxa": 154.0, "custolog": 269.8, "pedidos": 1735.11}, "TX": {"qtd": 4, "taxa": 26.0, "custolog": 44.9, "pedidos": 42.9}, "WA": {"qtd": 183, "taxa": 1134.0, "custolog": 1823.5, "pedidos": 10888.15}}}, {"sem": "31/08/2026", "id": "52025", "ent": 39, "dest": 47, "corr": 385.75, "adic": 0.0, "taxa": 82.5, "tot": 468.25, "dia": [[3, 30.55], [4, 28.3], [7, 44.3], [6, 61.3], [6, 55.1], [9, 111.9], [4, 54.3]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 5, 1, 1, 1, 2, 2, 5, 6, 4, 2, 6, 2], "mot": [130, 145, 187, 227, 257, 286, 368, 436, 559, 562, 571, 675, 699, 757, 771, 790, 807, 876, 905, 963, 1020, 1079, 1084, 1106, 1140, 1141, 1190, 1194, 1203, 1223, 1244, 1267, 1291, 1302, 1310, 1359], "cl": {"AP": {"qtd": 26, "taxa": 148.5, "custolog": 29.0, "pedidos": 1415.06}, "SE": {"qtd": 1147, "taxa": 1023.0, "custolog": 2514.73, "pedidos": 40014.89}, "TE": {"qtd": 3, "taxa": 16.5, "custolog": 18.9, "pedidos": 112.1}, "TX": {"qtd": 4, "taxa": 23.5, "custolog": 43.5, "pedidos": 23.5}}}, {"sem": "10/08/2026", "id": "50988", "ent": 121, "dest": 197, "corr": 1143.2, "adic": 0.0, "taxa": 130.0, "tot": 1273.2, "dia": [[16, 137.0], [19, 161.9], [11, 117.4], [23, 208.8], [18, 180.7], [24, 242.4], [10, 95.0]], "hora": [6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 9, 9, 5, 4, 3, 5, 5, 19, 13, 15, 13, 11], "mot": [4, 18, 34, 36, 62, 64, 69, 76, 90, 99, 149, 165, 169, 192, 193, 271, 274, 300, 321, 348, 382, 389, 422, 436, 453, 472, 482, 502, 514, 541, 542, 574, 591, 592, 614, 636, 649, 660, 675, 676, 698, 718, 722, 727, 757, 807, 815, 843, 873, 892, 904, 914, 917, 918, 931, 933, 956, 966, 984, 993, 1020, 1046, 1065, 1093, 1097, 1099, 1103, 1141, 1152, 1155, 1163, 1213, 1218, 1248, 1253, 1277, 1310, 1318, 1333, 1335], "cl": {"AP": {"qtd": 10, "taxa": 59.5, "custolog": 0.0, "pedidos": 426.04}, "SE": {"qtd": 689, "taxa": 440.44, "custolog": 1343.41, "pedidos": 21107.23}, "TE": {"qtd": 80, "taxa": 445.0, "custolog": 714.4, "pedidos": 4133.87}, "TX": {"qtd": 5, "taxa": 27.5, "custolog": 48.0, "pedidos": 27.5}, "WA": {"qtd": 97, "taxa": 555.0, "custolog": 874.5, "pedidos": 5061.12}}}, {"sem": "24/08/2026", "id": "50988", "ent": 98, "dest": 192, "corr": 1083.5, "adic": 0.0, "taxa": 120.0, "tot": 1203.5, "dia": [[16, 157.2], [18, 216.8], [12, 139.3], [14, 147.2], [17, 176.3], [11, 136.4], [10, 110.3]], "hora": [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 4, 6, 3, 5, 7, 2, 7, 11, 13, 14, 11, 5], "mot": [33, 36, 69, 85, 101, 105, 109, 111, 154, 189, 197, 208, 211, 239, 251, 268, 271, 272, 306, 313, 347, 353, 366, 368, 373, 414, 422, 430, 436, 444, 446, 462, 471, 479, 482, 489, 508, 619, 632, 635, 636, 662, 671, 717, 757, 781, 791, 815, 848, 863, 869, 876, 995, 996, 1002, 1006, 1030, 1038, 1043, 1044, 1046, 1065, 1093, 1106, 1135, 1141, 1163, 1225, 1244, 1248, 1257, 1260, 1267, 1274, 1276, 1285, 1310, 1318, 1342, 1365], "cl": {"AP": {"qtd": 10, "taxa": 55.0, "custolog": 0.0, "pedidos": 537.64}, "SE": {"qtd": 544, "taxa": 425.78, "custolog": 1865.21, "pedidos": 20321.95}, "TE": {"qtd": 70, "taxa": 392.0, "custolog": 646.7, "pedidos": 3469.53}, "TX": {"qtd": 18, "taxa": 99.0, "custolog": 161.0, "pedidos": 99.0}, "WA": {"qtd": 89, "taxa": 498.0, "custolog": 825.7, "pedidos": 4717.07}}}, {"sem": "27/07/2026", "id": "61039", "ent": 10, "dest": 10, "corr": 90.1, "adic": 0.0, "taxa": 45.0, "tot": 135.1, "dia": [[1, 5.5], [0, 0.0], [1, 7.5], [1, 5.6], [1, 16.3], [4, 31.5], [2, 23.7]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 2, 2, 0, 1, 0], "mot": [199, 251, 388, 661, 670, 763, 917, 1006, 1149, 1257], "cl": {"SE": {"qtd": 158, "taxa": 534.99, "custolog": 130.04, "pedidos": 10300.0}, "TE": {"qtd": 3, "taxa": 26.0, "custolog": 37.8, "pedidos": 250.0}, "TX": {"qtd": 3, "taxa": 22.5, "custolog": 23.8, "pedidos": 22.5}, "WA": {"qtd": 3, "taxa": 24.5, "custolog": 35.5, "pedidos": 254.5}}}, {"sem": "10/08/2026", "id": "74789", "ent": 59, "dest": 70, "corr": 519.8, "adic": 0.0, "taxa": 97.5, "tot": 617.3, "dia": [[11, 92.0], [7, 48.6], [10, 80.5], [12, 93.0], [7, 81.5], [9, 78.9], [3, 45.3]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 3, 4, 2, 0, 1, 3, 12, 11, 7, 6, 4], "mot": [7, 50, 51, 149, 150, 196, 272, 379, 446, 449, 461, 486, 560, 571, 582, 603, 723, 768, 825, 862, 889, 910, 1002, 1022, 1082, 1092, 1102, 1111, 1167, 1224, 1301, 1319], "cl": {"AP": {"qtd": 9, "taxa": 54.0, "custolog": 0.0, "pedidos": 395.1}, "SE": {"qtd": 843, "taxa": 1860.43, "custolog": 1852.35, "pedidos": 32821.81}, "TE": {"qtd": 2, "taxa": 11.0, "custolog": 16.6, "pedidos": 91.7}, "TX": {"qtd": 1, "taxa": 8.0, "custolog": 0.0, "pedidos": 8.0}, "WA": {"qtd": 54, "taxa": 348.5, "custolog": 7670.2, "pedidos": 3022.4}}}, {"sem": "17/08/2026", "id": "51379", "ent": 70, "dest": 104, "corr": 675.1, "adic": 0.0, "taxa": 105.0, "tot": 780.1, "dia": [[8, 61.0], [11, 142.3], [7, 53.3], [10, 71.5], [12, 98.8], [14, 132.1], [8, 116.1]], "hora": [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 7, 1, 1, 5, 0, 1, 1, 9, 13, 12, 8, 8], "mot": [56, 93, 100, 182, 230, 289, 319, 352, 363, 392, 463, 466, 468, 480, 484, 556, 605, 628, 640, 719, 989, 1043, 1060, 1081, 1095, 1131, 1242, 1255, 1274, 1304, 1330], "cl": {"AP": {"qtd": 6, "taxa": 53.0, "custolog": 19.7, "pedidos": 352.12}, "SE": {"qtd": 703, "taxa": 1281.95, "custolog": 915.71, "pedidos": 24630.1}, "TE": {"qtd": 4, "taxa": 23.0, "custolog": 35.2, "pedidos": 167.4}, "TX": {"qtd": 5, "taxa": 46.7, "custolog": 38.5, "pedidos": 46.7}, "WA": {"qtd": 80, "taxa": 446.0, "custolog": 664.4, "pedidos": 4395.68}}}, {"sem": "27/07/2026", "id": "74789", "ent": 78, "dest": 96, "corr": 693.9, "adic": 0.0, "taxa": 115.0, "tot": 808.9, "dia": [[7, 57.3], [11, 82.5], [8, 76.9], [19, 155.5], [16, 149.8], [10, 101.5], [7, 70.4]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7, 2, 2, 3, 3, 0, 1, 3, 12, 14, 15, 12, 3], "mot": [7, 20, 25, 84, 107, 196, 216, 219, 364, 379, 446, 461, 603, 658, 665, 794, 825, 906, 910, 1022, 1111, 1125, 1182, 1207, 1282, 1319, 1325, 1338], "cl": {"AP": {"qtd": 9, "taxa": 51.5, "custolog": 0.0, "pedidos": 627.05}, "SE": {"qtd": 428, "taxa": 1224.65, "custolog": 1174.8, "pedidos": 18909.62}, "TE": {"qtd": 1, "taxa": 5.5, "custolog": 8.3, "pedidos": 19.25}, "TX": {"qtd": 2, "taxa": 17.7, "custolog": 0.0, "pedidos": 17.7}, "WA": {"qtd": 77, "taxa": 489.5, "custolog": 4473.8, "pedidos": 3843.28}}}, {"sem": "03/08/2026", "id": "52025", "ent": 34, "dest": 39, "corr": 275.1, "adic": 0.0, "taxa": 75.0, "tot": 350.1, "dia": [[7, 40.1], [7, 44.9], [5, 49.9], [6, 43.7], [5, 47.4], [3, 39.4], [1, 9.7]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 3, 5, 4, 3, 2, 1, 1, 2, 3, 5, 2, 1, 0], "mot": [99, 145, 244, 287, 295, 411, 491, 529, 570, 638, 718, 799, 828, 873, 880, 891, 905, 974, 1002, 1086, 1223, 1239, 1276, 1343, 1368], "cl": {"AP": {"qtd": 21, "taxa": 121.5, "custolog": 9.0, "pedidos": 877.0}, "SE": {"qtd": 1278, "taxa": 789.29, "custolog": 2341.67, "pedidos": 41856.96}, "TE": {"qtd": 2, "taxa": 11.0, "custolog": 0.0, "pedidos": 109.5}, "TX": {"qtd": 10, "taxa": 63.0, "custolog": 82.1, "pedidos": 63.0}}}, {"sem": "03/08/2026", "id": "52825", "ent": 255, "dest": 516, "corr": 3538.0, "adic": 0.0, "taxa": 140.0, "tot": 3678.0, "dia": [[33, 415.3], [37, 456.5], [24, 329.8], [57, 764.5], [32, 603.6], [48, 610.4], [24, 357.9]], "hora": [22, 8, 1, 0, 0, 0, 0, 0, 0, 0, 0, 7, 9, 10, 7, 7, 4, 6, 16, 29, 35, 40, 30, 24], "mot": [4, 68, 74, 134, 140, 144, 145, 155, 160, 180, 185, 189, 223, 226, 234, 235, 245, 267, 268, 284, 293, 315, 331, 335, 338, 347, 371, 382, 400, 437, 451, 475, 483, 516, 530, 544, 565, 597, 629, 637, 647, 668, 702, 727, 730, 733, 787, 806, 824, 846, 847, 850, 879, 891, 908, 945, 965, 986, 995, 1023, 1034, 1048, 1051, 1074, 1087, 1128, 1147, 1151, 1152, 1155, 1165, 1217, 1233, 1245, 1253, 1288, 1360, 1363], "cl": {"AP": {"qtd": 25, "taxa": 142.5, "custolog": 210.3, "pedidos": 1427.73}, "SE": {"qtd": 2434, "taxa": 6905.87, "custolog": 5549.86, "pedidos": 78942.99}, "TE": {"qtd": 129, "taxa": 779.0, "custolog": 1093.8, "pedidos": 7292.01}, "TX": {"qtd": 20, "taxa": 126.0, "custolog": 51.1, "pedidos": 597.4}, "WA": {"qtd": 331, "taxa": 2144.5, "custolog": 3029.4, "pedidos": 18973.12}}}, {"sem": "10/08/2026", "id": "61039", "ent": 12, "dest": 12, "corr": 90.3, "adic": 0.0, "taxa": 45.0, "tot": 135.3, "dia": [[3, 18.2], [0, 0.0], [2, 17.6], [2, 11.2], [1, 13.6], [3, 23.2], [1, 6.5]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 2, 1, 2, 1, 1, 1], "mot": [23, 45, 163, 225, 582, 812, 833, 934, 1084, 1133, 1141, 1301], "cl": {"SE": {"qtd": 210, "taxa": 639.29, "custolog": 333.07, "pedidos": 12908.66}, "TE": {"qtd": 3, "taxa": 24.5, "custolog": 32.7, "pedidos": 255.4}, "TX": {"qtd": 2, "taxa": 12.0, "custolog": 19.3, "pedidos": 12.0}, "WA": {"qtd": 6, "taxa": 45.5, "custolog": 64.2, "pedidos": 629.4}}}, {"sem": "24/08/2026", "id": "52825", "ent": 271, "dest": 502, "corr": 3502.3, "adic": 0.0, "taxa": 140.0, "tot": 3642.3, "dia": [[34, 412.7], [43, 659.9], [30, 352.0], [44, 552.4], [38, 445.3], [57, 724.3], [25, 355.7]], "hora": [25, 6, 2, 0, 0, 0, 0, 0, 0, 0, 0, 7, 15, 15, 9, 7, 4, 9, 15, 33, 38, 35, 29, 22], "mot": [0, 4, 9, 38, 56, 71, 81, 90, 91, 97, 101, 104, 144, 155, 157, 171, 185, 189, 226, 234, 241, 251, 268, 299, 308, 333, 382, 404, 408, 414, 415, 439, 441, 481, 503, 514, 522, 537, 543, 544, 617, 618, 629, 643, 707, 717, 720, 722, 733, 741, 751, 767, 787, 804, 824, 846, 848, 853, 854, 866, 871, 904, 935, 950, 964, 993, 995, 1021, 1029, 1041, 1048, 1055, 1074, 1122, 1128, 1138, 1142, 1151, 1162, 1190, 1220, 1245, 1249, 1258, 1310, 1311, 1336, 1360, 1364], "cl": {"AP": {"qtd": 18, "taxa": 107.0, "custolog": 193.0, "pedidos": 1035.04}, "SE": {"qtd": 1701, "taxa": 2630.94, "custolog": 4666.1, "pedidos": 64436.09}, "TE": {"qtd": 118, "taxa": 733.0, "custolog": 1066.1, "pedidos": 6532.77}, "TX": {"qtd": 18, "taxa": 139.0, "custolog": 60.2, "pedidos": 241.8}, "WA": {"qtd": 341, "taxa": 2130.0, "custolog": 2890.6, "pedidos": 20120.55}}}, {"sem": "10/08/2026", "id": "51379", "ent": 76, "dest": 95, "corr": 604.4, "adic": 0.0, "taxa": 105.0, "tot": 709.4, "dia": [[10, 72.7], [12, 104.6], [9, 60.6], [12, 89.0], [9, 63.8], [15, 112.8], [9, 100.9]], "hora": [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 5, 2, 1, 0, 2, 2, 4, 12, 13, 10, 14, 6], "mot": [45, 52, 83, 137, 192, 230, 280, 352, 363, 371, 392, 439, 466, 616, 640, 660, 668, 719, 721, 921, 957, 989, 1026, 1047, 1060, 1095, 1131, 1143, 1154, 1238, 1255, 1257, 1330], "cl": {"AP": {"qtd": 6, "taxa": 34.5, "custolog": 0.0, "pedidos": 398.43}, "SE": {"qtd": 732, "taxa": 1555.81, "custolog": 1124.28, "pedidos": 25054.94}, "TE": {"qtd": 7, "taxa": 40.0, "custolog": 61.0, "pedidos": 387.75}, "TX": {"qtd": 6, "taxa": 49.0, "custolog": 45.2, "pedidos": 49.0}, "WA": {"qtd": 69, "taxa": 392.0, "custolog": 617.8, "pedidos": 4271.57}}}, {"sem": "03/08/2026", "id": "51371", "ent": 225, "dest": 346, "corr": 2246.7, "adic": 0.0, "taxa": 140.0, "tot": 2386.7, "dia": [[36, 311.0], [34, 319.9], [29, 285.8], [45, 443.5], [38, 402.5], [26, 280.6], [17, 203.4]], "hora": [12, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 16, 11, 8, 5, 5, 9, 16, 26, 31, 32, 26, 16], "mot": [3, 12, 13, 34, 44, 48, 59, 64, 66, 70, 85, 93, 106, 116, 119, 120, 140, 144, 145, 147, 166, 184, 188, 192, 210, 214, 253, 267, 271, 290, 291, 309, 316, 331, 338, 342, 350, 351, 380, 383, 389, 393, 402, 414, 422, 424, 439, 455, 474, 484, 492, 497, 500, 503, 524, 538, 589, 591, 595, 597, 609, 633, 635, 636, 652, 660, 668, 678, 685, 722, 725, 730, 735, 738, 739, 747, 789, 792, 793, 815, 823, 836, 860, 870, 877, 922, 929, 930, 941, 951, 954, 969, 987, 995, 1019, 1023, 1025, 1058, 1062, 1065, 1074, 1093, 1121, 1128, 1141, 1155, 1191, 1202, 1231, 1233, 1257, 1286, 1298, 1310, 1321, 1342, 1372], "cl": {"AP": {"qtd": 5, "taxa": 22.0, "custolog": 21.6, "pedidos": 162.19}, "SE": {"qtd": 695, "taxa": 2358.15, "custolog": 1699.61, "pedidos": 25157.22}, "TE": {"qtd": 97, "taxa": 578.5, "custolog": 939.1, "pedidos": 5032.15}, "TX": {"qtd": 17, "taxa": 106.5, "custolog": 179.3, "pedidos": 106.5}, "WA": {"qtd": 213, "taxa": 1251.5, "custolog": 2009.8, "pedidos": 10854.29}}}, {"sem": "31/08/2026", "id": "51917", "ent": 23, "dest": 24, "corr": 234.7, "adic": 0.0, "taxa": 60.0, "tot": 294.7, "dia": [[2, 18.3], [0, 0.0], [6, 58.2], [2, 14.6], [4, 44.4], [8, 89.7], [1, 9.5]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 2, 2, 0, 0, 1, 3, 2, 3, 3, 3, 0], "mot": [82, 104, 259, 312, 321, 404, 425, 472, 571, 673, 700, 781, 858, 864, 891, 966, 1002, 1105, 1155, 1248, 1250, 1253], "cl": {"SE": {"qtd": 997, "taxa": 6032.53, "custolog": 4850.18, "pedidos": 48184.18}, "TE": {"qtd": 3, "taxa": 21.0, "custolog": 40.7, "pedidos": 279.0}, "TX": {"qtd": 4, "taxa": 38.2, "custolog": 24.1, "pedidos": 38.2}, "WA": {"qtd": 12, "taxa": 100.5, "custolog": 144.1, "pedidos": 1449.9}}}, {"sem": "17/08/2026", "id": "61039", "ent": 10, "dest": 11, "corr": 97.2, "adic": 0.0, "taxa": 37.5, "tot": 134.7, "dia": [[1, 10.1], [0, 0.0], [1, 6.9], [2, 15.5], [0, 0.0], [4, 43.1], [2, 21.6]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 2, 3, 0, 0], "mot": [251, 316, 405, 446, 751, 919, 1214, 1321], "cl": {"SE": {"qtd": 242, "taxa": 594.34, "custolog": 377.24, "pedidos": 14030.77}, "TE": {"qtd": 2, "taxa": 12.0, "custolog": 19.3, "pedidos": 116.0}, "TX": {"qtd": 1, "taxa": 25.0, "custolog": 0.0, "pedidos": 25.0}, "WA": {"qtd": 5, "taxa": 37.0, "custolog": 55.9, "pedidos": 584.8}}}, {"sem": "24/08/2026", "id": "52025", "ent": 35, "dest": 45, "corr": 365.4, "adic": 0.0, "taxa": 75.0, "tot": 440.4, "dia": [[7, 46.3], [8, 96.7], [6, 45.1], [4, 37.0], [4, 37.1], [4, 39.1], [2, 64.1]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 3, 0, 0, 1, 1, 4, 6, 5, 6, 2, 0], "mot": [0, 6, 13, 47, 69, 93, 101, 118, 167, 178, 268, 271, 303, 327, 329, 366, 382, 444, 455, 620, 673, 712, 731, 873, 905, 993, 1020, 1030, 1199, 1214, 1220, 1297, 1356, 1374], "cl": {"AP": {"qtd": 31, "taxa": 197.0, "custolog": 18.3, "pedidos": 1627.16}, "SE": {"qtd": 1342, "taxa": 1205.87, "custolog": 1510.72, "pedidos": 45850.63}, "TX": {"qtd": 5, "taxa": 29.5, "custolog": 29.2, "pedidos": 29.5}, "WA": {"qtd": 1, "taxa": 5.5, "custolog": 0.0, "pedidos": 43.4}}}, {"sem": "24/08/2026", "id": "51369", "ent": 170, "dest": 314, "corr": 2287.6, "adic": 0.0, "taxa": 140.0, "tot": 2427.6, "dia": [[23, 292.3], [28, 408.8], [19, 220.6], [25, 304.0], [23, 294.3], [30, 405.5], [22, 362.1]], "hora": [12, 5, 6, 3, 1, 1, 0, 0, 0, 0, 2, 10, 11, 10, 6, 3, 5, 4, 14, 20, 17, 19, 12, 9], "mot": [6, 12, 30, 34, 38, 47, 62, 75, 90, 102, 109, 147, 162, 168, 169, 178, 193, 204, 208, 223, 231, 258, 262, 274, 286, 304, 312, 322, 324, 327, 336, 343, 348, 383, 412, 414, 422, 439, 444, 446, 472, 479, 541, 553, 576, 581, 600, 604, 612, 656, 703, 706, 712, 716, 717, 722, 728, 739, 751, 758, 807, 834, 841, 844, 877, 886, 905, 917, 931, 935, 949, 952, 962, 963, 966, 1002, 1003, 1018, 1030, 1037, 1038, 1054, 1072, 1097, 1098, 1109, 1110, 1124, 1141, 1152, 1178, 1205, 1210, 1222, 1235, 1250, 1257, 1270, 1286, 1291, 1294, 1296, 1315, 1317, 1322, 1341, 1345, 1347, 1355, 1356, 1375], "cl": {"AP": {"qtd": 61, "taxa": 395.5, "custolog": 0.0, "pedidos": 3239.35}, "SE": {"qtd": 1328, "taxa": 7299.11, "custolog": 2651.67, "pedidos": 54913.22}, "TE": {"qtd": 93, "taxa": 580.0, "custolog": 989.7, "pedidos": 4745.77}, "TX": {"qtd": 11, "taxa": 67.5, "custolog": 74.7, "pedidos": 67.5}, "WA": {"qtd": 139, "taxa": 975.5, "custolog": 1564.8, "pedidos": 7743.32}}}, {"sem": "27/07/2026", "id": "11549", "ent": 12, "dest": 12, "corr": 127.3, "adic": 0.0, "taxa": 30.0, "tot": 157.3, "dia": [[0, 0.0], [0, 0.0], [0, 0.0], [3, 28.4], [3, 29.3], [2, 19.6], [4, 50.0]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 1, 2, 1, 2], "mot": [265, 348, 452, 483, 503, 696, 903, 978, 1152, 1174, 1258], "cl": {"AP": {"qtd": 1, "taxa": 6.0, "custolog": 16.5, "pedidos": 51.69}, "SE": {"qtd": 544, "taxa": 4336.99, "custolog": 479.52, "pedidos": 26602.07}, "TX": {"qtd": 1, "taxa": 10.0, "custolog": 16.6, "pedidos": 10.0}, "WA": {"qtd": 10, "taxa": 68.5, "custolog": 123.7, "pedidos": 664.55}}}, {"sem": "10/08/2026", "id": "51369", "ent": 159, "dest": 302, "corr": 2144.2, "adic": 0.0, "taxa": 140.0, "tot": 2284.2, "dia": [[23, 319.7], [24, 356.0], [25, 330.1], [21, 262.4], [25, 330.7], [21, 236.0], [20, 309.3]], "hora": [11, 5, 2, 2, 2, 0, 0, 0, 0, 0, 4, 11, 9, 7, 5, 2, 2, 6, 7, 19, 24, 16, 13, 12], "mot": [4, 30, 39, 55, 66, 69, 72, 85, 90, 94, 95, 114, 119, 127, 141, 142, 145, 147, 156, 169, 172, 178, 189, 192, 225, 231, 262, 271, 286, 313, 334, 368, 383, 394, 407, 414, 439, 445, 453, 454, 472, 486, 497, 541, 583, 636, 649, 656, 659, 668, 670, 675, 728, 743, 749, 790, 823, 846, 854, 863, 876, 886, 887, 888, 891, 898, 918, 928, 933, 947, 962, 993, 1018, 1026, 1065, 1067, 1097, 1110, 1133, 1152, 1160, 1174, 1180, 1187, 1199, 1202, 1218, 1223, 1253, 1262, 1285, 1292, 1294, 1322, 1347, 1360, 1370], "cl": {"AP": {"qtd": 56, "taxa": 338.5, "custolog": 28.6, "pedidos": 2901.17}, "SE": {"qtd": 1334, "taxa": 4668.97, "custolog": 1495.25, "pedidos": 51924.22}, "TE": {"qtd": 85, "taxa": 554.5, "custolog": 896.7, "pedidos": 4237.67}, "TX": {"qtd": 14, "taxa": 93.5, "custolog": 146.7, "pedidos": 93.5}, "WA": {"qtd": 139, "taxa": 900.0, "custolog": 1465.2, "pedidos": 7075.72}}}, {"sem": "31/08/2026", "id": "57804", "ent": 21, "dest": 24, "corr": 239.8, "adic": 0.0, "taxa": 52.5, "tot": 292.3, "dia": [[3, 33.1], [4, 40.8], [3, 29.8], [1, 9.5], [3, 41.9], [4, 51.6], [3, 33.1]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 1, 0, 0, 5, 4, 1, 0, 0], "mot": [276, 404, 414, 446, 505, 519, 620, 741, 773, 838, 886, 919, 1025, 1079, 1117, 1181, 1189, 1190, 1346, 1349], "cl": {"SE": {"qtd": 580, "taxa": 3116.38, "custolog": 0.0, "pedidos": 28710.03}, "TE": {"qtd": 4, "taxa": 36.8, "custolog": 49.6, "pedidos": 393.8}, "TX": {"qtd": 2, "taxa": 12.0, "custolog": 21.8, "pedidos": 12.0}, "WA": {"qtd": 7, "taxa": 60.3, "custolog": 89.7, "pedidos": 666.7}}}, {"sem": "27/07/2026", "id": "113150", "ent": 87, "dest": 124, "corr": 850.6, "adic": 0.0, "taxa": 102.5, "tot": 953.1, "dia": [[15, 147.0], [3, 34.3], [7, 67.9], [11, 105.9], [15, 153.2], [26, 223.3], [10, 119.0]], "hora": [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 5, 5, 4, 1, 1, 2, 6, 14, 16, 12, 7, 9], "mot": [7, 11, 38, 74, 107, 111, 129, 147, 155, 163, 171, 195, 216, 223, 257, 260, 283, 380, 383, 396, 414, 439, 446, 449, 467, 501, 503, 508, 572, 657, 680, 709, 712, 716, 825, 837, 842, 872, 906, 919, 928, 958, 966, 976, 993, 1005, 1015, 1071, 1128, 1179, 1221, 1227, 1240, 1258, 1301, 1302, 1342], "cl": {"AP": {"qtd": 195, "taxa": 94.5, "custolog": 0.0, "pedidos": 6996.9}, "SE": {"qtd": 380, "taxa": 36.0, "custolog": 0.0, "pedidos": 16826.7}, "TE": {"qtd": 21, "taxa": 149.0, "custolog": 0.0, "pedidos": 1178.22}, "TX": {"qtd": 3, "taxa": 24.0, "custolog": 0.0, "pedidos": 24.0}, "WA": {"qtd": 76, "taxa": 450.0, "custolog": 0.0, "pedidos": 4521.13}}}, {"sem": "31/08/2026", "id": "74789", "ent": 62, "dest": 76, "corr": 555.6, "adic": 0.0, "taxa": 97.5, "tot": 653.1, "dia": [[9, 81.4], [8, 69.0], [6, 38.3], [14, 118.3], [14, 120.7], [5, 56.0], [6, 71.9]], "hora": [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1, 1, 0, 2, 3, 12, 15, 10, 5, 4], "mot": [7, 14, 181, 262, 321, 325, 357, 461, 474, 562, 571, 603, 642, 679, 715, 766, 810, 825, 826, 867, 889, 910, 1000, 1010, 1022, 1057, 1111, 1146, 1181, 1338], "cl": {"AP": {"qtd": 12, "taxa": 68.0, "custolog": 18.9, "pedidos": 879.05}, "SE": {"qtd": 1276, "taxa": 4220.92, "custolog": 4942.56, "pedidos": 48471.39}, "WA": {"qtd": 56, "taxa": 361.0, "custolog": 887.9, "pedidos": 3466.15}}}, {"sem": "17/08/2026", "id": "51403", "ent": 15, "dest": 15, "corr": 127.6, "adic": 0.0, "taxa": 45.0, "tot": 172.6, "dia": [[1, 9.9], [0, 0.0], [1, 6.0], [3, 26.2], [4, 30.0], [2, 14.9], [4, 40.6]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 3, 5, 2, 0], "mot": [12, 208, 271, 347, 422, 436, 716, 870, 917, 966, 1020, 1262, 1310], "cl": {"AP": {"qtd": 2, "taxa": 12.0, "custolog": 0.0, "pedidos": 171.34}, "SE": {"qtd": 388, "taxa": 1185.1, "custolog": 684.47, "pedidos": 20099.13}, "TE": {"qtd": 1, "taxa": 5.5, "custolog": 8.3, "pedidos": 86.8}, "TX": {"qtd": 4, "taxa": 24.5, "custolog": 20.9, "pedidos": 88.0}, "WA": {"qtd": 7, "taxa": 49.5, "custolog": 80.8, "pedidos": 619.88}}}, {"sem": "03/08/2026", "id": "51379", "ent": 91, "dest": 127, "corr": 820.7, "adic": 0.0, "taxa": 110.0, "tot": 930.7, "dia": [[12, 96.5], [13, 101.5], [17, 154.9], [13, 105.7], [14, 142.7], [11, 96.9], [11, 122.5]], "hora": [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 9, 4, 0, 3, 1, 1, 3, 15, 17, 12, 14, 6], "mot": [10, 13, 86, 93, 125, 137, 220, 241, 280, 338, 352, 363, 392, 466, 599, 640, 719, 755, 900, 929, 989, 1043, 1047, 1060, 1065, 1095, 1131, 1143, 1149, 1227, 1255, 1301, 1305, 1321, 1353], "cl": {"AP": {"qtd": 9, "taxa": 49.5, "custolog": 0.0, "pedidos": 445.03}, "SE": {"qtd": 884, "taxa": 1882.69, "custolog": 1479.06, "pedidos": 25323.34}, "TE": {"qtd": 12, "taxa": 67.5, "custolog": 118.2, "pedidos": 843.9}, "TX": {"qtd": 7, "taxa": 55.0, "custolog": 81.5, "pedidos": 55.0}, "WA": {"qtd": 98, "taxa": 583.5, "custolog": 933.1, "pedidos": 5461.84}}}, {"sem": "31/08/2026", "id": "113150", "ent": 79, "dest": 148, "corr": 1047.4, "adic": 0.0, "taxa": 102.5, "tot": 1149.9, "dia": [[8, 76.5], [4, 29.3], [15, 138.8], [16, 165.3], [15, 249.4], [12, 247.7], [9, 140.4]], "hora": [3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 7, 5, 1, 3, 1, 1, 4, 9, 10, 13, 9, 6], "mot": [72, 88, 97, 107, 109, 129, 142, 143, 160, 187, 211, 235, 355, 366, 380, 391, 404, 414, 426, 443, 446, 478, 503, 519, 541, 569, 590, 607, 623, 660, 679, 703, 704, 713, 718, 758, 810, 820, 891, 928, 972, 995, 1002, 1133, 1134, 1160, 1161, 1167, 1181, 1204, 1210, 1322], "cl": {"AP": {"qtd": 162, "taxa": 180.0, "custolog": 0.0, "pedidos": 7145.07}, "SE": {"qtd": 140, "taxa": 0.0, "custolog": 0.0, "pedidos": 8122.67}, "TE": {"qtd": 25, "taxa": 147.0, "custolog": 10.6, "pedidos": 1472.1}, "TX": {"qtd": 2, "taxa": 12.5, "custolog": 0.0, "pedidos": 12.5}, "WA": {"qtd": 89, "taxa": 595.0, "custolog": 26.2, "pedidos": 5510.44}}}, {"sem": "24/08/2026", "id": "51917", "ent": 28, "dest": 28, "corr": 266.8, "adic": 0.0, "taxa": 60.0, "tot": 326.8, "dia": [[4, 32.9], [2, 15.2], [7, 64.7], [3, 29.4], [5, 45.5], [3, 31.6], [4, 47.5]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 4, 2, 0, 1, 1, 0, 2, 3, 3, 4, 1, 2], "mot": [119, 156, 239, 313, 324, 366, 381, 432, 524, 576, 582, 639, 699, 751, 767, 886, 934, 998, 1005, 1189, 1249, 1302, 1304, 1320, 1321, 1334, 1358, 1359], "cl": {"SE": {"qtd": 1214, "taxa": 5850.06, "custolog": 4222.71, "pedidos": 56170.91}, "TE": {"qtd": 3, "taxa": 22.5, "custolog": 13.0, "pedidos": 278.5}, "TX": {"qtd": 13, "taxa": 107.1, "custolog": 112.5, "pedidos": 107.1}, "WA": {"qtd": 9, "taxa": 82.0, "custolog": 120.6, "pedidos": 882.5}}}, {"sem": "17/08/2026", "id": "52827", "ent": 184, "dest": 399, "corr": 2245.9, "adic": 0.0, "taxa": 140.0, "tot": 2385.9, "dia": [[24, 292.9], [22, 291.0], [25, 258.6], [30, 329.2], [29, 366.9], [33, 371.7], [21, 335.6]], "hora": [9, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 11, 7, 8, 6, 5, 5, 23, 24, 29, 23, 13], "mot": [6, 60, 93, 109, 176, 179, 184, 193, 228, 294, 300, 301, 330, 374, 384, 475, 546, 721, 725, 748, 753, 755, 823, 834, 859, 881, 916, 952, 986, 1035, 1050, 1080, 1091, 1145, 1154, 1199, 1202, 1235, 1286, 1307, 1367], "cl": {"AP": {"qtd": 9, "taxa": 46.0, "custolog": 11.0, "pedidos": 524.89}, "SE": {"qtd": 2885, "taxa": 5834.98, "custolog": 4305.81, "pedidos": 99498.17}, "TE": {"qtd": 42, "taxa": 247.0, "custolog": 404.8, "pedidos": 2466.44}, "TX": {"qtd": 15, "taxa": 93.5, "custolog": 149.6, "pedidos": 320.09}, "WA": {"qtd": 288, "taxa": 1719.0, "custolog": 2743.7, "pedidos": 17136.65}}}, {"sem": "10/08/2026", "id": "52025", "ent": 26, "dest": 29, "corr": 221.5, "adic": 0.0, "taxa": 67.5, "tot": 289.0, "dia": [[3, 18.7], [9, 70.6], [6, 65.0], [2, 17.6], [2, 13.2], [2, 14.4], [2, 22.0]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 2, 0, 0, 1, 3, 4, 2, 3, 5, 2], "mot": [99, 145, 146, 204, 244, 299, 329, 449, 514, 524, 570, 614, 649, 689, 694, 905, 918, 1020, 1106, 1142, 1160, 1341, 1343], "cl": {"AP": {"qtd": 18, "taxa": 106.0, "custolog": 23.2, "pedidos": 895.85}, "SE": {"qtd": 1193, "taxa": 1083.1, "custolog": 1773.99, "pedidos": 40563.11}, "TE": {"qtd": 2, "taxa": 19.0, "custolog": 16.99, "pedidos": 144.55}, "TX": {"qtd": 2, "taxa": 11.0, "custolog": 19.6, "pedidos": 11.0}}}, {"sem": "24/08/2026", "id": "61039", "ent": 9, "dest": 9, "corr": 95.1, "adic": 0.0, "taxa": 37.5, "tot": 132.6, "dia": [[3, 26.7], [3, 38.1], [1, 8.5], [1, 6.9], [0, 0.0], [1, 14.9], [0, 0.0]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1], "mot": [147, 207, 219, 412, 730, 1044, 1192, 1205, 1227], "cl": {"SE": {"qtd": 168, "taxa": 671.53, "custolog": 354.76, "pedidos": 12015.64}, "TE": {"qtd": 3, "taxa": 27.5, "custolog": 43.5, "pedidos": 252.5}, "TX": {"qtd": 3, "taxa": 26.5, "custolog": 38.8, "pedidos": 26.5}, "WA": {"qtd": 1, "taxa": 7.0, "custolog": 12.1, "pedidos": 58.0}}}, {"sem": "17/08/2026", "id": "51369", "ent": 163, "dest": 315, "corr": 2281.1, "adic": 0.0, "taxa": 140.0, "tot": 2421.1, "dia": [[22, 257.0], [29, 399.9], [19, 258.5], [21, 308.7], [27, 392.6], [26, 357.7], [19, 306.7]], "hora": [13, 3, 2, 4, 0, 0, 0, 0, 0, 0, 1, 8, 10, 8, 5, 7, 3, 4, 9, 21, 21, 19, 14, 11], "mot": [5, 18, 30, 43, 58, 64, 69, 85, 101, 106, 119, 127, 142, 175, 178, 186, 192, 231, 253, 265, 271, 276, 278, 285, 286, 349, 356, 359, 363, 382, 403, 408, 439, 444, 446, 453, 472, 541, 551, 554, 572, 582, 585, 592, 600, 605, 614, 636, 656, 758, 764, 777, 790, 792, 807, 846, 859, 888, 891, 925, 926, 931, 933, 938, 954, 958, 962, 986, 1002, 1018, 1044, 1046, 1065, 1097, 1110, 1122, 1152, 1161, 1180, 1190, 1196, 1218, 1223, 1237, 1258, 1270, 1279, 1294, 1322, 1324, 1333, 1341, 1347, 1349, 1356], "cl": {"AP": {"qtd": 37, "taxa": 220.0, "custolog": 0.0, "pedidos": 1839.6}, "SE": {"qtd": 1221, "taxa": 4699.97, "custolog": 2379.51, "pedidos": 48731.72}, "TE": {"qtd": 70, "taxa": 473.0, "custolog": 758.9, "pedidos": 4603.36}, "TX": {"qtd": 4, "taxa": 27.5, "custolog": 36.9, "pedidos": 27.5}, "WA": {"qtd": 114, "taxa": 826.5, "custolog": 1288.9, "pedidos": 7201.77}}}, {"sem": "10/08/2026", "id": "51403", "ent": 16, "dest": 18, "corr": 130.2, "adic": 0.0, "taxa": 52.5, "tot": 182.7, "dia": [[2, 16.8], [1, 6.1], [1, 7.0], [4, 36.1], [2, 11.6], [5, 34.1], [1, 18.5]], "hora": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 1], "mot": [85, 193, 251, 255, 437, 498, 566, 837, 1175, 1213, 1223, 1262, 1285, 1310, 1318], "cl": {"AP": {"qtd": 3, "taxa": 16.5, "custolog": 9.0, "pedidos": 78.5}, "SE": {"qtd": 421, "taxa": 1474.06, "custolog": 860.49, "pedidos": 20997.72}, "TE": {"qtd": 3, "taxa": 26.0, "custolog": 35.7, "pedidos": 594.8}, "TX": {"qtd": 2, "taxa": 13.5, "custolog": 10.3, "pedidos": 13.5}, "WA": {"qtd": 9, "taxa": 55.0, "custolog": 91.3, "pedidos": 867.0}}}, {"sem": "03/08/2026", "id": "52828", "ent": 138, "dest": 347, "corr": 2506.1, "adic": 0.0, "taxa": 135.0, "tot": 2641.1, "dia": [[17, 311.0], [19, 292.6], [21, 311.6], [24, 466.6], [24, 453.3], [21, 384.6], [12, 286.4]], "hora": [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 11, 11, 6, 6, 5, 1, 7, 16, 16, 18, 12, 12], "mot": [122, 148, 164, 183, 192, 207, 210, 219, 255, 257, 269, 291, 331, 369, 375, 513, 532, 557, 594, 597, 598, 630, 664, 677, 729, 740, 775, 790, 801, 813, 823, 851, 861, 920, 942, 1017, 1045, 1093, 1118, 1129, 1155, 1167, 1208, 1228, 1308, 1350], "cl": {"AP": {"qtd": 6, "taxa": 34.5, "custolog": 0.0, "pedidos": 312.44}, "SE": {"qtd": 2382, "taxa": 1790.13, "custolog": 5208.86, "pedidos": 73263.06}, "TE": {"qtd": 17, "taxa": 114.0, "custolog": 174.7, "pedidos": 1058.13}, "TX": {"qtd": 7, "taxa": 74.95, "custolog": 25.3, "pedidos": 133.71}, "WA": {"qtd": 239, "taxa": 1505.5, "custolog": 2029.9, "pedidos": 16410.57}}}, {"sem": "24/08/2026", "id": "74789", "ent": 64, "dest": 75, "corr": 534.6, "adic": 0.0, "taxa": 97.5, "tot": 632.1, "dia": [[11, 82.1], [12, 120.7], [5, 37.5], [7, 60.2], [10, 73.8], [12, 99.9], [7, 60.4]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 3, 2, 1, 2, 0, 4, 11, 12, 10, 8, 4], "mot": [7, 20, 28, 50, 56, 159, 196, 235, 262, 325, 364, 394, 446, 460, 476, 486, 500, 582, 603, 658, 679, 686, 750, 768, 825, 826, 889, 910, 928, 1031, 1111, 1173], "cl": {"AP": {"qtd": 8, "taxa": 45.0, "custolog": 0.0, "pedidos": 568.44}, "SE": {"qtd": 725, "taxa": 2907.67, "custolog": 2500.08, "pedidos": 31181.21}, "TX": {"qtd": 1, "taxa": 15.5, "custolog": 0.0, "pedidos": 15.5}, "WA": {"qtd": 66, "taxa": 393.5, "custolog": 610.7, "pedidos": 4106.89}}}, {"sem": "10/08/2026", "id": "84878", "ent": 88, "dest": 131, "corr": 914.1, "adic": 0.0, "taxa": 110.0, "tot": 1024.1, "dia": [[12, 141.9], [10, 99.6], [11, 112.7], [6, 46.8], [12, 112.4], [23, 248.5], [14, 152.2]], "hora": [9, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 3, 2, 2, 2, 1, 1, 4, 13, 13, 15, 7, 9], "mot": [31, 43, 74, 145, 188, 199, 271, 344, 383, 385, 390, 514, 528, 533, 618, 628, 651, 666, 682, 710, 800, 808, 812, 849, 857, 909, 939, 944, 954, 985, 993, 1087, 1139, 1149, 1200, 1219, 1234, 1252, 1253, 1352], "cl": {"AP": {"qtd": 11, "taxa": 61.5, "custolog": 0.0, "pedidos": 633.74}, "SE": {"qtd": 1286, "taxa": 5065.15, "custolog": 2083.48, "pedidos": 45155.58}, "TE": {"qtd": 12, "taxa": 71.0, "custolog": 117.3, "pedidos": 544.35}, "TX": {"qtd": 10, "taxa": 113.1, "custolog": 41.6, "pedidos": 153.09}, "WA": {"qtd": 89, "taxa": 547.0, "custolog": 873.9, "pedidos": 5442.72}}}, {"sem": "24/08/2026", "id": "52828", "ent": 130, "dest": 356, "corr": 2411.9, "adic": 0.0, "taxa": 130.0, "tot": 2541.9, "dia": [[14, 204.1], [20, 343.4], [15, 224.2], [23, 395.6], [19, 375.3], [21, 407.8], [18, 461.5]], "hora": [7, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 9, 7, 9, 6, 3, 2, 9, 13, 20, 18, 13, 8], "mot": [6, 79, 117, 133, 144, 148, 174, 224, 255, 347, 370, 375, 389, 391, 423, 425, 439, 444, 515, 527, 534, 536, 575, 594, 598, 625, 630, 664, 672, 739, 772, 790, 803, 851, 864, 874, 985, 1017, 1077, 1118, 1155, 1174, 1230, 1235, 1259, 1260, 1271, 1280, 1285, 1286, 1350, 1355, 1356, 1364], "cl": {"AP": {"qtd": 11, "taxa": 60.5, "custolog": 0.0, "pedidos": 486.2}, "SE": {"qtd": 1841, "taxa": 1786.97, "custolog": 4063.62, "pedidos": 68136.29}, "TE": {"qtd": 68, "taxa": 437.0, "custolog": 603.7, "pedidos": 3658.44}, "TX": {"qtd": 9, "taxa": 95.57, "custolog": 108.9, "pedidos": 169.97}, "WA": {"qtd": 194, "taxa": 1213.0, "custolog": 1632.9, "pedidos": 12455.04}}}, {"sem": "10/08/2026", "id": "52827", "ent": 183, "dest": 418, "corr": 2386.95, "adic": 0.0, "taxa": 140.0, "tot": 2526.95, "dia": [[27, 324.0], [30, 338.5], [20, 262.1], [31, 325.3], [27, 432.25], [30, 347.5], [18, 357.3]], "hora": [13, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 13, 10, 5, 1, 4, 9, 11, 20, 29, 32, 16, 12], "mot": [57, 78, 108, 112, 137, 176, 179, 184, 192, 193, 199, 281, 301, 313, 330, 374, 394, 399, 478, 490, 546, 551, 556, 636, 697, 721, 748, 778, 823, 839, 875, 881, 916, 952, 986, 1011, 1050, 1052, 1065, 1078, 1113, 1128, 1145, 1154, 1199, 1202, 1227, 1253, 1299, 1300, 1367], "cl": {"AP": {"qtd": 6, "taxa": 33.0, "custolog": 10.1, "pedidos": 373.43}, "SE": {"qtd": 3063, "taxa": 7235.17, "custolog": 6468.62, "pedidos": 107238.11}, "TE": {"qtd": 19, "taxa": 118.0, "custolog": 185.4, "pedidos": 1571.34}, "TX": {"qtd": 6, "taxa": 39.5, "custolog": 64.9, "pedidos": 64.4}, "WA": {"qtd": 147, "taxa": 869.0, "custolog": 1351.6, "pedidos": 8287.73}}}, {"sem": "24/08/2026", "id": "113150", "ent": 64, "dest": 95, "corr": 643.7, "adic": 0.0, "taxa": 97.5, "tot": 741.2, "dia": [[9, 74.5], [2, 21.3], [13, 96.3], [10, 80.3], [11, 143.3], [12, 127.7], [7, 100.3]], "hora": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 3, 3, 3, 1, 1, 1, 4, 11, 10, 10, 3, 9], "mot": [37, 50, 72, 129, 133, 181, 208, 227, 259, 262, 304, 308, 327, 370, 403, 413, 446, 447, 450, 472, 476, 484, 494, 503, 521, 522, 541, 623, 698, 751, 822, 830, 878, 886, 889, 1109, 1133, 1142, 1164, 1240, 1258, 1301, 1356], "cl": {"AP": {"qtd": 205, "taxa": 113.0, "custolog": 0.0, "pedidos": 6952.13}, "SE": {"qtd": 274, "taxa": 11.0, "custolog": 0.0, "pedidos": 12262.6}, "TE": {"qtd": 10, "taxa": 58.0, "custolog": 0.0, "pedidos": 490.35}, "TX": {"qtd": 2, "taxa": 14.0, "custolog": 0.0, "pedidos": 14.0}, "WA": {"qtd": 60, "taxa": 367.0, "custolog": 36.1, "pedidos": 3548.88}}}, {"sem": "24/08/2026", "id": "51371", "ent": 181, "dest": 299, "corr": 2000.2, "adic": 0.0, "taxa": 135.0, "tot": 2135.2, "dia": [[23, 251.7], [28, 290.7], [31, 235.0], [30, 325.4], [30, 389.2], [28, 323.9], [11, 184.3]], "hora": [3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 11, 13, 4, 4, 4, 7, 17, 27, 26, 26, 16, 9], "mot": [13, 36, 59, 93, 112, 116, 130, 141, 157, 167, 174, 182, 191, 231, 273, 296, 297, 312, 327, 369, 378, 383, 389, 399, 414, 416, 433, 434, 447, 448, 455, 472, 508, 510, 536, 547, 569, 582, 585, 592, 594, 624, 636, 646, 674, 699, 706, 718, 725, 754, 761, 803, 814, 834, 846, 853, 854, 855, 870, 876, 890, 891, 894, 896, 921, 930, 943, 952, 955, 959, 970, 995, 1001, 1008, 1018, 1025, 1055, 1069, 1121, 1133, 1141, 1142, 1148, 1159, 1163, 1168, 1191, 1199, 1201, 1220, 1230, 1235, 1237, 1253, 1271, 1301, 1325, 1351, 1356, 1373, 1374], "cl": {"AP": {"qtd": 11, "taxa": 60.5, "custolog": 9.1, "pedidos": 793.42}, "SE": {"qtd": 750, "taxa": 3207.34, "custolog": 1817.6, "pedidos": 27393.62}, "TE": {"qtd": 73, "taxa": 414.0, "custolog": 711.2, "pedidos": 3544.87}, "TX": {"qtd": 10, "taxa": 92.5, "custolog": 128.7, "pedidos": 126.4}, "WA": {"qtd": 199, "taxa": 1205.5, "custolog": 2030.4, "pedidos": 10344.91}}}, {"sem": "03/08/2026", "id": "51369", "ent": 148, "dest": 271, "corr": 1998.2, "adic": 0.0, "taxa": 140.0, "tot": 2138.2, "dia": [[21, 312.5], [27, 313.4], [17, 205.4], [21, 276.7], [21, 283.6], [24, 302.8], [17, 303.8]], "hora": [8, 6, 0, 2, 4, 0, 0, 0, 0, 0, 0, 6, 9, 8, 4, 4, 5, 2, 8, 18, 19, 19, 14, 12], "mot": [30, 34, 38, 62, 69, 94, 101, 104, 139, 141, 142, 178, 182, 183, 194, 208, 222, 225, 231, 242, 243, 271, 275, 283, 286, 287, 290, 304, 346, 382, 388, 414, 419, 424, 439, 446, 458, 472, 483, 500, 529, 549, 581, 599, 619, 622, 656, 677, 678, 727, 733, 737, 739, 745, 747, 758, 765, 771, 798, 819, 821, 869, 886, 941, 951, 990, 993, 996, 1024, 1029, 1054, 1059, 1072, 1079, 1082, 1106, 1110, 1141, 1185, 1206, 1213, 1240, 1257, 1265, 1294, 1296, 1302, 1305, 1318, 1320, 1322, 1341, 1342, 1344, 1346, 1347, 1348, 1365], "cl": {"AP": {"qtd": 37, "taxa": 225.0, "custolog": 0.0, "pedidos": 1995.82}, "SE": {"qtd": 1291, "taxa": 3324.38, "custolog": 1892.25, "pedidos": 44344.16}, "TE": {"qtd": 55, "taxa": 361.0, "custolog": 611.2, "pedidos": 2768.14}, "TX": {"qtd": 6, "taxa": 35.0, "custolog": 30.4, "pedidos": 35.0}, "WA": {"qtd": 124, "taxa": 905.0, "custolog": 1408.3, "pedidos": 6661.72}}}, {"sem": "17/08/2026", "id": "52025", "ent": 23, "dest": 25, "corr": 205.5, "adic": 0.0, "taxa": 52.5, "tot": 258.0, "dia": [[1, 6.1], [5, 70.1], [2, 16.0], [5, 31.2], [5, 38.6], [3, 29.7], [2, 13.8]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 3, 1, 0, 1, 0, 0, 2, 2, 4, 4, 1, 1], "mot": [5, 116, 192, 227, 244, 382, 421, 422, 561, 733, 784, 803, 859, 918, 1020, 1046, 1066, 1130, 1144, 1274, 1332, 1348, 1349], "cl": {"AP": {"qtd": 17, "taxa": 103.0, "custolog": 14.99, "pedidos": 1096.17}, "SE": {"qtd": 1299, "taxa": 1006.03, "custolog": 1530.75, "pedidos": 44388.37}, "TX": {"qtd": 2, "taxa": 11.0, "custolog": 17.6, "pedidos": 11.0}}}, {"sem": "31/08/2026", "id": "11549", "ent": 25, "dest": 31, "corr": 308.6, "adic": 0.0, "taxa": 67.5, "tot": 376.1, "dia": [[2, 15.1], [2, 20.3], [3, 34.6], [2, 15.8], [8, 116.4], [1, 12.5], [7, 93.9]], "hora": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 6, 6, 2, 3, 4], "mot": [4, 104, 394, 398, 404, 479, 537, 611, 676, 735, 781, 823, 889, 921, 957, 1024, 1098, 1146, 1203, 1261, 1299, 1322, 1345], "cl": {"AP": {"qtd": 12, "taxa": 62.5, "custolog": 167.1, "pedidos": 798.94}, "SE": {"qtd": 649, "taxa": 5637.04, "custolog": 2284.09, "pedidos": 27805.55}, "TX": {"qtd": 3, "taxa": 21.0, "custolog": 35.5, "pedidos": 21.0}, "WA": {"qtd": 16, "taxa": 116.5, "custolog": 221.9, "pedidos": 1195.2}}}, {"sem": "31/08/2026", "id": "52827", "ent": 200, "dest": 479, "corr": 2862.0, "adic": 0.0, "taxa": 140.0, "tot": 3002.0, "dia": [[21, 286.8], [31, 430.1], [25, 298.2], [28, 371.4], [36, 577.1], [35, 535.9], [24, 362.5]], "hora": [12, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 14, 12, 8, 5, 8, 4, 8, 29, 25, 26, 21, 17], "mot": [6, 27, 56, 90, 125, 136, 179, 182, 231, 301, 330, 374, 383, 391, 444, 452, 531, 546, 593, 636, 714, 761, 805, 823, 837, 852, 878, 881, 952, 1023, 1041, 1069, 1080, 1154, 1174, 1199, 1220, 1299, 1326, 1342, 1367], "cl": {"AP": {"qtd": 10, "taxa": 56.0, "custolog": 0.0, "pedidos": 618.41}, "SE": {"qtd": 2655, "taxa": 9437.69, "custolog": 7630.18, "pedidos": 96970.51}, "TE": {"qtd": 53, "taxa": 304.5, "custolog": 542.1, "pedidos": 3161.89}, "TX": {"qtd": 24, "taxa": 164.5, "custolog": 271.0, "pedidos": 332.59}, "WA": {"qtd": 348, "taxa": 2034.0, "custolog": 3610.0, "pedidos": 21702.49}}}, {"sem": "03/08/2026", "id": "51403", "ent": 12, "dest": 13, "corr": 93.4, "adic": 0.0, "taxa": 37.5, "tot": 130.9, "dia": [[0, 0.0], [3, 21.7], [0, 0.0], [1, 5.5], [2, 11.7], [2, 21.0], [4, 33.5]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 5, 0], "mot": [47, 172, 256, 283, 414, 498, 614, 1003, 1158, 1213, 1228], "cl": {"AP": {"qtd": 6, "taxa": 34.5, "custolog": 0.0, "pedidos": 253.88}, "SE": {"qtd": 442, "taxa": 1360.27, "custolog": 790.69, "pedidos": 20573.68}, "TE": {"qtd": 2, "taxa": 12.0, "custolog": 24.9, "pedidos": 167.1}, "TX": {"qtd": 1, "taxa": 6.5, "custolog": 10.8, "pedidos": 6.5}, "WA": {"qtd": 4, "taxa": 22.0, "custolog": 37.5, "pedidos": 329.2}}}, {"sem": "24/08/2026", "id": "84878", "ent": 102, "dest": 127, "corr": 937.4, "adic": 0.0, "taxa": 120.0, "tot": 1057.4, "dia": [[9, 73.7], [11, 122.8], [21, 174.8], [9, 66.3], [18, 156.0], [19, 166.2], [15, 177.6]], "hora": [4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 6, 3, 4, 2, 1, 2, 3, 11, 23, 17, 12, 6], "mot": [8, 54, 55, 74, 77, 97, 135, 208, 252, 261, 294, 299, 333, 344, 380, 418, 425, 429, 460, 467, 478, 514, 543, 584, 628, 635, 666, 688, 692, 693, 711, 752, 786, 800, 871, 907, 993, 1012, 1032, 1074, 1096, 1138, 1139, 1150, 1245, 1252, 1306, 1331, 1336], "cl": {"AP": {"qtd": 14, "taxa": 81.0, "custolog": 0.0, "pedidos": 864.27}, "SE": {"qtd": 1313, "taxa": 8692.79, "custolog": 1986.47, "pedidos": 49195.64}, "TE": {"qtd": 12, "taxa": 70.5, "custolog": 116.5, "pedidos": 653.5}, "TX": {"qtd": 6, "taxa": 59.2, "custolog": 38.7, "pedidos": 84.1}, "WA": {"qtd": 87, "taxa": 518.5, "custolog": 887.1, "pedidos": 5022.78}}}, {"sem": "03/08/2026", "id": "113150", "ent": 75, "dest": 98, "corr": 690.5, "adic": 0.0, "taxa": 102.5, "tot": 793.0, "dia": [[16, 128.5], [2, 13.4], [13, 109.1], [12, 98.0], [11, 101.5], [13, 130.0], [8, 110.0]], "hora": [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 4, 1, 2, 2, 1, 2, 12, 14, 13, 10, 4], "mot": [4, 18, 107, 128, 129, 145, 149, 155, 233, 235, 244, 272, 345, 370, 394, 407, 409, 437, 446, 467, 503, 520, 529, 582, 599, 665, 668, 670, 687, 702, 708, 713, 716, 717, 741, 817, 823, 862, 886, 928, 954, 961, 965, 966, 997, 1003, 1071, 1072, 1108, 1156, 1170, 1180, 1186, 1210, 1234, 1306, 1315, 1360], "cl": {"AP": {"qtd": 250, "taxa": 155.0, "custolog": 0.0, "pedidos": 8717.04}, "SE": {"qtd": 415, "taxa": 6.5, "custolog": 0.0, "pedidos": 16367.19}, "TE": {"qtd": 17, "taxa": 124.0, "custolog": 0.0, "pedidos": 905.47}, "TX": {"qtd": 3, "taxa": 22.0, "custolog": 0.0, "pedidos": 22.0}, "WA": {"qtd": 48, "taxa": 274.0, "custolog": 0.0, "pedidos": 3015.32}}}, {"sem": "17/08/2026", "id": "52828", "ent": 122, "dest": 280, "corr": 1910.5, "adic": 0.0, "taxa": 130.0, "tot": 2040.5, "dia": [[16, 210.2], [19, 286.0], [13, 174.4], [19, 307.7], [20, 347.7], [21, 331.1], [14, 253.4]], "hora": [7, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 11, 7, 4, 3, 4, 6, 7, 19, 13, 15, 12, 9], "mot": [34, 58, 60, 79, 148, 176, 210, 255, 269, 274, 278, 315, 336, 343, 375, 394, 412, 415, 423, 448, 458, 462, 472, 479, 516, 527, 532, 534, 575, 594, 598, 630, 636, 664, 672, 722, 726, 738, 741, 772, 790, 851, 859, 873, 936, 1017, 1118, 1120, 1142, 1160, 1254, 1271, 1286, 1320, 1350], "cl": {"AP": {"qtd": 8, "taxa": 47.0, "custolog": 0.0, "pedidos": 523.86}, "SE": {"qtd": 2050, "taxa": 2049.66, "custolog": 3534.88, "pedidos": 76013.56}, "TE": {"qtd": 10, "taxa": 80.5, "custolog": 102.6, "pedidos": 675.1}, "TX": {"qtd": 9, "taxa": 79.3, "custolog": 21.8, "pedidos": 110.8}, "WA": {"qtd": 197, "taxa": 1230.0, "custolog": 1755.6, "pedidos": 13039.44}}}, {"sem": "24/08/2026", "id": "51403", "ent": 18, "dest": 20, "corr": 151.4, "adic": 0.0, "taxa": 52.5, "tot": 203.9, "dia": [[2, 13.3], [1, 8.6], [3, 21.4], [3, 22.2], [3, 19.6], [4, 25.0], [2, 41.3]], "hora": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 4, 5, 3, 1], "mot": [69, 102, 250, 290, 414, 454, 575, 718, 809, 892, 913, 924, 933, 1133, 1141, 1244, 1285], "cl": {"AP": {"qtd": 8, "taxa": 44.0, "custolog": 0.0, "pedidos": 340.4}, "SE": {"qtd": 254, "taxa": 719.2, "custolog": 487.37, "pedidos": 13836.92}, "TE": {"qtd": 1, "taxa": 5.5, "custolog": 8.3, "pedidos": 77.1}, "TX": {"qtd": 1, "taxa": 6.5, "custolog": 10.4, "pedidos": 6.5}, "WA": {"qtd": 8, "taxa": 46.0, "custolog": 66.9, "pedidos": 543.9}}}, {"sem": "10/08/2026", "id": "52825", "ent": 252, "dest": 476, "corr": 3313.5, "adic": 0.0, "taxa": 140.0, "tot": 3453.5, "dia": [[38, 475.5], [38, 500.8], [32, 383.5], [39, 487.1], [42, 533.1], [35, 500.4], [28, 433.1]], "hora": [24, 5, 0, 0, 0, 0, 0, 0, 0, 0, 2, 5, 9, 13, 8, 7, 4, 8, 19, 26, 36, 40, 23, 23], "mot": [0, 4, 9, 81, 85, 91, 104, 116, 155, 171, 173, 180, 189, 204, 226, 234, 271, 284, 292, 362, 371, 385, 397, 404, 411, 441, 469, 475, 502, 506, 535, 544, 555, 629, 648, 665, 671, 675, 689, 702, 725, 783, 787, 806, 817, 823, 824, 846, 909, 915, 921, 932, 939, 944, 945, 1039, 1048, 1107, 1128, 1129, 1149, 1151, 1165, 1174, 1181, 1190, 1211, 1234, 1243, 1245, 1253, 1310, 1344, 1346, 1360], "cl": {"AP": {"qtd": 43, "taxa": 187.42, "custolog": 271.82, "pedidos": 1703.33}, "SE": {"qtd": 2007, "taxa": 5781.63, "custolog": 4291.45, "pedidos": 75303.67}, "TE": {"qtd": 127, "taxa": 818.49, "custolog": 1464.59, "pedidos": 6849.76}, "TX": {"qtd": 14, "taxa": 92.0, "custolog": 33.8, "pedidos": 285.7}, "WA": {"qtd": 306, "taxa": 1970.5, "custolog": 4122.2, "pedidos": 18317.95}}}, {"sem": "31/08/2026", "id": "51379", "ent": 85, "dest": 114, "corr": 743.2, "adic": 0.0, "taxa": 115.0, "tot": 858.2, "dia": [[6, 40.7], [18, 126.7], [12, 92.0], [16, 119.9], [14, 149.8], [11, 126.4], [8, 87.7]], "hora": [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7, 3, 2, 3, 6, 1, 0, 4, 9, 16, 16, 9, 6], "mot": [10, 93, 106, 119, 125, 151, 153, 167, 203, 230, 280, 342, 352, 363, 466, 504, 636, 640, 707, 719, 762, 853, 960, 989, 992, 1026, 1033, 1060, 1074, 1083, 1095, 1096, 1143, 1189, 1235, 1274, 1301, 1303], "cl": {"AP": {"qtd": 3, "taxa": 16.5, "custolog": 0.0, "pedidos": 160.3}, "SE": {"qtd": 606, "taxa": 2500.72, "custolog": 1971.27, "pedidos": 19480.14}, "TE": {"qtd": 3, "taxa": 16.5, "custolog": 25.2, "pedidos": 109.2}, "TX": {"qtd": 5, "taxa": 51.5, "custolog": 39.2, "pedidos": 51.5}, "WA": {"qtd": 105, "taxa": 616.46, "custolog": 992.16, "pedidos": 6201.12}}}, {"sem": "17/08/2026", "id": "57804", "ent": 19, "dest": 20, "corr": 215.1, "adic": 0.0, "taxa": 52.5, "tot": 267.6, "dia": [[1, 7.1], [0, 0.0], [1, 7.6], [7, 63.8], [4, 49.9], [3, 40.8], [3, 45.9]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 1, 1, 0, 0, 1, 1, 0, 5, 2, 3, 1, 0], "mot": [45, 90, 106, 276, 287, 388, 445, 554, 649, 1030, 1122, 1126, 1160, 1201, 1249, 1258, 1271, 1310, 1321], "cl": {"AP": {"qtd": 1, "taxa": 6.5, "custolog": 0.0, "pedidos": 44.49}, "SE": {"qtd": 606, "taxa": 1713.81, "custolog": 822.95, "pedidos": 24390.84}, "TE": {"qtd": 1, "taxa": 5.5, "custolog": 8.7, "pedidos": 173.5}, "TX": {"qtd": 3, "taxa": 23.0, "custolog": 11.9, "pedidos": 23.01}, "WA": {"qtd": 5, "taxa": 70.8, "custolog": 18.5, "pedidos": 775.7}}}, {"sem": "17/08/2026", "id": "51917", "ent": 23, "dest": 28, "corr": 234.8, "adic": 0.0, "taxa": 52.5, "tot": 287.3, "dia": [[4, 37.5], [0, 0.0], [1, 6.2], [4, 46.1], [4, 35.8], [7, 74.3], [3, 34.9]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 3, 2, 2, 2, 8, 2, 1], "mot": [11, 36, 92, 111, 119, 144, 204, 502, 600, 668, 691, 757, 783, 803, 884, 886, 951, 963, 1042, 1072, 1210, 1349], "cl": {"SE": {"qtd": 1173, "taxa": 5150.6, "custolog": 4117.43, "pedidos": 52315.5}, "TE": {"qtd": 3, "taxa": 21.0, "custolog": 37.5, "pedidos": 219.0}, "TX": {"qtd": 13, "taxa": 103.8, "custolog": 61.7, "pedidos": 161.3}, "WA": {"qtd": 7, "taxa": 73.0, "custolog": 98.0, "pedidos": 774.4}}}, {"sem": "27/07/2026", "id": "50988", "ent": 114, "dest": 173, "corr": 1019.3, "adic": 0.0, "taxa": 130.0, "tot": 1149.3, "dia": [[11, 91.4], [17, 128.2], [18, 140.4], [17, 179.5], [18, 166.6], [19, 177.7], [14, 135.5]], "hora": [8, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 6, 7, 7, 2, 3, 4, 6, 17, 16, 12, 8, 9], "mot": [18, 23, 34, 36, 60, 70, 94, 99, 110, 147, 186, 208, 225, 237, 248, 263, 287, 298, 313, 315, 318, 324, 346, 354, 378, 396, 408, 415, 422, 428, 436, 438, 453, 482, 566, 571, 572, 579, 595, 652, 663, 732, 735, 758, 781, 795, 815, 823, 873, 882, 888, 890, 917, 971, 985, 993, 1038, 1062, 1068, 1093, 1094, 1141, 1213, 1225, 1226, 1227, 1248, 1277, 1286, 1289, 1321, 1372], "cl": {"AP": {"qtd": 4, "taxa": 22.0, "custolog": 0.0, "pedidos": 169.99}, "SE": {"qtd": 570, "taxa": 131.96, "custolog": 950.06, "pedidos": 23892.87}, "TE": {"qtd": 63, "taxa": 350.5, "custolog": 566.4, "pedidos": 3023.66}, "TX": {"qtd": 10, "taxa": 55.0, "custolog": 88.7, "pedidos": 55.0}, "WA": {"qtd": 95, "taxa": 540.5, "custolog": 856.8, "pedidos": 6190.88}}}, {"sem": "24/08/2026", "id": "52827", "ent": 171, "dest": 380, "corr": 2191.1, "adic": 0.0, "taxa": 140.0, "tot": 2331.1, "dia": [[25, 273.0], [23, 308.0], [19, 259.0], [27, 326.1], [32, 389.3], [26, 380.7], [19, 255.0]], "hora": [14, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 10, 12, 6, 4, 4, 3, 7, 20, 32, 25, 14, 11], "mot": [4, 6, 112, 179, 182, 190, 191, 262, 301, 324, 330, 374, 384, 394, 536, 543, 546, 550, 660, 697, 725, 748, 767, 804, 823, 859, 881, 943, 1023, 1025, 1062, 1080, 1128, 1136, 1141, 1142, 1154, 1195, 1202, 1213, 1223, 1301, 1367], "cl": {"AP": {"qtd": 12, "taxa": 75.0, "custolog": 10.2, "pedidos": 937.32}, "SE": {"qtd": 2714, "taxa": 6204.84, "custolog": 4768.88, "pedidos": 97152.86}, "TE": {"qtd": 39, "taxa": 219.0, "custolog": 366.7, "pedidos": 2271.18}, "TX": {"qtd": 17, "taxa": 108.0, "custolog": 170.2, "pedidos": 253.7}, "WA": {"qtd": 267, "taxa": 1574.99, "custolog": 2594.39, "pedidos": 17081.06}}}, {"sem": "17/08/2026", "id": "84878", "ent": 94, "dest": 121, "corr": 879.6, "adic": 0.0, "taxa": 115.0, "tot": 994.6, "dia": [[13, 124.0], [13, 98.9], [8, 79.9], [15, 137.4], [18, 156.2], [18, 186.1], [9, 97.1]], "hora": [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 1, 3, 1, 2, 2, 14, 20, 12, 16, 12], "mot": [31, 32, 74, 77, 125, 193, 221, 223, 234, 254, 344, 363, 372, 429, 435, 439, 477, 526, 628, 660, 666, 669, 682, 683, 698, 738, 786, 871, 907, 909, 954, 993, 1000, 1032, 1086, 1091, 1122, 1132, 1138, 1139, 1198, 1212, 1245, 1252, 1352, 1363], "cl": {"AP": {"qtd": 14, "taxa": 81.5, "custolog": 0.0, "pedidos": 925.17}, "SE": {"qtd": 1378, "taxa": 6693.55, "custolog": 1873.14, "pedidos": 49180.09}, "TE": {"qtd": 13, "taxa": 71.5, "custolog": 116.8, "pedidos": 735.43}, "TX": {"qtd": 10, "taxa": 104.9, "custolog": 40.0, "pedidos": 104.9}, "WA": {"qtd": 77, "taxa": 476.5, "custolog": 789.7, "pedidos": 4500.43}}}, {"sem": "10/08/2026", "id": "51917", "ent": 20, "dest": 23, "corr": 189.6, "adic": 0.0, "taxa": 52.5, "tot": 242.1, "dia": [[2, 15.2], [1, 6.0], [1, 7.1], [4, 31.5], [3, 20.7], [5, 44.8], [4, 64.3]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 1, 0, 0, 2, 0, 7, 2, 2, 1, 1], "mot": [85, 163, 193, 271, 367, 547, 580, 675, 716, 777, 935, 1002, 1018, 1065, 1174, 1235, 1321, 1322], "cl": {"SE": {"qtd": 1107, "taxa": 5112.96, "custolog": 3794.79, "pedidos": 51587.87}, "TE": {"qtd": 5, "taxa": 35.0, "custolog": 55.8, "pedidos": 528.9}, "TX": {"qtd": 2, "taxa": 13.35, "custolog": 0.0, "pedidos": 13.35}, "WA": {"qtd": 12, "taxa": 77.5, "custolog": 131.9, "pedidos": 1108.5}}}, {"sem": "27/07/2026", "id": "84878", "ent": 123, "dest": 150, "corr": 1107.3, "adic": 0.0, "taxa": 130.0, "tot": 1237.3, "dia": [[11, 121.6], [15, 134.3], [17, 138.9], [22, 186.9], [21, 173.4], [21, 198.4], [16, 153.8]], "hora": [7, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 5, 9, 1, 1, 2, 2, 9, 17, 18, 17, 12, 16], "mot": [74, 93, 110, 117, 132, 145, 177, 200, 212, 229, 234, 282, 302, 344, 352, 400, 418, 427, 467, 477, 573, 628, 644, 666, 682, 698, 711, 744, 782, 788, 796, 798, 800, 809, 944, 954, 968, 993, 1024, 1139, 1150, 1184, 1207, 1252, 1306, 1313, 1344, 1347, 1353], "cl": {"AP": {"qtd": 13, "taxa": 77.0, "custolog": 0.0, "pedidos": 795.58}, "SE": {"qtd": 1064, "taxa": 4046.42, "custolog": 438.45, "pedidos": 39959.83}, "TE": {"qtd": 29, "taxa": 183.5, "custolog": 299.1, "pedidos": 1305.5}, "TX": {"qtd": 11, "taxa": 131.9, "custolog": 45.8, "pedidos": 131.9}, "WA": {"qtd": 90, "taxa": 543.0, "custolog": 896.4, "pedidos": 5405.44}}}, {"sem": "27/07/2026", "id": "51371", "ent": 177, "dest": 339, "corr": 2109.4, "adic": 0.0, "taxa": 140.0, "tot": 2249.4, "dia": [[19, 218.2], [24, 287.0], [24, 315.8], [32, 340.9], [33, 375.4], [25, 306.6], [20, 265.5]], "hora": [7, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 9, 12, 9, 4, 5, 6, 12, 26, 28, 21, 19, 13], "mot": [38, 48, 59, 60, 67, 70, 74, 110, 112, 113, 116, 126, 128, 147, 166, 208, 231, 241, 266, 286, 291, 312, 323, 350, 358, 369, 388, 389, 414, 422, 455, 471, 472, 497, 500, 508, 558, 563, 564, 574, 589, 633, 646, 668, 677, 684, 692, 735, 777, 792, 798, 818, 823, 836, 839, 846, 851, 864, 865, 878, 882, 891, 917, 930, 932, 942, 977, 983, 991, 994, 995, 999, 1006, 1043, 1058, 1073, 1094, 1101, 1121, 1166, 1202, 1223, 1231, 1236, 1239, 1270, 1314, 1316, 1334, 1347, 1351, 1363], "cl": {"AP": {"qtd": 22, "taxa": 90.38, "custolog": 49.93, "pedidos": 1373.36}, "SE": {"qtd": 533, "taxa": 1416.8, "custolog": 505.14, "pedidos": 22970.45}, "TE": {"qtd": 96, "taxa": 556.5, "custolog": 917.0, "pedidos": 4850.13}, "TX": {"qtd": 11, "taxa": 74.5, "custolog": 118.6, "pedidos": 100.41}, "WA": {"qtd": 209, "taxa": 1240.5, "custolog": 2060.2, "pedidos": 11330.25}}}, {"sem": "31/08/2026", "id": "52825", "ent": 243, "dest": 490, "corr": 3382.0, "adic": 0.0, "taxa": 140.0, "tot": 3522.0, "dia": [[32, 399.7], [37, 442.0], [28, 338.3], [38, 489.4], [44, 653.5], [40, 685.9], [24, 373.2]], "hora": [22, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 12, 4, 5, 4, 5, 17, 29, 37, 32, 25, 18], "mot": [4, 9, 15, 16, 28, 36, 42, 56, 71, 81, 104, 145, 155, 179, 180, 185, 189, 226, 231, 234, 271, 290, 292, 311, 312, 315, 328, 346, 393, 395, 441, 444, 481, 485, 502, 505, 506, 507, 531, 537, 544, 567, 580, 582, 602, 629, 650, 668, 718, 787, 824, 846, 867, 873, 893, 937, 986, 998, 1021, 1052, 1055, 1067, 1068, 1120, 1123, 1128, 1151, 1189, 1190, 1204, 1234, 1240, 1245, 1267, 1270, 1320, 1359, 1360], "cl": {"AP": {"qtd": 30, "taxa": 177.5, "custolog": 325.7, "pedidos": 1710.81}, "SE": {"qtd": 1879, "taxa": 7607.52, "custolog": 6933.42, "pedidos": 61278.82}, "TE": {"qtd": 147, "taxa": 938.0, "custolog": 1398.9, "pedidos": 9497.6}, "TX": {"qtd": 11, "taxa": 64.0, "custolog": 36.2, "pedidos": 235.2}, "WA": {"qtd": 300, "taxa": 1887.0, "custolog": 2666.9, "pedidos": 18859.21}}}, {"sem": "17/08/2026", "id": "52825", "ent": 269, "dest": 513, "corr": 3441.32, "adic": 0.0, "taxa": 140.0, "tot": 3581.32, "dia": [[33, 375.62], [40, 499.4], [34, 383.6], [41, 546.3], [41, 528.3], [51, 672.6], [29, 435.5]], "hora": [24, 7, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 13, 12, 10, 7, 4, 9, 15, 31, 41, 37, 27, 20], "mot": [4, 33, 34, 81, 91, 97, 104, 116, 117, 144, 147, 155, 156, 159, 176, 226, 234, 260, 268, 271, 276, 284, 292, 315, 349, 386, 393, 394, 408, 441, 471, 475, 481, 544, 568, 629, 787, 824, 846, 871, 878, 912, 952, 953, 974, 1048, 1052, 1074, 1120, 1128, 1151, 1183, 1211, 1219, 1241, 1245, 1253, 1275, 1279, 1311, 1322, 1332, 1344, 1360, 1374], "cl": {"AP": {"qtd": 22, "taxa": 127.0, "custolog": 179.2, "pedidos": 1255.65}, "SE": {"qtd": 2107, "taxa": 5978.2, "custolog": 4319.78, "pedidos": 79392.87}, "TE": {"qtd": 165, "taxa": 1046.5, "custolog": 1568.6, "pedidos": 9008.69}, "TX": {"qtd": 18, "taxa": 136.5, "custolog": 10.1, "pedidos": 397.45}, "WA": {"qtd": 302, "taxa": 1888.5, "custolog": 2631.1, "pedidos": 18340.66}}}, {"sem": "27/07/2026", "id": "52825", "ent": 262, "dest": 462, "corr": 3119.4, "adic": 0.0, "taxa": 140.0, "tot": 3259.4, "dia": [[34, 359.5], [35, 394.0], [34, 399.5], [43, 559.6], [45, 515.6], [42, 521.7], [29, 369.5]], "hora": [22, 8, 1, 0, 0, 0, 0, 0, 0, 0, 0, 11, 13, 7, 9, 4, 7, 9, 21, 35, 29, 36, 27, 23], "mot": [4, 16, 46, 85, 89, 96, 97, 104, 117, 123, 124, 144, 155, 173, 180, 189, 199, 226, 234, 264, 267, 279, 283, 284, 292, 294, 312, 348, 362, 401, 408, 411, 437, 439, 441, 446, 475, 495, 506, 509, 544, 579, 586, 601, 621, 627, 629, 700, 744, 764, 770, 781, 850, 909, 932, 940, 965, 982, 991, 1020, 1026, 1048, 1074, 1123, 1128, 1149, 1151, 1188, 1207, 1228, 1234, 1245, 1253, 1258, 1267, 1276, 1295, 1360, 1374], "cl": {"AP": {"qtd": 17, "taxa": 100.0, "custolog": 131.5, "pedidos": 1017.95}, "SE": {"qtd": 1667, "taxa": 2580.38, "custolog": 2639.7, "pedidos": 71168.43}, "TE": {"qtd": 126, "taxa": 768.0, "custolog": 1101.2, "pedidos": 7614.11}, "TX": {"qtd": 5, "taxa": 28.5, "custolog": 8.8, "pedidos": 28.5}, "WA": {"qtd": 316, "taxa": 1942.5, "custolog": 2636.5, "pedidos": 19911.74}}}, {"sem": "03/08/2026", "id": "50988", "ent": 118, "dest": 201, "corr": 1182.4, "adic": 0.0, "taxa": 130.0, "tot": 1312.4, "dia": [[16, 124.8], [22, 188.9], [12, 120.3], [18, 180.9], [17, 191.2], [23, 245.4], [10, 130.9]], "hora": [6, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5, 8, 3, 7, 5, 2, 3, 12, 17, 17, 13, 9, 7], "mot": [17, 36, 62, 69, 93, 94, 99, 111, 126, 133, 144, 145, 156, 172, 183, 186, 192, 208, 217, 235, 253, 256, 283, 291, 312, 324, 338, 341, 383, 385, 414, 421, 422, 436, 444, 482, 483, 485, 525, 547, 566, 570, 571, 578, 589, 614, 667, 689, 718, 721, 727, 789, 815, 829, 832, 835, 869, 873, 887, 902, 903, 917, 928, 931, 933, 951, 979, 997, 1006, 1097, 1119, 1141, 1143, 1153, 1160, 1176, 1177, 1233, 1248, 1257, 1258, 1269, 1277, 1298, 1318, 1322, 1347, 1371], "cl": {"AP": {"qtd": 7, "taxa": 38.5, "custolog": 0.0, "pedidos": 295.63}, "SE": {"qtd": 838, "taxa": 389.82, "custolog": 1768.35, "pedidos": 23623.99}, "TE": {"qtd": 74, "taxa": 422.5, "custolog": 684.1, "pedidos": 4384.3}, "TX": {"qtd": 15, "taxa": 82.5, "custolog": 136.9, "pedidos": 82.5}, "WA": {"qtd": 101, "taxa": 586.0, "custolog": 931.6, "pedidos": 5435.12}}}, {"sem": "31/08/2026", "id": "84878", "ent": 105, "dest": 159, "corr": 1123.3, "adic": 0.0, "taxa": 115.0, "tot": 1238.3, "dia": [[11, 119.9], [12, 174.8], [23, 174.0], [15, 121.3], [21, 247.0], [11, 144.6], [12, 141.7]], "hora": [12, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 1, 3, 2, 10, 12, 18, 14, 9, 9], "mot": [22, 31, 43, 68, 74, 77, 97, 98, 145, 151, 223, 249, 252, 254, 270, 290, 327, 344, 354, 377, 380, 383, 431, 452, 463, 504, 514, 522, 617, 628, 666, 698, 762, 824, 871, 921, 923, 944, 960, 993, 1020, 1032, 1059, 1067, 1074, 1139, 1150, 1227, 1245, 1252, 1270, 1274, 1276, 1306, 1311], "cl": {"AP": {"qtd": 18, "taxa": 103.0, "custolog": 25.1, "pedidos": 1060.98}, "SE": {"qtd": 1566, "taxa": 10645.29, "custolog": 5334.41, "pedidos": 51492.32}, "TE": {"qtd": 10, "taxa": 58.5, "custolog": 79.9, "pedidos": 537.19}, "TX": {"qtd": 13, "taxa": 145.7, "custolog": 44.3, "pedidos": 162.45}, "WA": {"qtd": 109, "taxa": 625.0, "custolog": 1024.4, "pedidos": 5777.48}}}, {"sem": "03/08/2026", "id": "84878", "ent": 115, "dest": 148, "corr": 1079.3, "adic": 0.0, "taxa": 120.0, "tot": 1199.3, "dia": [[13, 111.6], [12, 108.1], [19, 162.8], [15, 139.9], [26, 263.3], [20, 173.5], [10, 120.1]], "hora": [10, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 7, 4, 2, 0, 4, 0, 5, 23, 14, 21, 9, 10], "mot": [74, 93, 98, 145, 189, 223, 234, 240, 249, 271, 273, 277, 302, 310, 344, 351, 354, 361, 418, 431, 451, 477, 511, 514, 610, 628, 666, 682, 705, 710, 711, 755, 788, 796, 846, 871, 883, 909, 944, 954, 993, 995, 1032, 1094, 1123, 1139, 1149, 1156, 1165, 1184, 1185, 1229, 1252, 1283, 1305], "cl": {"AP": {"qtd": 9, "taxa": 49.5, "custolog": 0.0, "pedidos": 536.74}, "SE": {"qtd": 1593, "taxa": 5988.15, "custolog": 3090.83, "pedidos": 53014.91}, "TE": {"qtd": 15, "taxa": 87.5, "custolog": 151.2, "pedidos": 819.93}, "TX": {"qtd": 15, "taxa": 153.71, "custolog": 55.7, "pedidos": 153.72}, "WA": {"qtd": 95, "taxa": 576.0, "custolog": 975.8, "pedidos": 5269.9}}}, {"sem": "31/08/2026", "id": "51369", "ent": 156, "dest": 281, "corr": 2228.1, "adic": 0.0, "taxa": 140.0, "tot": 2368.1, "dia": [[22, 307.1], [29, 385.7], [20, 211.4], [22, 252.9], [20, 345.6], [23, 366.9], [20, 358.5]], "hora": [12, 4, 0, 3, 1, 0, 0, 0, 0, 0, 2, 9, 8, 8, 3, 5, 3, 7, 7, 20, 23, 15, 15, 11], "mot": [0, 16, 27, 30, 55, 56, 111, 142, 145, 147, 161, 174, 178, 187, 231, 232, 235, 262, 278, 308, 312, 324, 327, 336, 347, 366, 382, 394, 425, 436, 446, 454, 479, 488, 494, 496, 505, 514, 539, 541, 554, 582, 614, 641, 642, 684, 700, 716, 717, 728, 730, 739, 741, 758, 781, 819, 834, 858, 863, 873, 876, 878, 891, 934, 951, 958, 985, 995, 1003, 1056, 1070, 1097, 1110, 1127, 1133, 1134, 1149, 1160, 1168, 1179, 1181, 1189, 1210, 1235, 1256, 1261, 1290, 1294, 1299, 1301, 1306, 1322, 1328, 1333, 1357, 1359, 1374], "cl": {"AP": {"qtd": 36, "taxa": 223.5, "custolog": 0.0, "pedidos": 2018.04}, "SE": {"qtd": 1601, "taxa": 8175.92, "custolog": 4601.12, "pedidos": 63971.81}, "TE": {"qtd": 63, "taxa": 438.0, "custolog": 752.0, "pedidos": 3841.23}, "TX": {"qtd": 5, "taxa": 35.5, "custolog": 36.9, "pedidos": 35.5}, "WA": {"qtd": 113, "taxa": 775.0, "custolog": 1300.8, "pedidos": 6998.41}}}, {"sem": "10/08/2026", "id": "57804", "ent": 14, "dest": 16, "corr": 163.1, "adic": 0.0, "taxa": 37.5, "tot": 200.6, "dia": [[0, 0.0], [3, 41.8], [3, 25.1], [0, 0.0], [3, 44.9], [3, 30.8], [2, 20.5]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 3, 2, 1, 2, 1, 1], "mot": [64, 116, 189, 267, 372, 423, 541, 678, 823, 833, 927, 1218, 1301], "cl": {"SE": {"qtd": 471, "taxa": 1736.09, "custolog": 1104.02, "pedidos": 21149.21}, "WA": {"qtd": 8, "taxa": 77.8, "custolog": 78.0, "pedidos": 1045.61}}}, {"sem": "17/08/2026", "id": "50988", "ent": 104, "dest": 188, "corr": 1032.5, "adic": 0.0, "taxa": 125.0, "tot": 1157.5, "dia": [[12, 110.7], [17, 127.7], [8, 68.3], [19, 209.6], [18, 201.6], [20, 231.4], [10, 83.2]], "hora": [5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 7, 9, 7, 5, 1, 1, 1, 5, 14, 16, 12, 9, 8], "mot": [4, 34, 36, 40, 56, 64, 99, 106, 124, 130, 158, 192, 197, 219, 286, 294, 326, 341, 348, 356, 397, 407, 414, 422, 436, 470, 474, 480, 482, 543, 571, 576, 604, 615, 620, 651, 671, 695, 743, 749, 757, 812, 834, 859, 869, 870, 888, 897, 899, 912, 914, 981, 1004, 1046, 1106, 1141, 1142, 1169, 1171, 1201, 1215, 1225, 1242, 1257, 1260, 1261, 1310, 1348], "cl": {"AP": {"qtd": 9, "taxa": 49.5, "custolog": 0.0, "pedidos": 407.85}, "SE": {"qtd": 619, "taxa": 472.31, "custolog": 1301.03, "pedidos": 21323.32}, "TE": {"qtd": 62, "taxa": 345.0, "custolog": 540.0, "pedidos": 3026.89}, "TX": {"qtd": 13, "taxa": 80.5, "custolog": 119.0, "pedidos": 118.15}, "WA": {"qtd": 101, "taxa": 572.5, "custolog": 892.8, "pedidos": 4989.79}}}, {"sem": "03/08/2026", "id": "51917", "ent": 22, "dest": 22, "corr": 173.7, "adic": 0.0, "taxa": 60.0, "tot": 233.7, "dia": [[6, 42.4], [2, 12.0], [3, 23.7], [3, 20.4], [4, 42.3], [3, 23.7], [1, 9.2]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 1, 2, 1, 1, 0, 0, 1, 5, 3, 3, 1, 0], "mot": [13, 119, 128, 173, 257, 263, 271, 313, 529, 808, 873, 934, 961, 966, 1006, 1072, 1097, 1174, 1213, 1225, 1233, 1265], "cl": {"SE": {"qtd": 1158, "taxa": 4580.16, "custolog": 3609.58, "pedidos": 51224.2}, "TE": {"qtd": 2, "taxa": 33.5, "custolog": 35.6, "pedidos": 299.9}, "TX": {"qtd": 6, "taxa": 34.5, "custolog": 8.3, "pedidos": 34.5}, "WA": {"qtd": 9, "taxa": 65.5, "custolog": 106.5, "pedidos": 958.4}}}, {"sem": "27/07/2026", "id": "57804", "ent": 26, "dest": 32, "corr": 302.2, "adic": 0.0, "taxa": 52.5, "tot": 354.7, "dia": [[0, 0.0], [8, 87.9], [5, 51.3], [4, 34.8], [5, 70.3], [3, 38.9], [1, 19.0]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 4, 2, 2, 1, 0, 0, 2, 3, 2, 5, 0, 0], "mot": [58, 65, 183, 257, 267, 291, 298, 303, 321, 398, 445, 456, 649, 657, 712, 747, 901, 956, 977, 998, 1094, 1118, 1309, 1346], "cl": {"SE": {"qtd": 493, "taxa": 2195.48, "custolog": 765.69, "pedidos": 25726.29}, "TE": {"qtd": 2, "taxa": 37.4, "custolog": 0.0, "pedidos": 189.8}, "WA": {"qtd": 8, "taxa": 71.2, "custolog": 0.0, "pedidos": 817.89}}}, {"sem": "17/08/2026", "id": "113150", "ent": 71, "dest": 109, "corr": 739.7, "adic": 0.0, "taxa": 97.5, "tot": 837.2, "dia": [[12, 99.4], [1, 5.7], [10, 78.0], [15, 137.9], [12, 157.6], [9, 114.9], [12, 146.2]], "hora": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 4, 5, 3, 1, 3, 0, 5, 9, 14, 14, 4, 3], "mot": [55, 72, 104, 129, 139, 175, 272, 315, 348, 360, 366, 386, 391, 403, 410, 414, 432, 442, 446, 454, 472, 581, 623, 650, 671, 700, 716, 823, 825, 840, 862, 889, 921, 928, 963, 1003, 1128, 1134, 1161, 1164, 1180, 1200, 1257, 1258, 1275], "cl": {"AP": {"qtd": 222, "taxa": 95.5, "custolog": 0.0, "pedidos": 7364.8}, "SE": {"qtd": 385, "taxa": 5.5, "custolog": 0.0, "pedidos": 15909.1}, "TE": {"qtd": 28, "taxa": 201.0, "custolog": 0.0, "pedidos": 1457.53}, "TX": {"qtd": 4, "taxa": 27.5, "custolog": 0.0, "pedidos": 27.5}, "WA": {"qtd": 56, "taxa": 348.5, "custolog": 0.0, "pedidos": 3511.94}}}, {"sem": "27/07/2026", "id": "52025", "ent": 35, "dest": 37, "corr": 274.7, "adic": 0.0, "taxa": 75.0, "tot": 349.7, "dia": [[5, 33.2], [4, 24.5], [1, 7.2], [9, 62.2], [6, 63.7], [8, 65.4], [2, 18.5]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 2, 6, 3, 1, 1, 0, 1, 3, 7, 2, 3, 3, 1], "mot": [38, 74, 99, 213, 218, 245, 247, 323, 372, 423, 570, 596, 662, 664, 677, 690, 784, 873, 905, 955, 1006, 1031, 1097, 1153, 1239, 1302, 1348], "cl": {"AP": {"qtd": 28, "taxa": 169.5, "custolog": 0.0, "pedidos": 1548.21}, "SE": {"qtd": 1439, "taxa": 668.74, "custolog": 1693.78, "pedidos": 46395.64}, "TX": {"qtd": 5, "taxa": 28.5, "custolog": 8.8, "pedidos": 28.5}}}, {"sem": "31/08/2026", "id": "52828", "ent": 134, "dest": 382, "corr": 2614.8, "adic": 0.0, "taxa": 135.0, "tot": 2749.8, "dia": [[17, 279.8], [20, 340.2], [19, 343.6], [20, 324.6], [20, 415.8], [24, 571.2], [14, 339.6]], "hora": [6, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5, 12, 6, 8, 4, 6, 5, 8, 19, 18, 12, 11, 11], "mot": [57, 79, 145, 148, 210, 219, 225, 231, 250, 255, 336, 375, 383, 423, 425, 439, 473, 500, 515, 534, 594, 630, 742, 759, 780, 790, 815, 851, 951, 1009, 1017, 1075, 1093, 1106, 1118, 1247, 1259, 1271, 1286, 1350], "cl": {"AP": {"qtd": 14, "taxa": 78.0, "custolog": 0.0, "pedidos": 933.03}, "SE": {"qtd": 1893, "taxa": 1696.65, "custolog": 6215.74, "pedidos": 58999.36}, "TE": {"qtd": 16, "taxa": 89.0, "custolog": 110.59, "pedidos": 1076.68}, "TX": {"qtd": 5, "taxa": 39.19, "custolog": 26.2, "pedidos": 134.09}, "WA": {"qtd": 272, "taxa": 1718.0, "custolog": 2486.5, "pedidos": 16976.28}}}, {"sem": "03/08/2026", "id": "61039", "ent": 10, "dest": 11, "corr": 113.9, "adic": 0.0, "taxa": 30.0, "tot": 143.9, "dia": [[0, 0.0], [4, 31.4], [0, 0.0], [1, 6.9], [3, 62.0], [2, 13.6], [0, 0.0]], "hora": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 1, 0], "mot": [69, 238, 337, 586, 655, 941, 1232, 1241, 1272, 1346], "cl": {"SE": {"qtd": 193, "taxa": 588.71, "custolog": 223.62, "pedidos": 11340.58}, "TE": {"qtd": 2, "taxa": 12.0, "custolog": 21.7, "pedidos": 157.0}, "TX": {"qtd": 3, "taxa": 17.5, "custolog": 29.4, "pedidos": 17.5}, "WA": {"qtd": 2, "taxa": 11.0, "custolog": 16.6, "pedidos": 129.0}}}, {"sem": "17/08/2026", "id": "11549", "ent": 18, "dest": 22, "corr": 225.1, "adic": 0.0, "taxa": 52.5, "tot": 277.6, "dia": [[2, 21.1], [2, 15.3], [1, 6.9], [2, 24.4], [4, 43.1], [2, 28.1], [5, 86.2]], "hora": [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 3, 7, 1, 0, 2], "mot": [193, 210, 394, 413, 446, 459, 493, 550, 554, 827, 856, 931, 963, 967, 1067, 1238, 1242, 1310], "cl": {"AP": {"qtd": 9, "taxa": 52.5, "custolog": 130.0, "pedidos": 530.73}, "SE": {"qtd": 688, "taxa": 5683.46, "custolog": 1571.31, "pedidos": 29269.65}, "TX": {"qtd": 3, "taxa": 22.0, "custolog": 38.2, "pedidos": 22.0}, "WA": {"qtd": 10, "taxa": 80.0, "custolog": 138.8, "pedidos": 712.4}}}, {"sem": "27/07/2026", "id": "51379", "ent": 90, "dest": 121, "corr": 742.1, "adic": 0.0, "taxa": 115.0, "tot": 857.1, "dia": [[9, 66.0], [12, 80.0], [12, 90.9], [14, 128.6], [18, 128.3], [19, 168.6], [6, 79.7]], "hora": [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 7, 4, 4, 0, 5, 3, 6, 16, 21, 9, 7, 3], "mot": [10, 66, 125, 128, 140, 145, 182, 230, 241, 270, 280, 352, 363, 376, 466, 471, 477, 608, 634, 640, 653, 696, 719, 725, 738, 760, 946, 989, 1043, 1060, 1155, 1227, 1283, 1330, 1369], "cl": {"AP": {"qtd": 10, "taxa": 57.5, "custolog": 0.0, "pedidos": 646.02}, "SE": {"qtd": 559, "taxa": 600.59, "custolog": 355.76, "pedidos": 21059.98}, "TE": {"qtd": 12, "taxa": 67.5, "custolog": 108.1, "pedidos": 843.07}, "TX": {"qtd": 7, "taxa": 63.5, "custolog": 80.7, "pedidos": 63.5}, "WA": {"qtd": 91, "taxa": 520.0, "custolog": 822.6, "pedidos": 5197.77}}}, {"sem": "03/08/2026", "id": "11549", "ent": 22, "dest": 23, "corr": 202.0, "adic": 0.0, "taxa": 60.0, "tot": 262.0, "dia": [[1, 8.6], [2, 21.8], [3, 28.8], [0, 0.0], [7, 57.6], [3, 25.1], [6, 60.1]], "hora": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 3, 2, 4, 4, 3], "mot": [61, 131, 146, 178, 233, 347, 422, 437, 444, 529, 530, 668, 689, 873, 926, 1100, 1110, 1223, 1305, 1322, 1331, 1361], "cl": {"AP": {"qtd": 5, "taxa": 23.5, "custolog": 56.7, "pedidos": 270.57}, "SE": {"qtd": 798, "taxa": 6724.48, "custolog": 1960.91, "pedidos": 32699.45}, "TX": {"qtd": 5, "taxa": 33.0, "custolog": 58.7, "pedidos": 33.0}, "WA": {"qtd": 11, "taxa": 64.5, "custolog": 119.1, "pedidos": 735.4}}}]};
+
+const BRL=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const B0 =n=>n.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
+const N1 =n=>n.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+const N2 =n=>n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const N0 =n=>Math.round(n).toLocaleString('pt-BR');
+const $  =id=>document.getElementById(id);
+
+function ticks(maxVal, alvo){
+  const raw=maxVal/alvo, mag=Math.pow(10,Math.floor(Math.log10(raw)));
+  const step=[1,2,2.5,5,10].map(m=>m*mag).find(s=>s>=raw)||10*mag;
+  const top=Math.ceil(maxVal/step)*step;
+  return {top, step, n:Math.round(top/step)};
+}
+
+/* ---------- índice ---------- */
+const WK = D.semanas.map(s=>s.ini);
+const REG = {};                                  // REG[semana][id]
+D.semanas.forEach(s=>REG[s.ini]={});
+D.reg.forEach(r=>{ REG[r.sem][r.id]=r; });
+const LOJA = {}; D.lojas.forEach(l=>LOJA[l.id]=l);
+const BASE_FIXA = D.lojas.map(l=>l.id).filter(i=>WK.every(w=>REG[w][i]));
+
+/* semanas com contraparte no relatório sintético da loja */
+const COMCLOUD = {};
+D.semanas.forEach(w=>COMCLOUD[w.ini]=D.reg.some(r=>r.sem===w.ini && r.cl && Object.keys(r.cl).length));
+
+/* --- filtro de entregador (modalidade de origem do pedido) --- */
+const ALLCATS = D.cats.map(c=>c.k);
+const PROPRIOS = ALLCATS.filter(k=>k!=='SE');     // tudo menos iFood/marketplace
+let ENT = PROPRIOS.slice();                        // seleção corrente
+/* volume total de cada modalidade, para mostrar no chip */
+const CATQ = {};
+ALLCATS.forEach(k=>CATQ[k]=D.reg.reduce((a,r)=>a+((r.cl[k]&&r.cl[k].qtd)||0),0));
+
+/* --- seleção: intervalo contíguo de semanas [a,b] ---
+   abre no período inteiro: assim todos os cards nascem preenchidos,
+   inclusive os que dependem do relatório da loja */
+let a0 = 0, a1 = WK.length-1;
+const nSel = ()=> a1-a0+1;
+const selWeeks = ()=> WK.slice(a0, a1+1);
+/* janela anterior de mesmo tamanho, quando existe */
+const prevWeeks = ()=> (a0-nSel() >= 0) ? WK.slice(a0-nSel(), a0) : null;
+
+/* soma os registros de uma unidade ao longo de um conjunto de semanas */
+function aggUnit(id, weeks){
+  const rs = weeks.map(w=>REG[w][id]).filter(Boolean);
+  if(!rs.length) return null;
+  const l = LOJA[id];
+  const s = k => rs.reduce((x,r)=>x+r[k],0);
+  const o = {id, loja:l.loja, curto:l.curto, grupo:l.grupo, semanas:rs.length,
+             ent:s('ent'), dest:s('dest'), corr:s('corr'), adic:s('adic'), taxa:s('taxa'), tot:s('tot')};
+  /* lado loja (Cloud), somando só as modalidades de entregador selecionadas */
+  const c = (k,cats) => rs.reduce((x,r)=>{
+    const cl=r.cl||{};
+    return x + cats.reduce((y,ct)=>y+((cl[ct]&&cl[ct][k])||0),0);
+  },0);
+  o.cEnt=c('qtd',ENT); o.cTaxa=c('taxa',ENT); o.cLog=c('custolog',ENT); o.cFat=c('pedidos',ENT);
+  o.cEntTot=c('qtd',ALLCATS); o.cFatTot=c('pedidos',ALLCATS);
+  /* por modalidade, sempre completo — os cards de modalidade não seguem o filtro */
+  o.cat={}; ALLCATS.forEach(k=>o.cat[k]={qtd:c('qtd',[k]), fat:c('pedidos',[k]), taxa:c('taxa',[k])});
+  o.propEnt=c('qtd',PROPRIOS);  o.propFat=c('pedidos',PROPRIOS);
+  o.ifoEnt =c('qtd',['SE']);    o.ifoFat =c('pedidos',['SE']);
+  /* todo cruzamento com o lado da loja usa só as semanas que têm relatório dela,
+     senão 5 semanas de Taon contra 4 de Cloud distorceriam o índice */
+  const rsC = rs.filter(r=>COMCLOUD[r.sem]);
+  o.totC = rsC.reduce((x,r)=>x+r.tot,0);
+  o.entC = rsC.reduce((x,r)=>x+r.ent,0);
+  o.saldo   = o.cTaxa - o.totC;                    // sobra (+) ou falta (−)
+  o.cober   = o.totC ? o.cTaxa/o.totC*100 : 0;     // quanto da conta a taxa cobre
+  o.txMed   = o.cEnt ? o.cTaxa/o.cEnt : 0;         // taxa média cobrada do cliente
+  o.cuMed   = o.ent  ? o.tot/o.ent   : 0;          // custo médio pago à Taon
+  o.cuMedC  = o.entC ? o.totC/o.entC : 0;          // idem, na base comparável
+  o.terc    = o.cEnt ? o.entC/o.cEnt*100 : 0;      // corridas Taon ÷ pedidos da loja
+  o.tkMed   = o.cEnt ? o.cFat/o.cEnt : 0;          // ticket médio do pedido
+  o.pctFat  = o.cFat ? o.totC/o.cFat*100 : 0;      // custo Taon sobre faturamento
+  o.dia  = D.dias.map((_,i)=>[rs.reduce((x,r)=>x+r.dia[i][0],0), rs.reduce((x,r)=>x+r.dia[i][1],0)]);
+  o.hora = Array.from({length:24},(_,h)=>rs.reduce((x,r)=>x+r.hora[h],0));
+  const mot=new Set(); rs.forEach(r=>r.mot.forEach(m=>mot.add(m)));
+  o.nmot = mot.size;
+  o.tm=o.corr/o.ent; o.tp=o.corr/o.dest; o.pct=o.taxa/o.corr*100; o.dpe=o.dest/o.ent;
+  return o;
+}
+/* todas as unidades presentes no conjunto de semanas, já agregadas */
+function unidades(weeks){
+  return D.lojas.map(l=>aggUnit(l.id, weeks)).filter(Boolean);
+}
+function totals(weeks, ids){
+  const rs = (ids ? ids.map(i=>aggUnit(i,weeks)) : unidades(weeks)).filter(Boolean);
+  const s = k => rs.reduce((x,r)=>x+r[k],0);
+  const T = {n:rs.length, ent:s('ent'), dest:s('dest'), corr:s('corr'), taxa:s('taxa'), adic:s('adic'), tot:s('tot'),
+             cEnt:s('cEnt'), cTaxa:s('cTaxa'), cLog:s('cLog'), cFat:s('cFat'),
+             cEntTot:s('cEntTot'), cFatTot:s('cFatTot')};
+  T.cat={}; ALLCATS.forEach(k=>T.cat[k]={
+    qtd: rs.reduce((x,r)=>x+r.cat[k].qtd,0),
+    fat: rs.reduce((x,r)=>x+r.cat[k].fat,0),
+    taxa:rs.reduce((x,r)=>x+r.cat[k].taxa,0)});
+  T.propEnt=s('propEnt'); T.propFat=s('propFat');
+  T.ifoEnt =s('ifoEnt');  T.ifoFat =s('ifoFat');
+  T.totC=s('totC'); T.entC=s('entC');
+  T.saldo=T.cTaxa-T.totC; T.cober=T.totC?T.cTaxa/T.totC*100:0;
+  T.txMed=T.cEnt?T.cTaxa/T.cEnt:0; T.cuMed=T.ent?T.tot/T.ent:0;
+  T.cuMedC=T.entC?T.totC/T.entC:0; T.terc=T.cEnt?T.entC/T.cEnt*100:0;
+  T.tkMed=T.cEnt?T.cFat/T.cEnt:0; T.pctFat=T.cFat?T.totC/T.cFat*100:0;
+  return T;
+}
+/* ids presentes nas duas janelas — base justa para o Δ */
+function comuns(wa, wb){
+  const has = (ws,i)=>ws.some(w=>REG[w][i]);
+  return D.lojas.map(l=>l.id).filter(i=>has(wa,i)&&has(wb,i));
+}
+const selCloud = ()=> SEL.filter(w=>COMCLOUD[w]);
+const cloudParcial = ()=> selCloud().length && selCloud().length < nSel();
+const semCloud    = ()=> selCloud().length===0;
+
+/* caches por render */
+let SEL=[], PRV=null, U=[], UI={};
+
+/* ---------- tooltip ---------- */
+const tip=$('tip');
+function showTip(e,t,rows){
+  tip.innerHTML='<div class="t">'+t+'</div>'+rows.map(r=>'<div class="r"><span>'+r[0]+'</span><b>'+r[1]+'</b></div>').join('');
+  tip.style.opacity=1; moveTip(e);
+}
+function moveTip(e){
+  const r=tip.getBoundingClientRect();
+  let x=e.clientX+14, y=e.clientY+14;
+  if(x+r.width>innerWidth-8) x=e.clientX-r.width-14;
+  if(y+r.height>innerHeight-8) y=e.clientY-r.height-14;
+  tip.style.left=Math.max(8,x)+'px'; tip.style.top=Math.max(8,y)+'px';
+}
+const hideTip=()=>tip.style.opacity=0;
+function bindTip(el,t,rows){
+  el.addEventListener('mouseenter',e=>showTip(e,t,rows));
+  el.addEventListener('mousemove',moveTip);
+  el.addEventListener('mouseleave',hideTip);
+}
+
+/* ---------- Δ ---------- */
+let JANELA='período anterior';   /* preenchido a cada render por drawKpis */
+/* invert=0 → é custo, subir é ruim (vermelho); invert=1 → é receita/volume, subir é bom (verde) */
+function delta(cur, ant, fmt, invert){
+  if(ant==null || !isFinite(ant) || ant===0) return '';   /* sem base de comparação: nenhum chip */
+  const dif=cur-ant, p=dif/ant*100;
+  const cls = Math.abs(p)<0.05 ? 'fl' : (invert ? (dif>0?'dn':'up') : (dif>0?'up':'dn'));
+  /* o sinal sai do próprio percentual: com base negativa (uma falta, p.ex.)
+     usar o sinal da diferença produzia "+-20,0%" */
+  const sig = p>0?'+':'';
+  const tt = 'vs. '+JANELA+(fmt?': '+(dif>0?'+':'−')+fmt(Math.abs(dif)):'');
+  return '<span class="delta '+cls+'" title="'+tt+'">'+sig+N1(p)+'%</span>';
+}
+/* métricas que já são percentuais variam em pontos percentuais, não em % de % */
+function deltaPP(cur, ant, invert){
+  if(ant==null || !isFinite(ant)) return '';
+  const dif=cur-ant;
+  const cls = Math.abs(dif)<0.05 ? 'fl' : (invert ? (dif>0?'dn':'up') : (dif>0?'up':'dn'));
+  const sig = dif>0?'+':'';
+  return '<span class="delta '+cls+'" title="vs. '+JANELA+'">'+sig+N1(dif)+' p.p.</span>';
+}
+/* preenche um span de variação de uma vez */
+function setD(id, cur, ant, fmt, invert, pp){
+  const el=$(id); if(!el) return;
+  el.innerHTML = pp ? deltaPP(cur, ant, invert) : delta(cur, ant, fmt, invert);
+}
+
+/* ---------- filtro de datas ---------- */
+/* Os relatórios da Taon são semanais fechados: taxa administrativa e total do
+   relatório valem para a semana inteira e não podem ser divididos por dia.
+   Por isso o intervalo escolhido é expandido para as semanas que ele toca. */
+const MIN=D.semanas[0].i0, MAX=D.semanas[D.semanas.length-1].i1;
+const dt0=$('dt0'), dt1=$('dt1');
+[dt0,dt1].forEach(el=>{ el.min=MIN; el.max=MAX; });
+
+function aplicarDatas(){
+  let de=dt0.value||MIN, ate=dt1.value||MAX;
+  if(de>ate){ const t=de; de=ate; ate=t; }              // inverteu? corrige em silêncio
+  let idx=D.semanas.map((s,i)=>({i,s})).filter(x=>x.s.i0<=ate && x.s.i1>=de).map(x=>x.i);
+  if(!idx.length){                                      // nenhuma semana tocada: pega a mais próxima
+    let melhor=0, dist=Infinity;
+    D.semanas.forEach((s,i)=>{
+      const d = de>s.i1 ? new Date(de)-new Date(s.i1) : new Date(s.i0)-new Date(ate);
+      if(d<dist){dist=d; melhor=i;}
+    });
+    idx=[melhor];
+  }
+  a0=idx[0]; a1=idx[idx.length-1];
+  dt0.value=D.semanas[a0].i0; dt1.value=D.semanas[a1].i1;   // encaixa nas bordas reais
+  renderAll();
+}
+dt0.addEventListener('change',aplicarDatas);
+dt1.addEventListener('change',aplicarDatas);
+/* clicar em qualquer ponto do campo abre o calendário, não só no ícone */
+[dt0,dt1].forEach(el=>{
+  const abre=e=>{ if(el.showPicker){ try{ el.showPicker(); e.preventDefault(); }catch(_){} } };
+  el.addEventListener('click',abre);
+  el.addEventListener('focus',()=>{ if(el.showPicker){ try{ el.showPicker(); }catch(_){} } });
+});
+
+const PRESETS=[
+  {lab:'Última semana', n:1},
+  {lab:'Últimas 2',     n:2},
+  {lab:'Últimas 4',     n:4},
+  {lab:'Todo o período',n:WK.length}
+].filter(p=>p.n<=WK.length)
+ .filter((p,i,arr)=>arr.findLastIndex(x=>x.n===p.n)===i);   // mantém o rótulo mais descritivo
+$('ps-seg').innerHTML=PRESETS.map((p,i)=>'<button type="button" data-n="'+p.n+'">'+p.lab+'</button>').join('');
+$('ps-seg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  const n=+b.dataset.n;
+  a1=WK.length-1; a0=Math.max(0, a1-n+1);
+  dt0.value=D.semanas[a0].i0; dt1.value=D.semanas[a1].i1;
+  renderAll();
+});
+dt0.value=D.semanas[a0].i0; dt1.value=D.semanas[a1].i1;
+
+/* ---------- filtro de entregador ---------- */
+function pintaChips(){
+  [...$('ent-chips').children].forEach(b=>b.setAttribute('aria-pressed', ENT.includes(b.dataset.k)));
+}
+$('ent-chips').innerHTML=D.cats.filter(c=>c.k!=='SE').map(c=>
+  '<button type="button" class="chip" data-k="'+c.k+'" title="No relatório: '+c.src+'">'+
+  '<span class="dot"></span>'+c.lab+'<span class="qt">'+B0(CATQ[c.k])+'</span></button>').join('');
+pintaChips();
+$('ent-chips').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  const k=b.dataset.k;
+  ENT = ENT.includes(k) ? ENT.filter(x=>x!==k) : PROPRIOS.filter(x=>ENT.includes(x)||x===k);
+  if(!ENT.length) ENT=[k];                         // nunca deixa a seleção vazia
+  pintaChips(); renderAll();
+});
+$('ent-reset').addEventListener('click',()=>{ ENT=PROPRIOS.slice(); pintaChips(); renderAll(); });
+
+function entLabel(){
+  if(ENT.length===PROPRIOS.length && PROPRIOS.every(k=>ENT.includes(k))) return 'canais próprios';
+  return D.cats.filter(c=>ENT.includes(c.k)).map(c=>c.lab).join(', ');
+}
+
+/* ---------- capa / cobertura ---------- */
+function drawCover(){
+  const ws=SEL, n=nSel();
+  const ini=D.semanas[a0].ini, fim=D.semanas[a1].fim;
+  $('per').textContent = ini+' – '+fim;
+  $('emi').textContent = n===1
+    ? 'Emissão do relatório: '+D.semanas[a0].emissao
+    : n+' semanas · relatórios emitidos entre '+D.semanas[a0].emissao.split(',')[0]+' e '+D.semanas[a1].emissao.split(',')[0];
+  $('sub').textContent = 'Grupo Ragga · '+U.length+' de '+D.lojas.length+' unidades no período';
+
+  [...$('ps-seg').children].forEach(b=>
+    b.setAttribute('aria-pressed', +b.dataset.n===n && a1===WK.length-1));
+
+  const inc=ws.map(w=>D.semanas[WK.indexOf(w)].lab);
+  const falta=[];
+  ws.forEach(w=>D.lojas.forEach(l=>{ if(!REG[w][l.id]) falta.push(LOJA[l.id].curto+' ('+D.semanas[WK.indexOf(w)].lab+')'); }));
+  const parcial = ENT.length!==PROPRIOS.length;
+  $('wkinfo').className='wkinfo'+(falta.length?' warn':'');
+  $('wkinfo').innerHTML = (n===1
+      ? 'Semana incluída: <b>'+inc[0]+'</b>.'
+      : '<b>'+n+'</b> semanas incluídas: <b>'+inc.join('</b>, <b>')+'</b>.')+
+    ' Os relatórios da Taon são semanais fechados, então o intervalo é ajustado para semanas inteiras.'+
+    (falta.length? ' Faltando: '+falta.join(', ')+'.' : '')+
+    ' Entregador: <b>'+entLabel()+'</b>.'+
+    (!PRV ? ' Não há período anterior de mesmo tamanho na base, então os cards não mostram variação — escolha um intervalo mais curto para comparar.' : '')+
+    (semCloud()
+      ? ' <span class="alerta">Sem o Relatório de Entregas Sintético para este período — os números da loja e o confronto ficam indisponíveis.</span>'
+      : cloudParcial()
+        ? ' <span class="alerta">Falta o Relatório de Entregas Sintético de '+
+          SEL.filter(w=>!COMCLOUD[w]).map(w=>D.semanas[WK.indexOf(w)].lab).join(', ')+
+          ' — os números da loja e o confronto cobrem as outras '+selCloud().length+' semanas.</span>'
+        : '')+
+    (parcial && !semCloud() ? ' <span class="alerta">Você deixou modalidades de fora: os PDFs da Taon não separam a corrida por canal, '+
+               'então o custo dela segue inteiro e o confronto fica superestimado.</span>' : '');
+
+  $('cover').innerHTML = falta.length ? '<div class="note">'+
+    '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.6 15 14H1L8 1.6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M8 6.2v3.2M8 11.4v.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>'+
+    '<div>Faltam <b>'+falta.length+'</b> relatório'+(falta.length>1?'s':'')+' no período: <b>'+
+    falta.join(', ')+'</b>. Os totais abaixo cobrem só o que foi recebido.</div></div>' : '';
+}
+
+/* ---------- KPIs ---------- */
+function drawKpis(){
+  const T=totals(SEL);
+  const ids = PRV ? comuns(SEL,PRV) : null;
+  const A = PRV ? totals(SEL,ids) : null, B = PRV ? totals(PRV,ids) : null;
+  const rz = (o,k)=> o ? (k==='tm'? o.tot/o.ent : o[k]) : null;
+  const dias = nSel()*7;
+
+  $('k-tot').textContent=BRL(T.tot);
+  $('k-corr').textContent=BRL(T.corr);
+  $('k-taxa').textContent=BRL(T.taxa);
+  $('k-ent').textContent=B0(T.ent);
+  $('k-tm').textContent=BRL(T.cuMed);
+  $('k-corr-f').textContent=N1(T.corr/T.tot*100)+'% do custo Taon';
+  $('k-taxa-f').textContent=N1(T.taxa/T.corr*100)+'% sobre corridas'+(T.adic?' · adicionais R$ '+BRL(T.adic):'');
+  $('k-ent-f').textContent=B0(T.dest)+' destinos · '+N2(T.dest/T.ent)+' por entrega';
+
+  const janela = PRV ? (nSel()===1
+      ? D.semanas[a0-1].lab
+      : D.semanas[a0-nSel()].lab+' a '+D.semanas[a0-1].lab) : null;
+  JANELA = janela ? janela+(ids?' · base de '+ids.length+' unidades comuns':'') : 'período anterior';
+  const pares=[['tot','d-tot',0],['corr','d-corr',0],['taxa','d-taxa',0],
+               ['ent','d-ent',0],['tm','d-tm',1]];
+  const fmtK={tot:v=>'R$ '+BRL(v), corr:v=>'R$ '+BRL(v), taxa:v=>'R$ '+BRL(v), ent:B0, tm:v=>'R$ '+BRL(v)};
+  pares.forEach(([k,el,inv])=>{
+    $(el).innerHTML = A ? delta(rz(A,k), rz(B,k), fmtK[k], inv) : '';
+  });
+}
+
+const vazioMsg = t => '<div class="vazio">'+
+  '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">'+
+  '<circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>'+
+  '<path d="M10 6v5M10 13.4v.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'+
+  '<span>'+t+'</span></div>';
+
+/* ---------- confronto Cloud × Taon ---------- */
+/* os cards de modalidade sempre mostram todas as origens, independentes do filtro do topo */
+function drawModKpis(){
+  const T=totals(SEL), vazio=semCloud();
+  const P=antCloud();
+  const antQ = k => !P ? null : (k==='PROP' ? P.B.propEnt : P.B.cat[k].qtd);
+  const curQ = k => !P ? null : (k==='PROP' ? P.A.propEnt : P.A.cat[k].qtd);
+  const tiles=[{k:'PROP', lab:'Entregas próprias', q:T.propEnt,
+                sub:'App Próprio, Telefone, WhatsApp e Taxa Extra'}]
+    .concat(D.cats.filter(c=>c.k!=='SE').map(c=>({k:c.k, lab:c.lab, q:T.cat[c.k].qtd, sub:'No relatório: '+c.src})))
+    .concat([{k:'SE', lab:'iFood / Marketplace', q:T.cat.SE.qtd, ifo:1,
+              sub:'Entrega do próprio app — não passa pela Taon'}]);
+  const base=T.propEnt+T.cat.SE.qtd;
+  $('mod-kpis').innerHTML=tiles.map(t=>
+    '<div class="kpi'+(t.ifo?' ifo':'')+(vazio?' off':'')+'">'+
+    '<div class="lab">'+t.lab+'</div>'+
+    '<div class="v">'+(vazio?'—':B0(t.q))+'</div>'+
+    '<div class="foot">'+(vazio?'Sem relatório da loja no período'
+      : (base? N1(t.q/base*100)+'% dos pedidos · ' : '')+t.sub)+
+      (vazio||!P?'':' '+(()=>{const _j=JANELA; JANELA=P.lab;
+        const h=delta(curQ(t.k), antQ(t.k), B0, 1); JANELA=_j; return h;})())+'</div></div>').join('');
+}
+
+/* totais do período anterior, na base de unidades comuns — null quando não há janela anterior */
+function antTotals(){
+  if(!PRV) return null;
+  const ids=comuns(SEL,PRV);
+  return {A:totals(SEL,ids), B:totals(PRV,ids)};
+}
+
+/* Para tudo que envolve o lado da loja, a janela anterior precisa ter o MESMO número de
+   semanas com relatório da loja. Comparar 1 semana de Cloud contra 2 faria os cards
+   caírem ~50% sem que nada tivesse acontecido na operação. */
+const CW = WK.filter(w=>COMCLOUD[w]);
+function antCloud(){
+  const sc=selCloud(); if(!sc.length) return null;
+  const i=CW.indexOf(sc[0]), k=sc.length;
+  if(i-k < 0) return null;
+  const pc=CW.slice(i-k, i);
+  const ids=comuns(sc, pc);
+  const li=WK.indexOf(pc[0]), lf=WK.indexOf(pc[pc.length-1]);
+  return {A:totals(sc,ids), B:totals(pc,ids), ids,
+          lab:(li===lf? D.semanas[li].lab : D.semanas[li].lab+' a '+D.semanas[lf].lab)+
+              ' · base de '+ids.length+' unidades comuns'};
+}
+
+function drawFatKpis(){
+  const T=totals(SEL);
+  const dias=nSel()*7;
+  const vazio=semCloud();
+  document.querySelectorAll('.kpis.fat .kpi, .kpis.conf .kpi').forEach(k=>k.classList.toggle('off',vazio));
+  if(vazio){
+    ['k-fat','k-fifo','k-tk','k-pfat','k-ctaxa','k-saldo','k-cober'].forEach(i=>$(i).textContent='—');
+    ['k-fat-f','k-fifo-f','k-tk-f','k-pfat-f','k-ctaxa-f','k-cober-f'].forEach(i=>$(i).textContent='Sem relatório da loja no período');
+    ['d-fat','d-fifo','d-tk','d-pfat','d-ctaxa','d-saldo','d-cober'].forEach(i=>{const e=$(i); if(e) e.innerHTML='';});
+    $('kpi-saldo').className='kpi off'; $('k-saldo-l').textContent='Resultado da entrega';
+    $('k-saldo-f').textContent='Depende do relatório da loja';
+    return;
+  }
+  $('k-fat').textContent =BRL(T.propFat);
+  $('k-fifo').textContent=BRL(T.ifoFat);
+  $('k-tk').textContent  =BRL(T.propEnt?T.propFat/T.propEnt:0);
+  $('k-pfat').textContent=N1(T.propFat?T.totC/T.propFat*100:0);
+  const diasCloud=selCloud().length*7;
+  $('k-fat-f').textContent=B0(T.propEnt)+' pedidos próprios · R$ '+BRL(T.propFat/diasCloud)+'/dia'+
+    (cloudParcial()?' ('+selCloud().length+' sem.)':'');
+  $('k-fifo-f').textContent=B0(T.ifoEnt)+' pedidos · '+
+    N1(T.ifoFat/(T.propFat+T.ifoFat)*100)+'% do faturamento delivery total';
+  $('k-tk-f').textContent =B0(T.propEnt)+' pedidos próprios na base';
+  $('k-pfat-f').textContent='R$ '+BRL(T.totC)+' pagos à Taon'+(cloudParcial()?' ('+selCloud().length+' sem.)':'');
+
+  const P=antCloud();
+  if(P){
+    const {A,B}=P; const _j=JANELA; JANELA=P.lab;
+    setD('d-fat',  A.propFat, B.propFat, v=>'R$ '+BRL(v), 1);
+    setD('d-fifo', A.ifoFat,  B.ifoFat,  v=>'R$ '+BRL(v), 1);
+    setD('d-tk',   A.propEnt?A.propFat/A.propEnt:0, B.propEnt?B.propFat/B.propEnt:0, v=>'R$ '+BRL(v), 1);
+    setD('d-pfat', A.propFat?A.totC/A.propFat*100:0, B.propFat?B.totC/B.propFat*100:0, null, 0, 1);
+    JANELA=_j;
+  } else {
+    ['d-fat','d-fifo','d-tk','d-pfat'].forEach(i=>{const e=$(i); if(e) e.innerHTML='';});
+  }
+}
+
+function drawConfKpis(){
+  if(semCloud()) return;
+  const T=totals(SEL);
+  $('k-ctaxa').textContent=BRL(T.cTaxa);
+  $('k-saldo').textContent=BRL(Math.abs(T.saldo));
+  $('k-cober').textContent=N1(T.cober);
+  $('k-ctaxa-f').textContent=B0(T.cEnt)+' pedidos ('+entLabel()+') · R$ '+BRL(T.txMed)+'/pedido';
+  const neg=T.saldo<0;
+  $('kpi-saldo').className='kpi '+(neg?'neg':'pos');
+  $('k-saldo-l').textContent = neg ? 'Falta para cobrir a Taon' : 'Sobra depois da Taon';
+  $('k-saldo-f').textContent = (neg
+    ? 'A taxa cobrada do cliente não paga o serviço'
+    : 'A taxa cobrada mais que paga o serviço')+(cloudParcial()?' · '+selCloud().length+' sem.':'');
+  $('k-cober-f').textContent='Da conta da Taon paga pela taxa'+(cloudParcial()?' · base de '+selCloud().length+' semanas':'');
+
+  const P=antCloud();
+  if(P){
+    const {A,B}=P; const _j=JANELA; JANELA=P.lab;
+    setD('d-ctaxa', A.cTaxa, B.cTaxa, v=>'R$ '+BRL(v), 1);
+    setD('d-saldo', A.saldo, B.saldo, v=>'R$ '+BRL(v), 1);   /* saldo subindo é bom */
+    setD('d-cober', A.cober, B.cober, null, 1, 1);
+    JANELA=_j;
+  } else {
+    ['d-ctaxa','d-saldo','d-cober'].forEach(i=>{const e=$(i); if(e) e.innerHTML='';});
+  }
+}
+
+/* ---------- entregas: cobrado × realizado ---------- */
+const realiz = l => l.cEnt;
+
+function drawQtd(){
+  if(semCloud()){
+    $('qt-desc').textContent='Este período não tem Relatório de Entregas Sintético carregado.';
+    $('qt-kpi').innerHTML='';
+    $('qtd').innerHTML=vazioMsg('Sem os dados do sistema da loja não dá para confrontar cobrado e realizado.');
+    return;
+  }
+  const T=totals(SEL);
+  const re=T.cEnt, co=T.entC;             // realizado no sistema × cobrado pela Taon (base comparável)
+  const dif = co - re;                    // + = Taon cobrou mais do que o sistema registrou
+  $('qt-seg').innerHTML='';
+  $('qt-desc').textContent='Pedidos no sistema da loja ('+entLabel()+') contra as corridas faturadas pela Taon.';
+
+  $('qt-kpi').innerHTML=
+    '<div class="t"><div class="l">Entregas no sistema</div><div class="n">'+B0(re)+'</div>'+
+      '<div class="s">'+entLabel()+'</div></div>'+
+    '<div class="t"><div class="l">Corridas cobradas pela Taon</div><div class="n">'+B0(co)+'</div>'+
+      '<div class="s">Conforme os relatórios semanais em PDF</div></div>'+
+    '<div class="t '+(dif>0?'neg':'')+'"><div class="l">Diferença</div><div class="n">'+(dif>0?'+':'')+B0(dif)+'</div>'+
+      '<div class="s">'+(dif>0
+        ? 'A Taon cobrou mais corridas do que o sistema registrou'
+        : 'Entregas do sistema que a Taon não faturou')+'</div></div>'+
+    '<div class="t"><div class="l">Cobertura da Taon</div><div class="n">'+N1(co/re*100)+'<span style="font-size:14px;color:var(--muted)">%</span></div>'+
+      '<div class="s">Das entregas do sistema feitas pela Taon</div></div>';
+
+  const rows=[...U].sort((a,b)=>(b.entC-realiz(b))-(a.entC-realiz(a)));
+  const mx=Math.max(...rows.map(r=>Math.max(realiz(r), r.entC)));
+  $('qtd').innerHTML=rows.map(l=>{
+    const r=realiz(l), d=l.entC-r, pc=r?l.entC/r*100:0;
+    return '<div class="crow" data-id="'+l.id+'">'+
+      '<div class="nm">'+l.curto+'<span class="gp"> · '+l.grupo+'</span></div>'+
+      '<div class="pair">'+
+        '<span class="pbar re" style="width:'+Math.max(r/mx*100,0.5)+'%"></span>'+
+        '<span class="pbar co" style="width:'+Math.max(l.entC/mx*100,0.5)+'%"></span>'+
+      '</div>'+
+      '<div class="vl">'+B0(r)+'<small>'+B0(l.entC)+'</small></div>'+
+      '<div class="sd '+(d>0?'neg':'info')+'">'+(d>0?'+':'')+B0(d)+
+      '<small style="display:block;color:var(--muted);font-weight:400;font-size:11px;margin-top:-2px">'+N1(pc)+'%</small></div></div>';
+  }).join('')+
+  '<div class="leg"><span><i class="sw" style="background:var(--d1)"></i>Realizado — entregas no sistema da loja (barra de cima)</span>'+
+  '<span><i class="sw taon"></i>Cobrado — corridas faturadas pela Taon (barra de baixo)</span>'+
+  '<span style="color:var(--crit)">Vermelho = a Taon cobrou mais do que o sistema registrou</span></div>';
+
+  $('qtd').querySelectorAll('[data-id]').forEach(el=>{
+    const l=UI[el.dataset.id], r=realiz(l), d=l.entC-r;
+    bindTip(el,l.loja,[
+      ['Pedidos na seleção',B0(l.cEnt)],
+      ['Todos os pedidos',B0(l.cEntTot)],
+      ['Faturamento','R$ '+BRL(l.cFat)],
+      ['Corridas cobradas (Taon)',B0(l.entC)],
+      ['Diferença',(d>0?'+':'')+B0(d)+' ('+N1(r?l.entC/r*100:0)+'%)'],
+      ['Destinos atendidos',B0(l.dest)],
+      ['Pago à Taon (base comparável)','R$ '+BRL(l.totC)]
+    ]);
+  });
+}
+
+let cfv='saldo';
+$('cf-seg').innerHTML=
+  '<button type="button" data-v="saldo" aria-pressed="true">Sobra / falta</button>'+
+  '<button type="button" data-v="medio" aria-pressed="false">Taxa média × custo médio</button>';
+$('cf-seg').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return;
+  cfv=b.dataset.v; [...$('cf-seg').children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===cfv)); drawConf();});
+
+function drawConf(){
+  if(semCloud()){
+    $('cf-desc').textContent='Este período não tem Relatório de Entregas Sintético carregado.';
+    $('conf').innerHTML=vazioMsg('A taxa arrecadada vem do relatório da loja, que falta para este período.');
+    return;
+  }
+  const T=totals(SEL);
+  if(cfv==='saldo'){
+    $('cf-desc').textContent='Taxa de entrega arrecadada do cliente menos o valor pago à Taon, por unidade. Vermelho = a loja banca a diferença.';
+    const rows=[...U].sort((a,b)=>a.saldo-b.saldo);
+    const mx=Math.max(...rows.map(r=>Math.abs(r.saldo)));
+    const temPos=rows.some(r=>r.saldo>0), temNeg=rows.some(r=>r.saldo<0);
+    const div=temPos&&temNeg;                      // só vale eixo central se houver os dois sinais
+    const zero=div?50:0;
+    $('conf').innerHTML=rows.map(l=>{
+      const w=Math.abs(l.saldo)/mx*(div?48:96);
+      const neg=l.saldo<0;
+      const st = div ? (neg?'right:50%; width:'+w+'%':'left:50%; width:'+w+'%')
+                     : 'left:0; width:'+w+'%';
+      return '<div class="dvrow" data-id="'+l.id+'">'+
+        '<div class="nm">'+l.curto+'<span class="gp"> · '+l.grupo+'</span></div>'+
+        '<div class="dvtrack">'+(div?'<span class="dvzero" style="left:50%"></span>':'')+
+        '<span class="dvbar '+(neg?'neg':'pos')+'" style="'+st+'"></span></div>'+
+        '<div class="sd '+(neg?'neg':'pos')+'">'+(neg?'−':'+')+'R$ '+BRL(Math.abs(l.saldo))+
+        '<small style="display:block;color:var(--muted);font-weight:400;font-size:11px;margin-top:-2px">'+
+        N1(l.cober)+'% coberto</small></div></div>';
+    }).join('')+
+    '<div class="leg"><span><i class="sw" style="background:var(--crit)"></i>Falta — a taxa não cobre o custo da Taon</span>'+
+    (temPos?'<span><i class="sw" style="background:var(--good)"></i>Sobra</span>':'')+'</div>';
+  } else {
+    $('cf-desc').textContent='Quanto a loja cobra do cliente por pedido, contra quanto paga à Taon por corrida.';
+    const rows=[...U].sort((a,b)=>(b.cuMedC-b.txMed)-(a.cuMedC-a.txMed));
+    const mx=Math.max(...rows.map(r=>Math.max(r.txMed,r.cuMedC)));
+    $('conf').innerHTML=rows.map(l=>
+      '<div class="crow" data-id="'+l.id+'">'+
+      '<div class="nm">'+l.curto+'<span class="gp"> · '+l.grupo+'</span></div>'+
+      '<div class="pair">'+
+        '<span class="pbar tx" style="width:'+Math.max(l.txMed/mx*100,0.5)+'%"></span>'+
+        '<span class="pbar cu" style="width:'+Math.max(l.cuMedC/mx*100,0.5)+'%"></span>'+
+      '</div>'+
+      '<div class="vl">R$ '+BRL(l.txMed)+'<small>R$ '+BRL(l.cuMedC)+'</small></div>'+
+      '<div class="sd neg">−R$ '+BRL(l.cuMedC-l.txMed)+'<small style="display:block;color:var(--muted);font-weight:400;font-size:11px;margin-top:-2px">por entrega</small></div>'+
+      '</div>').join('')+
+      '<div class="leg"><span><i class="sw" style="background:var(--d1)"></i>Taxa média cobrada do cliente — lado loja (barra de cima)</span>'+
+      '<span><i class="sw taon"></i>Custo médio pago à Taon (barra de baixo)</span></div>';
+  }
+  $('conf').querySelectorAll('[data-id]').forEach(el=>{
+    const l=UI[el.dataset.id];
+    bindTip(el,l.loja,[
+      ['Pedidos na seleção',B0(l.cEnt)],
+      ['Faturamento','R$ '+BRL(l.cFat)],
+      ['Taxa arrecadada','R$ '+BRL(l.cTaxa)],
+      ['Corridas Taon',B0(l.entC)],
+      ['Pago à Taon','R$ '+BRL(l.totC)],
+      [l.saldo<0?'Falta':'Sobra','R$ '+BRL(Math.abs(l.saldo))+' ('+N1(l.cober)+'% coberto)'],
+      ['Taxa média × custo médio','R$ '+BRL(l.txMed)+' × R$ '+BRL(l.cuMedC)],
+      ['Taon ÷ pedidos da seleção',N1(l.terc)+'%']
+    ]);
+  });
+}
+
+/* ---------- evolução semanal ---------- */
+const TRM=[
+  {k:'tot', lab:'Total', f:v=>'R$ '+B0(v)},
+  {k:'ent', lab:'Entregas', f:B0},
+  {k:'dest',lab:'Destinos', f:B0},
+  {k:'tm',  lab:'Custo/entrega', f:v=>'R$ '+N2(v)}
+];
+let trk='tot', trbase='fixa';
+$('tr-seg').innerHTML=TRM.map(m=>'<button type="button" data-k="'+m.k+'" aria-pressed="'+(m.k===trk)+'">'+m.lab+'</button>').join('');
+$('tr-seg').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return;
+  trk=b.dataset.k; [...$('tr-seg').children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.k===trk)); drawTrend();});
+/* o seletor de base só faz sentido quando a cobertura varia entre as semanas */
+const COB_UNIFORME = WK.every(w=>Object.keys(REG[w]).length===BASE_FIXA.length);
+$('tr-base').innerHTML = COB_UNIFORME ? '' :
+  '<button type="button" data-b="fixa" aria-pressed="true">Base comparável</button>'+
+  '<button type="button" data-b="todas" aria-pressed="false">Todas recebidas</button>';
+if(COB_UNIFORME) $('tr-base').style.display='none';
+$('tr-base').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return;
+  trbase=b.dataset.b; [...$('tr-base').children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.b===trbase)); drawTrend();});
+
+function drawTrend(){
+  const m=TRM.find(x=>x.k===trk);
+  const ids = trbase==='fixa' ? BASE_FIXA : null;
+  const pts = WK.map(w=>{
+    const t=totals([w],ids);
+    return {w, n:t.n, v: trk==='tm' ? t.corr/t.ent : t[trk]};
+  });
+  $('tr-desc').textContent = COB_UNIFORME
+    ? 'As mesmas '+BASE_FIXA.length+' unidades em todas as semanas — a variação é operacional.'
+    : trbase==='fixa'
+      ? 'Mesmas '+BASE_FIXA.length+' unidades em todas as semanas — variação reflete operação, não cobertura.'
+      : 'Todas as unidades recebidas em cada semana — a cobertura muda, então parte da variação é isso.';
+
+  /* faixa focada: a variação é pequena, então o eixo não parte de zero (avisado na legenda) */
+  const lo=Math.min(...pts.map(p=>p.v)), hi=Math.max(...pts.map(p=>p.v));
+  const pad=Math.max((hi-lo)*0.5, hi*0.04);
+  const lo2=Math.max(0,lo-pad), hi2=hi+pad;
+  const tk=ticks(hi2-lo2,4);                       // passo dimensionado pela FAIXA, não pelo máximo
+  const base=Math.max(0, tk.step*Math.floor(lo2/tk.step));
+  const top =tk.step*Math.ceil(hi2/tk.step);
+  const nt=Math.max(1,Math.round((top-base)/tk.step));
+  const W=1060,H=260,PL=62,PR=16,PT=22,PB=42;
+  const iw=W-PL-PR, ih=H-PT-PB;
+  const X=i=> pts.length===1 ? PL+iw/2 : PL+iw*i/(pts.length-1);
+  const Y=v=> PT+ih-ih*(v-base)/(top-base);
+  let g='';
+  for(let i=0;i<=nt;i++){
+    const y=PT+ih-ih*i/nt;
+    g+='<line class="gridline" x1="'+PL+'" y1="'+y+'" x2="'+(W-PR)+'" y2="'+y+'"/>'+
+       '<text class="axt" x="'+(PL-9)+'" y="'+(y+3.5)+'" text-anchor="end">'+B0(base+tk.step*i)+'</text>';
+  }
+  const dpath=pts.map((p,i)=>(i?'L':'M')+X(i)+' '+Y(p.v)).join(' ');
+  let b='<path class="tline" d="'+dpath+'"/>';
+  pts.forEach((p,i)=>{
+    const anc = i===0 ? 'start' : i===pts.length-1 ? 'end' : 'middle';
+    const lx  = i===0 ? X(i)-6 : i===pts.length-1 ? X(i)+6 : X(i);
+    const on = i>=a0 && i<=a1;
+    b+='<circle class="tdot'+(on?' last':'')+'" data-i="'+i+'" cx="'+X(i)+'" cy="'+Y(p.v)+'" r="'+(on?6:4)+'"'+(on?'':' opacity="0.45"')+'/>'+
+       '<text class="dlab" x="'+lx+'" y="'+(Y(p.v)-13)+'" text-anchor="'+anc+'">'+m.f(p.v)+'</text>'+
+       '<text class="axt b" x="'+X(i)+'" y="'+(PT+ih+18)+'" text-anchor="middle">'+D.semanas[i].lab+'</text>'+
+       '<text class="axt" x="'+X(i)+'" y="'+(PT+ih+32)+'" text-anchor="middle">'+p.n+' un.</text>';
+  });
+  $('trend').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Evolução de '+m.lab+' por semana">'+g+b+'</svg>'+
+    '<div class="leg"><span><i class="sw" style="background:var(--d1)"></i>'+m.lab+
+    ' · '+(trbase==='fixa'?BASE_FIXA.length+' unidades fixas':'base variável')+'</span>'+
+    '<span style="color:var(--muted)">Eixo em faixa focada — não parte do zero.</span>'+
+    '<span style="color:var(--muted)">Pontos cheios = semanas do período selecionado.</span></div>';
+
+  $('trend').querySelectorAll('circle[data-i]').forEach(c=>{
+    const i=+c.dataset.i, p=pts[i], ant=i>0?pts[i-1].v:null;
+    bindTip(c, D.semanas[i].lab+'/2026', [
+      [m.lab, m.f(p.v)],
+      ['Unidades na base', B0(p.n)],
+      ['vs. semana anterior', ant ? (p.v>ant?'+':'')+N1((p.v-ant)/ant*100)+'%' : '—']
+    ]);
+  });
+}
+
+/* ---------- ranking ---------- */
+const METRICS=[
+  {k:'tot', lab:'Total do relatório', fmt:v=>'R$ '+BRL(v), inv:0, desc:'Valor total faturado pela Taon em cada unidade na semana.'},
+  {k:'ent', lab:'Entregas',           fmt:B0,              inv:0, desc:'Número de corridas acionadas no período.'},
+  {k:'dest',lab:'Destinos',           fmt:B0,              inv:0, desc:'Paradas atendidas — uma corrida pode ter mais de um destino.'},
+  {k:'tm',  lab:'Custo por entrega',  fmt:v=>'R$ '+BRL(v), inv:1, desc:'Total Corridas dividido pelo número de entregas.'},
+  {k:'pct', lab:'% taxa adm.',        fmt:v=>N1(v)+'%',    inv:1, desc:'Peso da taxa administrativa fixa sobre o valor das corridas.'}
+];
+let mk='tot';
+$('rk-seg').innerHTML=METRICS.map(m=>'<button type="button" data-k="'+m.k+'" aria-pressed="'+(m.k===mk)+'">'+m.lab+'</button>').join('');
+$('rk-seg').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return;
+  mk=b.dataset.k; [...$('rk-seg').children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.k===mk)); drawRank();});
+
+function drawRank(){
+  const m=METRICS.find(x=>x.k===mk);
+  $('rk-desc').textContent=m.desc+(nSel()>1?' Somado nas '+nSel()+' semanas do período.':'');
+  const rows=[...U].sort((a,b)=>b[mk]-a[mk]);
+  const max=Math.max(...rows.map(r=>r[mk]));
+  $('rank').innerHTML=rows.map(l=>{
+    const wd=Math.max(0.6,l[mk]/max*100);
+    const pa = PRV ? aggUnit(l.id,PRV) : null;
+    const ant = pa ? pa[mk] : null;
+    const sub = mk==='tot'?B0(l.ent)+' entregas' : mk==='ent'?'R$ '+BRL(l.tot)
+              : mk==='dest'?N2(l.dpe)+' /entrega' : mk==='tm'?B0(l.ent)+' entregas' : 'R$ '+BRL(l.taxa);
+    return '<div class="row" data-id="'+l.id+'">'+
+      '<div class="nm">'+l.curto+'<span class="gp"> · '+l.grupo+'</span></div>'+
+      '<div class="bar-t"><div class="bar" style="width:'+wd+'%"></div></div>'+
+      '<div class="vl">'+m.fmt(l[mk])+'<small>'+sub+'</small></div>'+
+      '<div class="dl">'+delta(l[mk],ant,null,m.inv)+'</div></div>';
+  }).join('');
+  [...$('rank').children].forEach(el=>{
+    const l=UI[el.dataset.id], a=PRV?aggUnit(el.dataset.id,PRV):null;
+    bindTip(el,l.loja,[
+      ['Total do relatório','R$ '+BRL(l.tot)],
+      ['Corridas','R$ '+BRL(l.corr)],
+      ['Taxa administrativa','R$ '+BRL(l.taxa)+' ('+N1(l.pct)+'%)'],
+      ['Entregas / destinos',B0(l.ent)+' / '+B0(l.dest)],
+      ['Custo por entrega','R$ '+BRL(l.tm)],
+      ['Motoristas distintos',B0(l.nmot)],
+      ['Período anterior', a ? 'R$ '+BRL(a.tot) : 'sem relatório']
+    ]);
+  });
+}
+
+/* ---------- dia da semana ---------- */
+let dwk='valor';
+$('dw-seg').innerHTML='<button type="button" data-k="valor" aria-pressed="true">Valor</button><button type="button" data-k="qtd" aria-pressed="false">Entregas</button>';
+$('dw-seg').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return;
+  dwk=b.dataset.k; [...$('dw-seg').children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.k===dwk)); drawDow();});
+
+function drawDow(){
+  const idx=dwk==='valor'?1:0, rs=U;
+  $('dw-desc').textContent='Rede consolidada · '+(nSel()===1
+    ? D.semanas[a0].lab
+    : 'soma de '+nSel()+' semanas ('+D.semanas[a0].lab+' a '+D.semanas[a1].lab+')');
+  const vals=D.dias.map((_,i)=>rs.reduce((a,l)=>a+l.dia[i][idx],0));
+  const tk=ticks(Math.max(...vals)*1.12,4), max=tk.top;
+  const W=520,H=250,PL=44,PR=8,PT=16,PB=30;
+  const iw=W-PL-PR, ih=H-PT-PB, bw=iw/7;
+  let g='';
+  for(let i=0;i<=tk.n;i++){
+    const y=PT+ih-ih*i/tk.n;
+    g+='<line class="gridline" x1="'+PL+'" y1="'+y+'" x2="'+(W-PR)+'" y2="'+y+'"/>'+
+       '<text class="axt" x="'+(PL-7)+'" y="'+(y+3.5)+'" text-anchor="end">'+B0(tk.step*i)+'</text>';
+  }
+  let b='';
+  vals.forEach((v,i)=>{
+    const h=Math.max(ih*v/max,2), x=PL+bw*i+7, y=PT+ih-h, wd=bw-14, r=Math.min(4,h);
+    b+='<path class="vbar" data-i="'+i+'" d="M'+x+' '+(PT+ih)+' V'+(y+r)+' q0 -'+r+' '+r+' -'+r+' h'+(wd-2*r)+' q'+r+' 0 '+r+' '+r+' V'+(PT+ih)+' Z"/>'+
+       '<text class="dlab" x="'+(x+wd/2)+'" y="'+(y-6)+'" text-anchor="middle">'+B0(Math.round(v))+'</text>'+
+       '<text class="axt b" x="'+(x+wd/2)+'" y="'+(PT+ih+16)+'" text-anchor="middle">'+D.dias[i]+'</text>';
+  });
+  $('dow').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+(dwk==='valor'?'Valor':'Entregas')+' por dia da semana">'+g+b+'</svg>'+
+    '<div class="leg"><span><i class="sw" style="background:var(--d1)"></i>'+(dwk==='valor'?'Valor das corridas (R$)':'Entregas realizadas')+'</span></div>';
+  $('dow').querySelectorAll('.vbar[data-i]').forEach(r=>{
+    const i=+r.dataset.i, q=rs.reduce((a,l)=>a+l.dia[i][0],0), v=rs.reduce((a,l)=>a+l.dia[i][1],0);
+    bindTip(r,D.dias[i],[['Entregas',B0(q)],['Valor','R$ '+BRL(v)],['Ticket médio','R$ '+BRL(v/q)]]);
+  });
+}
+
+/* ---------- faixa horária ---------- */
+function drawHrs(){
+  const rs=U, T=totals(SEL);
+  const vals=Array.from({length:24},(_,h)=>rs.reduce((a,l)=>a+l.hora[h],0));
+  const tk=ticks(Math.max(...vals)*1.1,4), max=tk.top;
+  const W=520,H=250,PL=32,PR=8,PT=16,PB=30;
+  const iw=W-PL-PR, ih=H-PT-PB, bw=iw/24;
+  let g='';
+  for(let i=0;i<=tk.n;i++){
+    const y=PT+ih-ih*i/tk.n;
+    g+='<line class="gridline" x1="'+PL+'" y1="'+y+'" x2="'+(W-PR)+'" y2="'+y+'"/>'+
+       '<text class="axt" x="'+(PL-7)+'" y="'+(y+3.5)+'" text-anchor="end">'+B0(tk.step*i)+'</text>';
+  }
+  let b='';
+  vals.forEach((v,h)=>{
+    const bh=ih*v/max, x=PL+bw*h+2, y=PT+ih-bh, wd=bw-4;
+    b+='<rect class="vbar'+(h>=19&&h<=22?'':' soft')+'" data-h="'+h+'" x="'+x+'" y="'+y+'" width="'+wd+'" height="'+Math.max(bh,1)+'" rx="3" ry="3"/>';
+    if(h%3===0) b+='<text class="axt" x="'+(x+wd/2)+'" y="'+(PT+ih+16)+'" text-anchor="middle">'+String(h).padStart(2,'0')+'h</text>';
+  });
+  const pico=vals.slice(19,23).reduce((a,b)=>a+b,0);
+  $('hrs').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Entregas por hora do dia">'+g+b+'</svg>'+
+    '<div class="leg"><span><i class="sw" style="background:var(--d1)"></i>Pico 19h–22h · '+B0(pico)+' entregas ('+N1(pico/T.ent*100)+'%)</span>'+
+    '<span><i class="sw" style="background:var(--d1-soft)"></i>Demais horários</span></div>';
+  $('hrs').querySelectorAll('rect[data-h]').forEach(r=>{
+    const h=+r.dataset.h;
+    bindTip(r,String(h).padStart(2,'0')+'h – '+String((h+1)%24).padStart(2,'0')+'h',
+      [['Entregas',B0(vals[h])],['% da semana',N1(vals[h]/T.ent*100)+'%']]);
+  });
+}
+
+/* ---------- insights ---------- */
+function drawIns(){
+  const rs=U, T=totals(SEL);
+  const byTot=[...rs].sort((a,b)=>b.tot-a.tot), top4=byTot.slice(0,4);
+  const byPct=[...rs].sort((a,b)=>b.pct-a.pct);
+  const byTm =[...rs].sort((a,b)=>b.tm-a.tm);
+  const dias =D.dias.map((d,i)=>({d,v:rs.reduce((a,l)=>a+l.dia[i][1],0)})).sort((a,b)=>b.v-a.v);
+  let mov='';
+  if(PRV){
+    const ids=comuns(SEL,PRV);
+    const var_=ids.map(i=>{const a=aggUnit(i,SEL), b=aggUnit(i,PRV); return {l:a, d:a.tot-b.tot};})
+                  .sort((a,b)=>b.d-a.d);
+    const A=totals(SEL,ids), B=totals(PRV,ids);
+    const jan = nSel()===1 ? 'a semana anterior'
+              : 'as '+nSel()+' semanas anteriores ('+D.semanas[a0-nSel()].lab+' a '+D.semanas[a0-1].lab+')';
+    mov='Contra '+jan+', na base de <b>'+ids.length+'</b> unidades comuns, o período '+
+        (A.tot>=B.tot?'subiu':'caiu')+' <b>'+N1(Math.abs(A.tot/B.tot-1)*100)+'%</b> ('+
+        (A.tot>=B.tot?'+':'−')+'<b>R$ '+BRL(Math.abs(A.tot-B.tot))+'</b>). Maior alta: <b>'+
+        var_[0].l.curto+'</b> ('+(var_[0].d>=0?'+':'−')+'R$ '+BRL(Math.abs(var_[0].d))+'). Maior queda: <b>'+
+        var_[var_.length-1].l.curto+'</b> ('+(var_[var_.length-1].d>=0?'+':'−')+'R$ '+BRL(Math.abs(var_[var_.length-1].d))+').';
+  } else {
+    mov='Não há período anterior de mesmo tamanho na base para comparar. Reduza o intervalo ou escolha um período mais recente.';
+  }
+  $('ins').innerHTML=[
+    ['Concentração do custo',
+     '<b>'+top4.map(l=>l.curto).join('</b>, <b>')+'</b> somam <b>R$ '+BRL(top4.reduce((a,b)=>a+b.tot,0))+
+     '</b> — <b>'+N1(top4.reduce((a,b)=>a+b.tot,0)/T.tot*100)+'%</b> do total do período. '+
+     byTot[0].curto+' sozinha responde por <b>'+N1(byTot[0].tot/T.tot*100)+'%</b>, com <b>'+B0(byTot[0].ent)+'</b> entregas.'],
+    ['Variação contra o período anterior', mov],
+    ['A taxa fixa pesa nas unidades pequenas',
+     'Em <b>'+byPct[0].curto+'</b> a taxa administrativa equivale a <b>'+N1(byPct[0].pct)+
+     '%</b> do valor das corridas, contra <b>'+N1(T.taxa/T.corr*100)+'%</b> na média da rede. '+
+     'O custo por entrega vai de <b>R$ '+BRL(byTm[byTm.length-1].tm)+'</b> ('+byTm[byTm.length-1].curto+
+     ') a <b>R$ '+BRL(byTm[0].tm)+'</b> ('+byTm[0].curto+'), variação de <b>'+
+     N0(byTm[0].tm/byTm[byTm.length-1].tm*100-100)+'%</b>. '+dias[0].d+' foi o dia mais forte (<b>R$ '+BRL(dias[0].v)+'</b>).']
+  ].map(x=>'<div class="it"><h3>'+x[0]+'</h3><p>'+x[1]+'</p></div>').join('');
+}
+
+/* ---------- tabela ---------- */
+const COLS=[
+  {k:'loja',lab:'Unidade',      t:'s'},
+  {k:'ent', lab:'Entregas',     f:B0},
+  {k:'dest',lab:'Destinos',     f:B0},
+  {k:'dpe', lab:'Dest./ent.',   f:N2},
+  {k:'corr',lab:'Corridas',     f:BRL},
+  {k:'taxa',lab:'Taxa adm.',    f:BRL},
+  {k:'tot', lab:'Total',        f:BRL},
+  {k:'dtot',lab:'Δ total',      t:'d'},
+  {k:'tm',  lab:'R$/entrega',   f:BRL},
+  {k:'tp',  lab:'R$/parada',    f:BRL},
+  {k:'pct', lab:'% taxa',       t:'p'},
+  {k:'cEnt',lab:'Ped. Cloud',   f:B0},
+  {k:'cFat', lab:'Faturamento',  f:BRL},
+  {k:'tkMed',lab:'Ticket méd.',  f:BRL},
+  {k:'pctFat',lab:'Taon/Fat.',   t:'pf'},
+  {k:'cTaxa',lab:'Taxa arrec.', f:BRL},
+  {k:'txMed',lab:'Taxa méd.',   f:BRL},
+  {k:'cuMed',lab:'Custo méd.',  f:BRL},
+  {k:'saldo',lab:'Sobra/falta', t:'s$'},
+  {k:'cober',lab:'Cobertura',   t:'cb'},
+  {k:'nmot',lab:'Motor.',       f:B0}
+];
+let sk='tot', sd=-1, gp='Todas', q='';
+$('th').innerHTML=COLS.map(c=>'<th tabindex="0" data-k="'+c.k+'" data-on="'+(c.k===sk?1:0)+'">'+c.lab+
+  '<span class="ar">'+(c.k===sk?(sd<0?'↓':'↑'):'↕')+'</span></th>').join('');
+$('th').addEventListener('click',e=>{const t=e.target.closest('th'); if(t) sort(t.dataset.k);});
+$('th').addEventListener('keydown',e=>{
+  if(e.key==='Enter'||e.key===' '){e.preventDefault(); const t=e.target.closest('th'); if(t) sort(t.dataset.k);}
+});
+function sort(k){
+  if(k===sk) sd=-sd; else {sk=k; sd=k==='loja'?1:-1;}
+  [...$('th').children].forEach(th=>{
+    const on=th.dataset.k===sk; th.dataset.on=on?1:0;
+    th.querySelector('.ar').textContent=on?(sd<0?'↓':'↑'):'↕';
+  });
+  drawTable();
+}
+const GRUPOS=['Todas',...new Set(D.lojas.map(l=>l.grupo))];
+$('gp-seg').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return;
+  gp=b.dataset.g; [...$('gp-seg').children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.g===gp)); drawTable();});
+$('q').addEventListener('input',e=>{q=e.target.value.toLowerCase().trim(); drawTable();});
+
+function drawTable(){
+  const all=U;
+  $('gp-seg').innerHTML=GRUPOS.map(g=>{
+    const n=g==='Todas'?all.length:all.filter(l=>l.grupo===g).length;
+    return '<button type="button" data-g="'+g+'" aria-pressed="'+(g===gp)+'">'+g+' ('+n+')</button>';
+  }).join('');
+  let rows=all.filter(l=>(gp==='Todas'||l.grupo===gp)&&(!q||l.loja.toLowerCase().includes(q)));
+  rows.forEach(l=>{
+    const a=PRV?aggUnit(l.id,PRV):null;
+    l.dtot = a ? (l.tot/a.tot-1)*100 : null;
+    l._ant = a;
+  });
+  rows.sort((a,b)=> sk==='loja' ? a.loja.localeCompare(b.loja,'pt-BR')*sd
+    : sk==='dtot' ? ((a.dtot==null?-1e9:a.dtot)-(b.dtot==null?-1e9:b.dtot))*sd
+    : (a[sk]-b[sk])*sd);
+
+  $('tbody').innerHTML = rows.length ? rows.map(l=>'<tr>'+COLS.map(c=>{
+    if(c.k==='loja') return '<td><span class="gp">'+l.grupo+' · </span>'+l.curto+'</td>';
+    if(c.t==='d')    return '<td class="n">'+delta(l.tot, l._ant?l._ant.tot:null)+'</td>';
+    if(c.t==='p'){
+      const cls=l.pct>=25?'c':l.pct>=12?'w':'g';
+      return '<td class="n"><span class="pill '+cls+'">'+N1(l.pct)+'%</span></td>';
+    }
+    if(c.t==='s$') return '<td class="n" style="color:var(--'+(l.saldo<0?'crit':'good')+');font-weight:600">'+
+      (l.saldo<0?'−':'+')+BRL(Math.abs(l.saldo))+'</td>';
+    if(c.t==='pf') return '<td class="n">'+N1(l.pctFat)+'%</td>';
+    if(c.t==='cb'){
+      const cls=l.cober>=100?'g':l.cober>=80?'w':'c';
+      return '<td class="n"><span class="pill '+cls+'">'+N1(l.cober)+'%</span></td>';
+    }
+    return '<td class="n">'+c.f(l[c.k])+'</td>';
+  }).join('')+'</tr>').join('')
+   : '<tr><td colspan="'+COLS.length+'" style="text-align:center;color:var(--muted);padding:26px 0">Nenhuma unidade encontrada.</td></tr>';
+
+  const s=k=>rows.reduce((a,b)=>a+b[k],0);
+  const e=s('ent'), de=s('dest'), co=s('corr'), tx=s('taxa'), to=s('tot');
+  const com=rows.filter(l=>l._ant);
+  const antTot=com.reduce((a,b)=>a+b._ant.tot,0), curTot=com.reduce((a,b)=>a+b.tot,0);
+  $('tfoot').innerHTML = e ?
+    '<td>'+rows.length+' unidade'+(rows.length>1?'s':'')+'</td>'+
+    '<td class="n">'+B0(e)+'</td><td class="n">'+B0(de)+'</td><td class="n">'+N2(de/e)+'</td>'+
+    '<td class="n">'+BRL(co)+'</td><td class="n">'+BRL(tx)+'</td><td class="n">'+BRL(to)+'</td>'+
+    '<td class="n">'+(com.length?delta(curTot,antTot):'<span class="delta fl">—</span>')+'</td>'+
+    '<td class="n">'+BRL(co/e)+'</td><td class="n">'+BRL(co/de)+'</td>'+
+    '<td class="n">'+N1(tx/co*100)+'%</td>'+
+    '<td class="n">'+B0(s('cEnt'))+'</td><td class="n">'+BRL(s('cFat'))+'</td>'+
+    '<td class="n">'+BRL(s('cFat')/s('cEnt'))+'</td><td class="n">'+N1(to/s('cFat')*100)+'%</td>'+
+    '<td class="n">'+BRL(s('cTaxa'))+'</td>'+
+    '<td class="n">'+BRL(s('cTaxa')/s('cEnt'))+'</td><td class="n">'+BRL(to/e)+'</td>'+
+    '<td class="n" style="color:var(--'+(s('cTaxa')-to<0?'crit':'good')+')">'+
+      ((s('cTaxa')-to)<0?'−':'+')+BRL(Math.abs(s('cTaxa')-to))+'</td>'+
+    '<td class="n">'+N1(s('cTaxa')/to*100)+'%</td><td class="n">—</td>' : '';
+}
+
+/* ---------- relatório para WhatsApp ---------- */
+let wamodo='resumo';
+$('wa-seg').innerHTML=
+  '<button type="button" data-m="resumo" aria-pressed="true">Resumo</button>'+
+  '<button type="button" data-m="unidade" aria-pressed="false">Por unidade</button>';
+$('wa-seg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  wamodo=b.dataset.m;
+  [...$('wa-seg').children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.m===wamodo));
+  montaWA();
+});
+
+function montaWA(){
+  const T=totals(SEL), n=nSel();
+  const dup={}; D.lojas.forEach(l=>dup[l.curto]=(dup[l.curto]||0)+1);
+  const nm=l=>l.curto+(dup[l.curto]>1?' ('+l.grupo+')':'');
+  const per=D.semanas[a0].ini+' a '+D.semanas[a1].fim;
+  const R=v=>'R$ '+BRL(v);
+  const L=[];
+  L.push('*PAINEL TAON DELIVERY — GRUPO RAGGA*');
+  L.push('Período: '+per+(n>1?' ('+n+' semanas)':' (1 semana)'));
+  L.push('Unidades: '+T.n+' de '+D.lojas.length+'  |  Entregador: '+entLabel());
+  L.push('');
+  L.push('*CUSTO TAON*');
+  L.push('Corridas: '+B0(T.ent)+'   Destinos: '+B0(T.dest));
+  L.push('Total corridas: '+R(T.corr));
+  L.push('Taxa administrativa: '+R(T.taxa)+' ('+N1(T.taxa/T.corr*100)+'%)');
+  if(T.adic) L.push('Valores adicionais: '+R(T.adic));
+  L.push('*Total pago: '+R(T.tot)+'*');
+  L.push('Custo por entrega: '+R(T.cuMed)+'   Por parada: '+R(T.corr/T.dest));
+
+  if(!semCloud()){
+    L.push('');
+    L.push('*ENTREGAS NO SISTEMA DA LOJA*');
+    L.push('Próprias: '+B0(T.propEnt)+'  (WhatsApp '+B0(T.cat.WA.qtd)+
+           ' · Telefone '+B0(T.cat.TE.qtd)+' · App '+B0(T.cat.AP.qtd)+
+           ' · Taxa Extra '+B0(T.cat.TX.qtd)+')');
+    L.push('iFood / Marketplace: '+B0(T.cat.SE.qtd)+' (não passa pela Taon)');
+    L.push('');
+    L.push('*FATURAMENTO*');
+    L.push('Delivery próprio: '+R(T.propFat)+'   Ticket médio: '+R(T.propEnt?T.propFat/T.propEnt:0));
+    L.push('iFood: '+R(T.ifoFat));
+    L.push('Taxa de entrega arrecadada: '+R(T.cTaxa)+' ('+R(T.txMed)+'/pedido)');
+    L.push('');
+    L.push('*CONFRONTO*');
+    const falta=T.saldo<0;
+    L.push((falta?'*FALTA: ':'*SOBRA: ')+R(Math.abs(T.saldo))+'*  — a taxa cobre '+N1(T.cober)+'% da conta da Taon');
+    L.push('Custo Taon sobre faturamento próprio: '+N1(T.pctFat)+'%');
+    L.push('Entregas: '+B0(T.entC)+' cobradas x '+B0(T.cEnt)+' no sistema ('+N1(T.terc)+'%)');
+    if(cloudParcial())
+      L.push('_Confronto na base de '+selCloud().length+' das '+n+' semanas — o relatório da loja não cobre todas._');
+  } else {
+    L.push('');
+    L.push('_Sem Relatório de Entregas Sintético para este período: faturamento e confronto indisponíveis._');
+  }
+
+  const porFalta=[...U].sort((a,b)=>a.saldo-b.saldo);
+  const alerta=U.filter(l=>l.entC>l.cEnt).sort((a,b)=>(b.entC-b.cEnt)-(a.entC-a.cEnt));
+
+  if(semCloud()){
+    L.push('');
+    L.push('*MAIORES CUSTOS POR UNIDADE*');
+    [...U].sort((a,b)=>b.tot-a.tot).slice(0,5).forEach((l,i)=>
+      L.push((i+1)+'. '+nm(l)+': '+R(l.tot)+' — '+B0(l.ent)+' corridas'));
+  } else if(wamodo==='resumo'){
+    L.push('');
+    L.push('*MAIORES FALTAS*');
+    porFalta.slice(0,5).forEach((l,i)=>L.push((i+1)+'. '+nm(l)+': '+
+      (l.saldo<0?'falta ':'sobra ')+R(Math.abs(l.saldo))+' — '+N1(l.cober)+'% coberto'));
+  } else {
+    L.push('');
+    L.push('*POR UNIDADE*');
+    porFalta.forEach(l=>{
+      L.push('*'+l.curto+'* ('+l.grupo+')');
+      L.push('  Taon: '+B0(l.entC)+' corridas · '+R(l.totC));
+      L.push('  Loja: '+B0(l.propEnt)+' pedidos próprios · '+R(l.propFat)+' faturados');
+      L.push('  iFood: '+B0(l.ifoEnt)+' pedidos · '+R(l.ifoFat));
+      L.push('  Taxa: '+R(l.cTaxa)+'  |  '+(l.saldo<0?'Falta ':'Sobra ')+R(Math.abs(l.saldo))+' ('+N1(l.cober)+'%)');
+    });
+  }
+  if(alerta.length){
+    L.push('');
+    L.push('*ATENÇÃO — Taon cobrou mais que o sistema registrou*');
+    alerta.forEach(l=>L.push('- '+nm(l)+': '+B0(l.entC)+' cobradas x '+B0(l.cEnt)+' no sistema (+'+B0(l.entC-l.cEnt)+')'));
+    L.push('Verificar se a Taon também entrega marketplace nessas lojas.');
+  }
+  L.push('');
+  L.push('_Fonte: relatórios semanais da Taon + Relatório de Entregas Sintético._');
+  $('wa-txt').value=L.join('\n');
+  $('wa-sub').textContent=per+' · '+T.n+' unidades · '+entLabel();
+}
+
+function abreWA(){ montaWA(); $('wa-ov').setAttribute('open',''); $('wa-copy').focus(); }
+function fechaWA(){ $('wa-ov').removeAttribute('open'); $('wa-open').focus();
+  $('wa-copy').textContent='Copiar texto'; $('wa-copy').className='btn pri'; }
+$('wa-open').addEventListener('click',abreWA);
+$('wa-x').addEventListener('click',fechaWA);
+$('wa-x2').addEventListener('click',fechaWA);
+$('wa-ov').addEventListener('click',e=>{ if(e.target===$('wa-ov')) fechaWA(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && $('wa-ov').hasAttribute('open')) fechaWA(); });
+
+$('wa-copy').addEventListener('click',async()=>{
+  const t=$('wa-txt'), b=$('wa-copy');
+  let ok=false;
+  try{ await navigator.clipboard.writeText(t.value); ok=true; }
+  catch(_){                                   // arquivo local costuma bloquear a API moderna
+    try{ t.removeAttribute('readonly'); t.select(); t.setSelectionRange(0,t.value.length);
+         ok=document.execCommand('copy'); t.setAttribute('readonly',''); }catch(__){ ok=false; }
+  }
+  if(ok){ b.textContent='Copiado'; b.className='btn ok';
+          setTimeout(()=>{ b.textContent='Copiar texto'; b.className='btn pri'; },2200); }
+  else  { t.select(); b.textContent='Use Ctrl+C'; b.className='btn'; }
+});
+
+/* ---------- render ---------- */
+function renderAll(){
+  SEL=selWeeks(); PRV=prevWeeks();
+  U=unidades(SEL); UI={}; U.forEach(u=>UI[u.id]=u);
+  drawCover(); drawKpis(); drawModKpis(); drawFatKpis(); drawConfKpis(); drawQtd(); drawConf(); drawTrend(); drawRank(); drawDow(); drawHrs(); drawIns(); drawTable(); }
+renderAll();
+</script>
